@@ -670,7 +670,4 @@ renderSymptoms();
 renderRulesList();
 // <-- Chamada está aqui e correta
 
-// --- CORREÇÃO: Preenchimento de RISK_WEIGHTS ---
-// Esta lógica foi movida para o data.js e corrigida lá
-Object.assign(RISK_WEIGHTS, RISK_WEIGHTS_DATA);
-// --- FIM CORREÇÃO ---
+// (Eu removi a linha com erro que estava aqui)
