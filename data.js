@@ -14,7 +14,7 @@ const SYMPTOMS = [
 
   // Grupo: Respiratório / ORL (Otorrino)
   {id:'tosse', label:'Tosse', group: 'Respiratório / ORL'},
-  {id:'dispneia', label:'Dificuldade para respirar', group: 'Respiratório / ORL'}, [cite: 61]
+  {id:'dispneia', label:'Dificuldade para respirar', group: 'Respiratório / ORL'},
   {id:'dor_peito', label:'Dor no peito', group: 'Respiratório / ORL'}, // Pode ser cardíaco, mas deixamos aqui por ora
   {id:'coriza', label:'Coriza / nariz entupido', group: 'Respiratório / ORL'},
   {id:'odinofagia', label:'Dor ao engolir', group: 'Respiratório / ORL'},
@@ -27,7 +27,7 @@ const SYMPTOMS = [
   {id:'dor_abdominal', label:'Dor abdominal', group: 'Digestivo'},
   {id:'vomito', label:'Vômito', group: 'Digestivo'},
   {id:'diarreia', label:'Diarreia', group: 'Digestivo'},
-  {id:'ictericia', label:'Icterícia (amarelamento)', group: 'Digestivo'}, [cite: 62]
+  {id:'ictericia', label:'Icterícia (amarelamento)', group: 'Digestivo'},
   {id:'sangue_no_sangue', label:'Sangue nas fezes', group: 'Digestivo'},
   {id:'nausea', label:'Náusea', group: 'Digestivo'}, // Adicionei Náusea que estava implícita em Gastrite/Úlcera
   {id:'perda_apetite', label:'Perda de Apetite', group: 'Digestivo'}, // Adicionei, usado em Gastrite
@@ -39,8 +39,7 @@ const SYMPTOMS = [
   {id:'perda_consciencia', label:'Perda de consciência', group: 'Neurológico / Cabeça'},
   {id:'convulsao', label:'Convulsões', group: 'Neurológico / Cabeça'},
   {id:'sensibilidade_luz', label:'Sensibilidade à luz', group: 'Neurológico / Cabeça'},
-  {id:'dor_face', label:'Dor na Face', group: 'Neurológico / Cabeça'}, 
-  // Adicionei, usado em Sinusite [cite: 63]
+  {id:'dor_face', label:'Dor na Face', group: 'Neurológico / Cabeça'}, // Adicionei, usado em Sinusite
   {id:'fraqueza_unilateral', label: 'Fraqueza Unilateral', group: 'Neurológico / Cabeça'}, // Adicionei, usado em AVC
 
   // Grupo: Pele / Mucosas
@@ -52,7 +51,7 @@ const SYMPTOMS = [
 
   // Grupo: Urinário / Metabólico
   {id:'disuria', label:'Dor ao urinar', group: 'Urinário / Metabólico'},
-  {id:'anuria', label:'Redução/ausência de urina', group: 'Urinário / Metabólico'}, [cite: 64]
+  {id:'anuria', label:'Redução/ausência de urina', group: 'Urinário / Metabólico'},
   {id:'poliuria', label:'Urina em excesso', group: 'Urinário / Metabólico'},
   {id:'polidipsia', label:'Sede excessiva', group: 'Urinário / Metabólico'},
 
@@ -65,8 +64,7 @@ const SYMPTOMS = [
   // Grupo: Outros (ajustar conforme necessidade)
   {id:'inic_local', label:'Dor localizada intensa', group: 'Outros'}, // Ex: Apendicite, LER, Celulite
   {id:'dor_articular', label:'Dor Articular', group: 'Outros'}, // Adicionei, usado em Chikungunya
-  {id:'chiado', label:'Chiado no Peito', group: 'Respiratório / ORL'}, // Movido 
-  para Respiratório [cite: 65]
+  {id:'chiado', label:'Chiado no Peito', group: 'Respiratório / ORL'}, // Movido para Respiratório
   {id:'ganho_peso', label:'Ganho de Peso', group: 'Geral'}, // Adicionei, usado em Hipotireoidismo
   {id:'constipacao', label:'Constipação', group: 'Digestivo'}, // Adicionei, usado em Hipotireoidismo
   {id:'frio_intolerancia', label:'Intolerância ao Frio', group: 'Geral'}, // Adicionei, usado em Hipotireoidismo
@@ -74,18 +72,17 @@ const SYMPTOMS = [
   {id:'insônia_sintoma', label:'Insônia (Sintoma)', group: 'Geral'}, // Renomeado de 'insônia', usado em Depressão/Ansiedade
   {id:'tristeza', label:'Tristeza / Desânimo', group: 'Geral'}, // Adicionei, usado em Depressão
   {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'} // Adicionei, usado em Insônia
-
 ];
-const DISEASES = [ [cite: 66]
-  {id:'covid19', nome:'COVID-19', sintomas:['febre','tosse','dispneia','dor_corpo','cefaleia','coriza'], painWeight:0.5, descricao:'Doença viral respiratória. Sintomas respiratórios, febre, fadiga.'}, [cite: 67]
+const DISEASES = [
+  {id:'covid19', nome:'COVID-19', sintomas:['febre','tosse','dispneia','dor_corpo','cefaleia','coriza'], painWeight:0.5, descricao:'Doença viral respiratória. Sintomas respiratórios, febre, fadiga.'},
   {id:'dengue', nome:'Dengue', sintomas:['febre','dor_corpo','cefaleia','manchas_pele','calafrios','sangramento_gengiva'], painWeight:0.3, descricao:'Infecção viral transmitida por Aedes, febre alta, mialgia e rash.'},
   {id:'gripe', nome:'Gripe (Influenza)', sintomas:['febre','tosse','dor_corpo','cefaleia','coriza'], painWeight:0.3, descricao:'Infecção respiratória sazonal.'},
   {id:'resfriado', nome:'Resfriado comum', sintomas:['coriza','tosse','rouquidão','dor_corpo'], painWeight:0.1, descricao:'Virose respiratória leve.'},
-  {id:'pneumonia', nome:'Pneumonia', sintomas:['febre','tosse','dispneia','sangue_no_sarro','dor_peito'], painWeight:0.6, descricao:'Infecção pulmonar com dispneia e febre.'}, // Ajustado
+  {id:'pneumonia', nome:'Pneumonia', sintomas:['febre','tosse','dispneia','sangue_no_sarro','dor_peito'], painWeight:0.6, descricao:'Infecção pulmonar com dispneia e febre.'},
   {id:'asma', nome:'Asma', sintomas:['tosse','dispneia','chiado'], painWeight:0.2, descricao:'Doença obstrutiva das vias aéreas caracterizada por crises de falta de ar.'},
-  {id:'bronquite', nome:'Bronquite', sintomas:['tosse','febre','dispneia'], painWeight:0.2, descricao:'Inflamação dos brônquios, costuma causar tosse produtiva.'}, // Ajustado
+  {id:'bronquite', nome:'Bronquite', sintomas:['tosse','febre','dispneia'], painWeight:0.2, descricao:'Inflamação dos brônquios, costuma causar tosse produtiva.'},
   {id:'sinusite', nome:'Sinusite', sintomas:['cefaleia','coriza','dor_face','sensibilidade_luz'], painWeight:0.4, descricao:'Inflamação dos seios paranasais causando dor facial.'},
-  {id:'otite', nome:'Otite', sintomas:['dor_ouvido','febre','tosse'], painWeight:0.7, descricao:'Infecção do ouvido médio com dor intensa.'}, [cite: 68]
+  {id:'otite', nome:'Otite', sintomas:['dor_ouvido','febre','tosse'], painWeight:0.7, descricao:'Infecção do ouvido médio com dor intensa.'},
   {id:'faringite', nome:'Faringite', sintomas:['odinofagia','febre','rouquidão'], painWeight:0.5, descricao:'Inflamação da faringe, dor ao engolir.'},
   {id:'amigdalite', nome:'Amigdalite', sintomas:['odinofagia','febre','adenomegalia','rouquidão'], painWeight:0.6, descricao:'Inflamação das amígdalas.'},
   {id:'infeccao_urinaria', nome:'Infecção urinária', sintomas:['disuria','poliuria','dor_abdominal','febre'], painWeight:0.5, genderPref: 'f', descricao:'Infecção do trato urinário com dor ou ardência ao urinar.'},
@@ -93,7 +90,7 @@ const DISEASES = [ [cite: 66]
   {id:'gastroenterite', nome:'Gastroenterite', sintomas:['diarreia','vomito','dor_abdominal','febre'], painWeight:0.4, descricao:'Inflamação do trato gastrointestinal.'},
   {id:'gastrite', nome:'Gastrite', sintomas:['dor_abdominal','nausea','vomito','perda_apetite'], painWeight:0.8, descricao:'Inflamação do estômago com dor epigástrica.'},
   {id:'colecistite', nome:'Colecistite', sintomas:['dor_abdominal','febre','vomito','ictericia'], painWeight:0.9, descricao:'Inflamação da vesícula biliar com dor intensa no quadrante superior direito.'},
-  {id:'pancreatite', nome:'Pancreatite', sintomas:['dor_abdominal','vomito','suor_noturno','ictericia'], painWeight:1.0, descricao:'Inflamação do pâncreas com dor abdominal intensa.'}, [cite: 69]
+  {id:'pancreatite', nome:'Pancreatite', sintomas:['dor_abdominal','vomito','suor_noturno','ictericia'], painWeight:1.0, descricao:'Inflamação do pâncreas com dor abdominal intensa.'},
   {id:'ulcera', nome:'Úlcera péptica', sintomas:['dor_abdominal','perda_peso','nausea','vomito'], painWeight:0.7, descricao:'Lesão na mucosa gástrica causando dor epigástrica.'},
   {id:'doenca_coronariana', nome:'Doença arterial coronariana', sintomas:['dor_peito','palpitacao','dispneia','sudorese'], painWeight:0.9, descricao:'Problemas das artérias coronárias podendo causar dor torácica.'},
   {id:'infarto', nome:'Infarto agudo do miocárdio', sintomas:['dor_peito','sudorese','tontura','desmaio'], painWeight:1.0, descricao:'Isquemia coronária grave com dor torácica intensa.'},
@@ -101,25 +98,25 @@ const DISEASES = [ [cite: 66]
   {id:'hipertensao', nome:'Hipertensão arterial', sintomas:['cefaleia','tontura','palpitacao'], painWeight:0.2, descricao:'Pressão arterial alta, muitas vezes assintomática.'},
   {id:'acidente_vascular', nome:'AVC (Acidente Vascular Cerebral)', sintomas:['confusao','perda_consciencia','tontura','fraqueza_unilateral'], painWeight:0.1, descricao:'Comprometimento neurológico agudo.'},
   {id:'diabetes2', nome:'Diabetes tipo 2', sintomas:['poliuria','polidipsia','perda_peso','astenia'], painWeight:0.1, descricao:'Doença metabólica com sede e micção aumentadas.'},
-  {id:'hipotireoidismo', nome:'Hipotireoidismo', sintomas:['astenia','ganho_peso','constipacao','frio_intolerancia'], painWeight:0.1, genderPref: 'f', descricao:'Baixa atividade da tireoide.'}, [cite: 70]
+  {id:'hipotireoidismo', nome:'Hipotireoidismo', sintomas:['astenia','ganho_peso','constipacao','frio_intolerancia'], painWeight:0.1, genderPref: 'f', descricao:'Baixa atividade da tireoide.'},
   {id:'hipertireoidismo', nome:'Hipertireoidismo', sintomas:['palpitacao','perda_peso','sudorese','ansiedade'], painWeight:0.1, genderPref: 'f', descricao:'Alta atividade da tireoide.'},
   {id:'depressao', nome:'Depressão', sintomas:['astenia','perda_peso','insônia','tristeza'], painWeight:0.05, descricao:'Transtorno do humor com perda de interesse.'},
   {id:'ansiedade', nome:'Ansiedade', sintomas:['palpitacao','insônia','tontura','sudorese'], painWeight:0.05, descricao:'Resposta exagerada de alerta.'},
   {id:'insônia', nome:'Insônia', sintomas:['insônia','astenia','irritabilidade'], painWeight:0.02, descricao:'Dificuldade de sono persistente.'},
-  {id:'dpoc', nome:'DPOC', sintomas:['tosse','dispneia','palpitacao'], painWeight:0.3, descricao:'Doença pulmonar obstrutiva crônica.'}, // Ajustado
-  {id:'tuberculose', nome:'Tuberculose', sintomas:['tosse','suor_noturno','perda_peso','febre'], painWeight:0.2, descricao:'Infecção bacteriana crônica dos pulmões.'}, // Ajustado
+  {id:'dpoc', nome:'DPOC', sintomas:['tosse','dispneia','palpitacao'], painWeight:0.3, descricao:'Doença pulmonar obstrutiva crônica.'},
+  {id:'tuberculose', nome:'Tuberculose', sintomas:['tosse','suor_noturno','perda_peso','febre'], painWeight:0.2, descricao:'Infecção bacteriana crônica dos pulmões.'},
   {id:'malaria', nome:'Malária', sintomas:['febre','calafrios','cefaleia','dor_corpo'], painWeight:0.3, descricao:'Infecção transmitida por mosquito com febre alta.'},
   {id:'chikungunya', nome:'Chikungunya', sintomas:['febre','dor_corpo','dor_articular','cefaleia'], painWeight:0.4, descricao:'Doença viral com artralgia intensa.'},
-  {id:'zika', nome:'Zika', sintomas:['febre','manchas_pele','conjuntivite','cefaleia'], painWeight:0.2, descricao:'Infecção viral frequentemente branda.'}, [cite: 71]
+  {id:'zika', nome:'Zika', sintomas:['febre','manchas_pele','conjuntivite','cefaleia'], painWeight:0.2, descricao:'Infecção viral frequentemente branda.'},
   {id:'ler', nome:'LER/DORT', sintomas:['dor_corpo','inic_local','astenia','edema'], painWeight:0.9, descricao:'Lesões por esforços repetitivos com dor local.'},
-  {id:'dermatite', nome:'Dermatite / Eczema', sintomas:['manchas_pele','edema'], painWeight:0.3, descricao:'Inflamação da pele com coceira.'}, // Ajustado
+  {id:'dermatite', nome:'Dermatite / Eczema', sintomas:['manchas_pele','edema'], painWeight:0.3, descricao:'Inflamação da pele com coceira.'},
   {id:'celulite', nome:'Celulite (infecção de pele)', sintomas:['manchas_pele','inic_local','febre','edema'], painWeight:0.8, descricao:'Infecção cutânea com dor e calor local.'},
   {id:'herpes', nome:'Herpes labial/genital', sintomas:['manchas_pele','inic_local','febre'], painWeight:0.6, descricao:'Infecção viral com vesículas dolorosas.'},
-  {id:'varicela', nome:'Varicela (catapora)', sintomas:['febre','manchas_pele','cefaleia'], painWeight:0.3, descricao:'Infecção viral com erupção generalizada.'}, // Ajustado
+  {id:'varicela', nome:'Varicela (catapora)', sintomas:['febre','manchas_pele','cefaleia'], painWeight:0.3, descricao:'Infecção viral com erupção generalizada.'},
   {id:'sarampo', nome:'Sarampo', sintomas:['febre','manchas_pele','conjuntivite','tosse'], painWeight:0.2, descricao:'Doença viral exantemática.'},
   {id:'rubéola', nome:'Rubéola', sintomas:['febre','manchas_pele','adenomegalia'], painWeight:0.1, descricao:'Infecção viral com exantema e adenomegalia.'},
   {id:'conjuntivite', nome:'Conjuntivite', sintomas:['conjuntivite','secrecao'], painWeight:0.2, descricao:'Inflamação da conjuntiva ocular.'},
-  {id:'meningite', nome:'Meningite', sintomas:['cefaleia','sensibilidade_luz','febre','confusao'], painWeight:1.0, descricao:'Inflamação das meninges com cefaleia intensa.'}, [cite: 72]
+  {id:'meningite', nome:'Meningite', sintomas:['cefaleia','sensibilidade_luz','febre','confusao'], painWeight:1.0, descricao:'Inflamação das meninges com cefaleia intensa.'},
   {id:'sepsis', nome:'Sepse', sintomas:['febre','confusao','hipotensao','taquicardia'], painWeight:0.9, descricao:'Resposta inflamatória sistêmica grave a infecção.'},
   {id:'anemia', nome:'Anemia', sintomas:['astenia','palidez','tontura','fraqueza'], painWeight:0.1, descricao:'Baixa hemoglobina causando fadiga.'},
   {id:'epilepsia', nome:'Epilepsia', sintomas:['convulsao','perda_consciencia','confusao'], painWeight:0.2, descricao:'Transtorno neurológico com crises convulsivas.'},
@@ -131,7 +128,7 @@ const RISK_WEIGHTS = {
   'covid19': {
     'm': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
     'f': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
-    'o': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 8, '49-53': 10, '54-58': 13, '59+': 15 } [cite: 247]
+    'o': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 8, '49-53': 10, '54-58': 13, '59+': 15 }
   },
   'dengue': {
     'm': { '0-18': 5, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 5, '44-48': 5, '49-53': 5, '54-58': 0, '59+': 0 },
@@ -139,60 +136,60 @@ const RISK_WEIGHTS = {
     'o': { '0-18': 5, '19-23': 13, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 8, '44-48': 8, '49-53': 5, '54-58': 0, '59+': 0 }
   },
   'gripe': {
-    'm': { '0-18': 15, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 }, [cite: 248]
+    'm': { '0-18': 15, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
     'f': { '0-18': 15, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
     'o': { '0-18': 15, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 }
   },
   'resfriado': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': -5, '59+': -5 },
-    'f': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': -5, '59+': -5 }, [cite: 249]
+    'f': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': -5, '59+': -5 },
     'o': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': -5, '59+': -5 }
   },
   'pneumonia': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 5, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
-    'f': { '0-18': 10, '19-23': 0, '24-28': -5, '29-33': -5, '34-38': -5, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 5, '59+': 10 }, [cite: 250]
+    'f': { '0-18': 10, '19-23': 0, '24-28': -5, '29-33': -5, '34-38': -5, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 5, '59+': 10 },
     'o': { '0-18': 13, '19-23': 3, '24-28': -3, '29-33': -3, '34-38': -3, '39-43': 3, '44-48': 3, '49-53': 8, '54-58': 8, '59+': 13 }
   },
   'asma': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -5, '59+': -5 },
     'f': { '0-18': 10, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 10, '54-58': 5, '59+': 5 },
-    'o': { '0-18': 13, '19-23': 8, '24-28': 8, '29-33': 8, '34-38': 5, '39-43': 3, '44-48': 3, '49-53': 3, '54-58': 0, '59+': 0 } [cite: 251]
+    'o': { '0-18': 13, '19-23': 8, '24-28': 8, '29-33': 8, '34-38': 5, '39-43': 3, '44-48': 3, '49-53': 3, '54-58': 0, '59+': 0 }
   },
   'bronquite': {
     'm': { '0-18': 10, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 },
     'f': { '0-18': 10, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 },
     'o': { '0-18': 10, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 }
-  }, [cite: 252]
+  },
   'sinusite': {
     'm': { '0-18': 5, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 5, '49-53': 5, '54-58': 5, '59+': 0 },
     'f': { '0-18': 5, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 10, '54-58': 10, '59+': 5 },
     'o': { '0-18': 5, '19-23': 13, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 13, '44-48': 8, '49-53': 8, '54-58': 8, '59+': 3 }
   },
   'otite': {
-    'm': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 }, [cite: 253]
+    'm': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 },
     'f': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 },
     'o': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 }
   },
   'faringite': {
     'm': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 },
-    'f': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 }, [cite: 254]
+    'f': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 },
     'o': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 }
   },
   // Lote 2
   'amigdalite': {
     'm': { '0-18': 15, '19-23': 10, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -10, '54-58': -10, '59+': -10 },
-    'f': { '0-18': 15, '19-23': 10, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -10, '54-58': -10, '59+': -10 }, [cite: 255]
+    'f': { '0-18': 15, '19-23': 10, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -10, '54-58': -10, '59+': -10 },
     'o': { '0-18': 15, '19-23': 10, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -10, '54-58': -10, '59+': -10 }
   },
   'infeccao_urinaria': {
     'm': { '0-18': -5, '19-23': -10, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 },
     'f': { '0-18': 5, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 15, '49-53': 10, '54-58': 10, '59+': 10 },
-    'o': { '0-18': 0, '19-23': 3, '24-28': 3, '29-33': 3, '34-38': 3, '39-43': 3, '44-48': 5, '49-53': 5, '54-58': 8, '59+': 10 } [cite: 256]
+    'o': { '0-18': 0, '19-23': 3, '24-28': 3, '29-33': 3, '34-38': 3, '39-43': 3, '44-48': 5, '49-53': 5, '54-58': 8, '59+': 10 }
   },
   'pielonefrite': {
     'm': { '0-18': 0, '19-23': -10, '24-28': -15, '29-33': -15, '34-38': -10, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 },
     'f': { '0-18': 5, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 10, '39-43': 10, '44-48': 10, '49-53': 5, '54-58': 5, '59+': 10 },
-    'o': { '0-18': 3, '19-23': 3, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 3, '49-53': 3, '54-58': 5, '59+': 10 } [cite: 257]
+    'o': { '0-18': 3, '19-23': 3, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 3, '49-53': 3, '54-58': 5, '59+': 10 }
   },
   'gastroenterite': {
     'm': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 },
@@ -200,60 +197,60 @@ const RISK_WEIGHTS = {
     'o': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 }
   },
   'gastrite': {
-    'm': { '0-18': -10, '19-23': 0, '24-28': 5, '29-33': 5, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 }, [cite: 258]
+    'm': { '0-18': -10, '19-23': 0, '24-28': 5, '29-33': 5, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -10, '19-23': 0, '24-28': 5, '29-33': 5, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -10, '19-23': 0, '24-28': 5, '29-33': 5, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 }
   },
   'colecistite': {
     'm': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 10, '59+': 15 },
-    'f': { '0-18': -10, '19-23': -5, '24-28': 0, '29-33': 5, '34-38': 10, '39-43': 15, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 }, [cite: 259]
+    'f': { '0-18': -10, '19-23': -5, '24-28': 0, '29-33': 5, '34-38': 10, '39-43': 15, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -13, '19-23': -8, '24-28': -3, '29-33': 3, '34-38': 8, '39-43': 10, '44-48': 13, '49-53': 13, '54-58': 13, '59+': 15 }
   },
   'pancreatite': {
     'm': { '0-18': -10, '19-23': -5, '24-28': 0, '29-33': 5, '34-38': 10, '39-43': 15, '44-48': 15, '49-53': 15, '54-58': 10, '59+': 10 },
-    'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 }, [cite: 260]
+    'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -13, '19-23': -8, '24-28': -3, '29-33': 3, '34-38': 8, '39-43': 13, '44-48': 15, '49-53': 15, '54-58': 13, '59+': 13 }
   },
   'ulcera': {
     'm': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
-    'o': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 13, '54-58': 15, '59+': 15 } [cite: 261]
+    'o': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 13, '54-58': 15, '59+': 15 }
   },
   'doenca_coronariana': {
     'm': { '0-18': -15, '19-23': -15, '24-28': -10, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': -15, '19-23': -15, '24-28': -13, '29-33': -8, '34-38': -3, '39-43': 3, '44-48': 8, '49-53': 13, '54-58': 15, '59+': 15 }
-  }, [cite: 262]
+  },
   'infarto': {
     'm': { '0-18': -15, '19-23': -15, '24-28': -10, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': -15, '19-23': -15, '24-28': -13, '29-33': -8, '34-38': -3, '39-43': 3, '44-48': 8, '49-53': 13, '54-58': 15, '59+': 15 }
   },
   'angina': {
-    'm': { '0-18': -15, '19-23': -15, '24-28': -10, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 }, [cite: 263]
+    'm': { '0-18': -15, '19-23': -15, '24-28': -10, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': -15, '19-23': -15, '24-28': -13, '29-33': -8, '34-38': -3, '39-43': 3, '44-48': 8, '49-53': 13, '54-58': 15, '59+': 15 }
   },
   // Lote 3
   'hipertensao': {
     'm': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
-    'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 }, [cite: 264]
+    'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': -3, '34-38': 3, '39-43': 8, '44-48': 10, '49-53': 13, '54-58': 15, '59+': 15 }
   },
   'acidente_vascular': {
     'm': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 15, '59+': 15 },
-    'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': -5, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 }, [cite: 265]
+    'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': -5, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
     'o': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': -3, '44-48': 3, '49-53': 8, '54-58': 13, '59+': 15 }
   },
   'diabetes2': {
     'm': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
-    'o': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 8, '44-48': 10, '49-53': 13, '54-58': 15, '59+': 15 } [cite: 266]
+    'o': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 5, '39-43': 8, '44-48': 10, '49-53': 13, '54-58': 15, '59+': 15 }
   },
   'hipotireoidismo': {
     'm': { '0-18': -10, '19-23': -5, '24-28': -5, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 5, '49-53': 5, '54-58': 5, '59+': 10 },
     'f': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 15, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 },
-    'o': { '0-18': -5, '19-23': 0, '24-28': 3, '29-33': 5, '34-38': 5, '39-43': 8, '44-48': 10, '49-53': 10, '54-58': 10, '59+': 13 } [cite: 267]
+    'o': { '0-18': -5, '19-23': 0, '24-28': 3, '29-33': 5, '34-38': 5, '39-43': 8, '44-48': 10, '49-53': 10, '54-58': 10, '59+': 13 }
   },
   'hipertireoidismo': {
     'm': { '0-18': -10, '19-23': -5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
@@ -261,30 +258,30 @@ const RISK_WEIGHTS = {
     'o': { '0-18': -5, '19-23': 3, '24-28': 8, '29-33': 8, '34-38': 8, '39-43': 5, '44-48': 5, '49-53': 3, '54-58': -3, '59+': -3 }
   },
   'depressao': {
-    'm': { '0-18': 5, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 5, '54-58': 10, '59+': 10 }, [cite: 268]
+    'm': { '0-18': 5, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 5, '54-58': 10, '59+': 10 },
     'f': { '0-18': 10, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': 8, '19-23': 13, '24-28': 13, '29-33': 13, '34-38': 10, '39-43': 8, '44-48': 8, '49-53': 8, '54-58': 13, '59+': 13 }
   },
   'ansiedade': {
     'm': { '0-18': 10, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 5, '44-48': 5, '49-53': 0, '54-58': 0, '59+': 0 },
-    'f': { '0-18': 15, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 5, '54-58': 5, '59+': 5 }, [cite: 269]
+    'f': { '0-18': 15, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 5, '54-58': 5, '59+': 5 },
     'o': { '0-18': 13, '19-23': 13, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 10, '44-48': 8, '49-53': 3, '54-58': 3, '59+': 3 }
   },
   'insônia': {
     'm': { '0-18': -5, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
-    'f': { '0-18': 0, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 10, '39-43': 10, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 }, [cite: 270]
+    'f': { '0-18': 0, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 10, '39-43': 10, '44-48': 15, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -3, '19-23': 3, '24-28': 3, '29-33': 3, '34-38': 8, '39-43': 8, '44-48': 10, '49-53': 13, '54-58': 13, '59+': 15 }
   },
   'dpoc': {
     'm': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -10, '39-43': -5, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
     'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -15, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 },
-    'o': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -13, '39-43': -8, '44-48': -3, '49-53': 3, '54-58': 8, '59+': 13 } [cite: 271]
+    'o': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -13, '39-43': -8, '44-48': -3, '49-53': 3, '54-58': 8, '59+': 13 }
   },
   'tuberculose': {
     'm': { '0-18': 5, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 15, '49-53': 10, '54-58': 10, '59+': 10 },
     'f': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 5, '44-48': 5, '49-53': 5, '54-58': 5, '59+': 5 },
     'o': { '0-18': 3, '19-23': 8, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 10, '44-48': 10, '49-53': 8, '54-58': 8, '59+': 8 }
-  }, [cite: 272]
+  },
   // Lote 4
   'malaria': {
     'm': { '0-18': 10, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 },
@@ -292,29 +289,29 @@ const RISK_WEIGHTS = {
     'o': { '0-18': 10, '19-23': 3, '24-28': 3, '29-33': 3, '34-38': 3, '39-43': 3, '44-48': 3, '49-53': 0, '54-58': 0, '59+': 0 }
   },
   'chikungunya': {
-    'm': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 10, '49-53': 5, '54-58': 5, '59+': 5 }, [cite: 273]
+    'm': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 10, '49-53': 5, '54-58': 5, '59+': 5 },
     'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 15, '49-53': 10, '54-58': 10, '59+': 10 },
     'o': { '0-18': 0, '19-23': 8, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 13, '44-48': 13, '49-53': 8, '54-58': 8, '59+': 8 }
   },
   'zika': {
     'm': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 5, '44-48': 5, '49-53': 0, '54-58': 0, '59+': 0 },
-    'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 5, '54-58': 0, '59+': 0 }, [cite: 274]
+    'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 5, '54-58': 0, '59+': 0 },
     'o': { '0-18': 0, '19-23': 8, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 8, '44-48': 8, '49-53': 3, '54-58': 0, '59+': 0 }
   },
   'ler': {
     'm': { '0-18': -15, '19-23': 5, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 10, '49-53': 5, '54-58': 5, '59+': -10 },
-    'f': { '0-18': -15, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 15, '49-53': 10, '54-58': 10, '59+': -10 }, [cite: 275]
+    'f': { '0-18': -15, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 15, '49-53': 10, '54-58': 10, '59+': -10 },
     'o': { '0-18': -15, '19-23': 8, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 13, '44-48': 13, '49-53': 8, '54-58': 8, '59+': -10 }
   },
   'dermatite': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -5, '59+': -5 },
     'f': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -5, '59+': -5 },
-    'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -5, '59+': -5 } [cite: 276]
+    'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -5, '59+': -5 }
   },
   'celulite': {
     'm': { '0-18': 10, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
     'f': { '0-18': 10, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
-    'o': { '0-18': 10, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 } [cite: 277]
+    'o': { '0-18': 10, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 }
   },
   'herpes': {
     'm': { '0-18': 5, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 10, '39-43': 5, '44-48': 5, '49-53': 0, '54-58': 0, '59+': 0 },
@@ -322,30 +319,30 @@ const RISK_WEIGHTS = {
     'o': { '0-18': 5, '19-23': 13, '24-28': 15, '29-33': 15, '34-38': 13, '39-43': 8, '44-48': 5, '49-53': 0, '54-58': 0, '59+': 0 }
   },
   'varicela': {
-    'm': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 }, [cite: 278]
+    'm': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 },
     'f': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 },
     'o': { '0-18': 15, '19-23': -5, '24-28': -10, '29-33': -10, '34-38': -10, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 }
   },
   'sarampo': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
-    'f': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 }, [cite: 279]
+    'f': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
     'o': { '0-18': 15, '19-23': 5, '24-28': 5, '29-33': 0, '34-38': 0, '39-43': -5, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 }
   },
   'rubéola': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -10, '44-48': -10, '49-53': -10, '54-58': -10, '59+': -10 },
-    'f': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 5, '44-48': 0, '49-53': -5, '54-58': -10, '59+': -10 }, [cite: 280]
+    'f': { '0-18': 15, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 5, '39-43': 5, '44-48': 0, '49-53': -5, '54-58': -10, '59+': -10 },
     'o': { '0-18': 15, '19-23': 8, '24-28': 5, '29-33': 3, '34-38': 0, '39-43': -3, '44-48': -5, '49-53': -8, '54-58': -10, '59+': -10 }
   },
   // Lote 5
   'conjuntivite': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 },
     'f': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 },
-    'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 } [cite: 281]
+    'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 0 }
   },
   'meningite': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 },
     'f': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 },
-    'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 } [cite: 282]
+    'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 }
   },
   'sepsis': {
     'm': { '0-18': 15, '19-23': 0, '24-28': -5, '29-33': -5, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 10, '59+': 15 },
@@ -353,24 +350,24 @@ const RISK_WEIGHTS = {
     'o': { '0-18': 15, '19-23': 0, '24-28': -5, '29-33': -5, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 10, '59+': 15 }
   },
   'anemia': {
-    'm': { '0-18': 10, '19-23': -5, '24-28': -5, '29-33': -5, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 }, [cite: 283]
+    'm': { '0-18': 10, '19-23': -5, '24-28': -5, '29-33': -5, '34-38': -5, '39-43': -5, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 10 },
     'f': { '0-18': 10, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 15, '49-53': 10, '54-58': 10, '59+': 15 },
     'o': { '0-18': 10, '19-23': 5, '24-28': 5, '29-33': 5, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 5, '54-58': 8, '59+': 13 }
   },
   'epilepsia': {
     'm': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
-    'f': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 }, [cite: 284]
+    'f': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
     'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 }
   },
   'apendicite': {
     'm': { '0-18': 15, '19-23': 15, '24-28': 10, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
-    'f': { '0-18': 10, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 }, [cite: 285]
+    'f': { '0-18': 10, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
     'o': { '0-18': 13, '19-23': 13, '24-28': 10, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 }
   },
   'cistite_cronica': {
     'm': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -10, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 5 },
     'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
-    'o': { '0-18': -8, '19-23': -3, '24-28': 0, '29-33': 0, '34-38': 3, '39-43': 0, '44-48': 3, '49-53': 8, '54-58': 10, '59+': 10 } [cite: 286]
+    'o': { '0-18': -8, '19-23': -3, '24-28': 0, '29-33': 0, '34-38': 3, '39-43': 0, '44-48': 3, '49-53': 8, '54-58': 10, '59+': 10 }
   }
 };
 const RISK_FACTOR_BONUS = {
@@ -379,9 +376,9 @@ const RISK_FACTOR_BONUS = {
   'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5 },
   'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
-  'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 } [cite: 114]
+  'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
-const SYMPTOM_QUALIFIERS = { [cite: 115]
+const SYMPTOM_QUALIFIERS = {
   'tosse': [
     { id: 'seca', label: 'Seca' },
     { id: 'catarro', label: 'Com Catarro (Amarelo/Verde)' },
@@ -394,7 +391,7 @@ const SYMPTOM_QUALIFIERS = { [cite: 115]
     { id: 'difusa', label: 'Difusa / Geral' }
   ],
   'dor_peito': [
-    { id: 'aperto', label: 'Em Aperto / Pressão' }, [cite: 116]
+    { id: 'aperto', label: 'Em Aperto / Pressão' },
     { id: 'irradia', label: 'Irradia (Braço/Pescoço/Costas)' },
     { id: 'piora_resp', label: 'Piora ao Respirar / Tocar' }
   ],
@@ -406,7 +403,7 @@ const SYMPTOM_QUALIFIERS = { [cite: 115]
   'cefaleia': [
     { id: 'intensa_subita', label: 'Intensa / Súbita' },
     { id: 'pulsatil', label: 'Pulsátil / Latejante' },
-    { id: 'nausea_vomito', label: 'Com Náusea / Vômito' } [cite: 117]
+    { id: 'nausea_vomito', label: 'Com Náusea / Vômito' }
   ],
   'dispneia': [
     { id: 'repouso', label: 'Em Repouso' },
@@ -420,7 +417,7 @@ const SYMPTOM_QUALIFIERS = { [cite: 115]
   ],
   'vomito': [
     { id: 'sangue_vom', label: 'Com Sangue' },
-    { id: 'jato', label: 'Incontrolável / Jato' }, [cite: 118]
+    { id: 'jato', label: 'Incontrolável / Jato' },
     { id: 'pos_comer', label: 'Após Comer' }
   ]
 };
