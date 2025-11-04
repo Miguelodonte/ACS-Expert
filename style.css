@@ -1,0 +1,236 @@
+:root{
+  --primary:#0066CC;
+  --success:#10B981; [cite: 2]
+  --warning:#F59E0B;
+  --danger:#EF4444;
+  --bg:#f6f9ff;
+  --card:#ffffff;
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+} [cite: 3]
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,var(--bg),#ffffff);color:#0b1220}
+.app{max-width:1200px;margin:20px auto;padding:20px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+header h1{margin:0;font-size:20px;color:var(--primary)}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tab{padding:10px 14px;border-radius:8px;background:var(--card);cursor:pointer;border:1px solid #e6eefc;color:var(--primary)}
+.tab.active{box-shadow:0 4px 14px rgba(0,102,204,0.12);background:linear-gradient(180deg,#eaf4ff,#ffffff)}
+.main{display:grid;grid-template-columns:1fr 380px;gap:18px}
+.panel{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(16,25,40,0.04)}
+
+.chat{display:flex;flex-direction:column;gap:12px;height:auto} 
+.conversation{height:250px;
+flex-shrink:0; overflow:auto;padding:12px;border-radius:8px;background:linear-gradient(180deg,#f8fbff,#ffffff);border:1px solid #eef6ff} [cite: 4]
+
+.msg{margin:8px 0;display:flex;gap:10px;align-items:flex-end}
+.bot{justify-content:flex-start}
+.bot .bubble{background:linear-gradient(90deg,var(--primary),#2990ff);color:white}
+.user{justify-content:flex-end}
+.bubble{max-width:78%;padding:10px 12px;border-radius:12px;display:inline-block}
+.controls{display:flex;gap:8px;align-items:center}
+input[type="number"], select, textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #dbeafe}
+
+.symptom-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); [cite: 5]
+  gap: 8px; 
+}
+/* --- NOVO (EVOLUÇÃO 4) --- */
+.symptom-wrapper { position: relative;
+} /* Para posicionar o popup */ [cite: 6]
+.symptom {
+  display: flex;
+  /* Para alinhar o [+] */ [cite: 7]
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-radius: 10px;
+  border: 1px solid #eef2ff; [cite: 8]
+  cursor: pointer;
+  background: white;
+  font-weight: 500;
+}
+.symptom.active{border-color:var(--primary);box-shadow:0 6px 18px rgba(0,102,204,0.06); border-bottom-left-radius: 0;
+border-bottom-right-radius: 0;} [cite: 9]
+.symptom-slider {
+  background: #fbfdff;
+  border: 1px solid var(--primary);
+  border-top: none;
+  border-radius: 0 0 10px 10px; [cite: 10]
+  margin-top: -8px; 
+  padding: 8px 10px 10px 10px;
+} [cite: 11]
+.qualifier-toggle {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 0 5px;
+  margin-left: 8px;
+  border-radius: 4px; [cite: 12]
+  background: #eaf4ff;
+}
+.qualifier-popup {
+  display: none;
+  position: absolute;
+  /* --- ALTERAÇÕES --- */ [cite: 13]
+  z-index: 99;
+  /* Valor bem mais alto para garantir a sobreposição */ [cite: 14]
+  top: 100%;
+  /* Posiciona o topo do popup no fundo do elemento pai (.symptom-wrapper) */ [cite: 15]
+  left: 0;
+  /* Alinha à esquerda do elemento pai */ [cite: 16]
+  margin-top: 2px;
+  /* Pequeno espaço entre o sintoma e o popup */ [cite: 17]
+  /* --- FIM ALTERAÇÕES --- */
+  background: white;
+  border: 1px solid var(--primary); [cite: 18]
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 10px;
+  min-width: 220px;
+  /* max-width: 95%;
+*/ /* Evita que seja maior que o pai em telas pequenas */ [cite: 19]
+}
+.qualifier-popup label {
+  display: block;
+  margin-bottom: 5px; [cite: 20]
+  font-size: 13px;
+  cursor: pointer;
+}
+ .qualifier-popup input[type="checkbox"] {
+  margin-right: 6px;
+  width: auto;
+  cursor: pointer; [cite: 21]
+}
+/* --- FIM NOVO (EVOLUÇÃO 4) --- */
+
+
+.risk-factor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); [cite: 22]
+  gap: 8px;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+.risk-factor-item {
+  display: flex;
+  align-items: center;
+  gap: 6px; [cite: 23]
+  background: #fbfdff;
+  border: 1px solid #eef2ff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+} [cite: 24]
+.risk-factor-item input[type="checkbox"] {
+  width: auto;
+  height: 16px;
+  margin: 0;
+} [cite: 25]
+.risk-factor-item label {
+  flex: 1;
+  cursor: pointer;
+} [cite: 26]
+
+.actions{display:flex;gap:8px}
+button{cursor:pointer;border:0;padding:10px 12px;border-radius:8px;font-weight:600}
+.btn-primary{background:var(--primary);color:white}
+.btn-ghost{background:#f3f7ff;border:1px solid #e6f0ff;color:var(--primary)}
+.right-col{display:flex;flex-direction:column;gap:12px}
+
+.progress{display:none;} 
+
+.result-list{display:flex;flex-direction:column;gap:10px}
+.dcard{padding:12px;border-radius:10px;border-left:6px solid #ddd;background:#fcfeff;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.dcard.danger{border-left-color:var(--danger);background:linear-gradient(90deg,#fff6f6,#fff)}
+.dcard.warning{border-left-color:var(--warning);background:linear-gradient(90deg,#fffaf6,#fff)}
+.dcard.info{border-left-color:var(--primary)}
+.badge{padding:6px 8px;border-radius:999px;color:white;font-weight:700;font-size:12px}
+.badge.danger{background:var(--danger)}
+.badge.warning{background:var(--warning);color:#2b2b2b}
+.badge.info{background:var(--primary)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+pre{background:#071428;color:#cfefff;padding:10px;border-radius:8px;overflow:auto}
+.small{font-size:13px;color:#334155}
+footer{margin-top:14px;font-size:13px;color:#475569}
+.rules-list{max-height:420px;overflow:auto}
+.rule-row{padding:8px;border-bottom:1px dashed #eef2ff;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.log-true{color:var(--success);font-weight:700}
+.log-false{color:#64748b}
+.muted{color:#64748b;font-size:13px}
+/* slider style */
+.slider-wrap{display:flex;align-items:center;gap:12px}
+.slider{flex:1}
+input[type=range]{-webkit-appearance:none;width:100%;height:10px;border-radius:10px;background:linear-gradient(90deg,#10B981,#F59E0B,#EF4444);
+outline:none} [cite: 27]
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid rgba(0,0,0,0.12);box-shadow:0 2px 6px rgba(0,0,0,0.12)}
+.percent-bar{height:10px;background:#eef3ff;border-radius:8px;overflow:hidden}
+.percent-fill{height:100%;background:linear-gradient(90deg,#10B981,#F59E0B,#EF4444);width:0%;}
+.disease-list{max-height:320px;overflow:auto}
+
+/* --- NOVOS ESTILOS (EVOLUÇÃO 4 - UI - Acordeão) --- */
+.symptom-group-header {
+background: #eaf4ff;
+border: 1px solid #dbeafe; [cite: 28]
+border-radius: 8px;
+padding: 10px 12px;
+margin-top: 10px;
+cursor: pointer;
+font-weight: 600;
+color: var(--primary);
+display: flex;
+justify-content: space-between; [cite: 29]
+align-items: center;
+}
+
+.symptom-group-header::after {
+content: '▼'; /* Seta para baixo */
+font-size: 12px;
+transition: transform 0.2s ease-in-out; [cite: 30]
+}
+
+.symptom-group-header.collapsed::after {
+transform: rotate(-90deg); /* Seta para o lado */
+}
+
+.symptom-group-panel {
+padding: 10px 5px 5px 5px;
+border: 1px solid #eef2ff; [cite: 31]
+border-top: none;
+border-radius: 0 0 8px 8px;
+margin-top: -8px;
+/* Cola no header */ [cite: 32]
+display: grid; /* Mantém as 2 colunas internas */
+grid-template-columns: repeat(2, 1fr);
+gap: 8px; [cite: 33]
+/* Animação e Overflow */
+max-height: 1000px;
+/* Altura grande para comportar os itens */ [cite: 34]
+/* --- ALTERAÇÃO: Mover overflow para a transição --- */
+/* overflow: hidden;
+*/ /* REMOVIDO DAQUI */ [cite: 35]
+transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out, border 0.3s ease-in-out;
+overflow: visible;
+/* Permitir que o conteúdo (popup) transborde por padrão */ [cite: 36]
+}
+
+.symptom-group-panel.collapsed {
+max-height: 0;
+padding-top: 0;
+padding-bottom: 0;
+border-width: 0;
+/* Anima o sumiço da borda também */ [cite: 37]
+overflow: hidden;
+/* --- ADICIONADO AQUI: Esconde o overflow SÓ quando colapsado --- */ [cite: 38]
+}
+/* --- FIM NOVOS ESTILOS --- */
+
+/* Ajuste no symptom-grid para remover colunas e gap */
+.symptom-grid {
+display: block;
+/* Mudar de grid para block */ [cite: 39]
+/* Remover grid-template-columns e gap */
+}
