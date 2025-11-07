@@ -1,5 +1,3 @@
-/* ... (Comentários Iniciais - sem alterações) ... */
-
 // ==== Lista de sintomas possíveis (com grupos) ====
 const SYMPTOMS = [
   // Grupo: Geral
@@ -54,6 +52,9 @@ const SYMPTOMS = [
   {id:'anuria', label:'Redução/ausência de urina', group: 'Urinário / Metabólico'},
   {id:'poliuria', label:'Urina em excesso', group: 'Urinário / Metabólico'},
   {id:'polidipsia', label:'Sede excessiva', group: 'Urinário / Metabólico'},
+  {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urinário / Metabólico'},
+  {id:'hematuria', label:'Sangue na Urina', group: 'Urinário / Metabólico'},
+  {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urinário / Metabólico'},
 
   // Grupo: Cardiovascular
   {id:'palpitacao', label:'Palpitações', group: 'Cardiovascular'},
@@ -71,12 +72,7 @@ const SYMPTOMS = [
   {id:'ansiedade_sintoma', label:'Ansiedade (Sintoma)', group: 'Geral'}, // Renomeado de 'ansiedade', usado em Hipertireoidismo
   {id:'insônia_sintoma', label:'Insônia (Sintoma)', group: 'Geral'}, // Renomeado de 'insônia', usado em Depressão/Ansiedade
   {id:'tristeza', label:'Tristeza / Desânimo', group: 'Geral'}, // Adicionei, usado em Depressão
-  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'}, // Adicionei, usado em Insônia
-  
-  // NOVAS ADIÇÕES:
-  {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urinário / Metabólico'},
-  {id:'hematuria', label:'Sangue na Urina', group: 'Urinário / Metabólico'},
-  {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urinário / Metabólico'}
+  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'} // Adicionei, usado em Insônia
 ];
 const DISEASES = [
   {id:'covid19', nome:'COVID-19', sintomas:['febre','tosse','dispneia','dor_corpo','cefaleia','coriza'], painWeight:0.5, descricao:'Doença viral respiratória. Sintomas respiratórios, febre, fadiga.'},
@@ -167,6 +163,11 @@ const RISK_WEIGHTS = {
     'm': { '0-18': 10, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 },
     'f': { '0-18': 10, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 },
     'o': { '0-18': 10, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 0, '54-58': 0, '59+': 5 }
+  },
+  'calculo_renal': {
+    'm': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 10, '54-58': 5, '59+': 5 },
+    'f': { '0-18': 0, '19-23': 0, '24-28': 5, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 5, '49-53': 5, '54-58': 0, '59+': 0 },
+    'o': { '0-18': 0, '19-23': 3, '24-28': 8, '29-33': 13, '34-38': 13, '39-43': 13, '44-48': 8, '49-53': 8, '54-58': 3, '59+': 3 }
   },
   'sinusite': {
     'm': { '0-18': 5, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 5, '49-53': 5, '54-58': 5, '59+': 0 },
@@ -376,12 +377,6 @@ const RISK_WEIGHTS = {
     'm': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -10, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 5 },
     'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -8, '19-23': -3, '24-28': 0, '29-33': 0, '34-38': 3, '39-43': 0, '44-48': 3, '49-53': 8, '54-58': 10, '59+': 10 }
-  },
-    // NOVA ADIÇÃO:
-  'calculo_renal': {
-    'm': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 10, '54-58': 5, '59+': 5 },
-    'f': { '0-18': 0, '19-23': 0, '24-28': 5, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 5, '49-53': 5, '54-58': 0, '59+': 0 },
-    'o': { '0-18': 0, '19-23': 3, '24-28': 8, '29-33': 13, '34-38': 13, '39-43': 13, '44-48': 8, '49-53': 8, '54-58': 3, '59+': 3 }
   }
 };
 const RISK_FACTOR_BONUS = {
@@ -409,6 +404,10 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'irradia', label: 'Irradia (Braço/Pescoço/Costas)' },
     { id: 'piora_resp', label: 'Piora ao Respirar / Tocar' }
   ],
+  'dor_flanco': [
+    { id: 'irradia_virilha', label: 'Irradia para virilha / genitais' },
+    { id: 'colica_intensa', label: 'Cólica intensa (intermitente)' }
+  ],
   'febre': [
     { id: 'baixa', label: 'Baixa (< 38°C)' },
     { id: 'moderada', label: 'Moderada (38°C - 38.9°C)' },
@@ -433,11 +432,5 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'sangue_vom', label: 'Com Sangue' },
     { id: 'jato', label: 'Incontrolável / Jato' },
     { id: 'pos_comer', label: 'Após Comer' }
-  ],
-  'dor_flanco': [
-  { id: 'irradia_virilha', label: 'Irradia para virilha / genitais' },
-  { id: 'colica_intensa', label: 'Cólica intensa (intermitente)' }
   ]
-
-
 };
