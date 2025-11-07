@@ -46,6 +46,7 @@ const SYMPTOMS = [
   {id:'sangramento_gengiva', label:'Sangramento nas gengivas', group: 'Pele / Mucosas'},
   {id:'palidez', label:'Palidez', group: 'Pele / Mucosas'}, // Adicionei, usado em Anemia
   {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Pele / Mucosas'}, // Adicionei, usado em Conjuntivite
+  {id:'prurido', label:'Coceira generalizada (sem rash)', group: 'Pele / Mucosas'},
 
   // Grupo: Urinário / Metabólico
   {id:'disuria', label:'Dor ao urinar', group: 'Urinário / Metabólico'},
@@ -123,8 +124,7 @@ const DISEASES = [
   {id:'epilepsia', nome:'Epilepsia', sintomas:['convulsao','perda_consciencia','confusao'], painWeight:0.2, descricao:'Transtorno neurológico com crises convulsivas.'},
   {id:'apendicite', nome:'Apendicite aguda', sintomas:['dor_abdominal','febre','vomito','inic_local'], painWeight:1.0, descricao:'Inflamação do apêndice com dor abdominal localizada intensa.'},
   {id:'cistite_cronica', nome:'Cistite / Cistite recorrente', sintomas:['disuria','poliuria','hemorragia','dor_abdominal'], painWeight:0.6, genderPref: 'f', descricao:'Inflamação da bexiga com dor miccional.'},
-  
-  // NOVA ADIÇÃO:
+  {id:'insuficiencia_renal', nome:'Insuficiência Renal Crônica', sintomas:['astenia', 'edema', 'anuria', 'nausea', 'perda_apetite', 'confusao', 'prurido', 'palidez'], painWeight: 0.2, descricao:'Perda progressiva da função renal, sintomas podem ser silenciosos no início.'},
   {id:'calculo_renal', nome:'Cálculo Renal (Pedra nos Rins)', sintomas:['dor_flanco', 'hematuria', 'disuria', 'nausea', 'vomito', 'calafrios', 'febre', 'polaciuria'], painWeight: 1.0, descricao:'Depósitos minerais nos rins causando dor em cólica intensa que pode irradiar.'}
 ];
 const RISK_WEIGHTS = {
@@ -368,6 +368,11 @@ const RISK_WEIGHTS = {
     'f': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 },
     'o': { '0-18': 15, '19-23': 5, '24-28': 0, '29-33': 0, '34-38': 0, '39-43': 0, '44-48': 0, '49-53': 5, '54-58': 10, '59+': 15 }
   },
+  'insuficiencia_renal': {
+      'm': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 20 },
+      'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 20 },
+      'o': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': 0, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 20 }
+  },
   'apendicite': {
     'm': { '0-18': 15, '19-23': 15, '24-28': 10, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
     'f': { '0-18': 10, '19-23': 10, '24-28': 10, '29-33': 5, '34-38': 0, '39-43': 0, '44-48': -5, '49-53': -5, '54-58': -10, '59+': -10 },
@@ -381,8 +386,8 @@ const RISK_WEIGHTS = {
 };
 const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
-  'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5 },
-  'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5 },
+  'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20 },
+  'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20 },
   'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
@@ -403,6 +408,10 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'aperto', label: 'Em Aperto / Pressão' },
     { id: 'irradia', label: 'Irradia (Braço/Pescoço/Costas)' },
     { id: 'piora_resp', label: 'Piora ao Respirar / Tocar' }
+  ],
+  'edema': [
+    { id: 'pernas_rosto', label: 'Em pernas, tornozelos ou rosto' },
+    { id: 'localizado_trauma', label: 'Localizado (após pancada)' }
   ],
   'dor_flanco': [
     { id: 'irradia_virilha', label: 'Irradia para virilha / genitais' },
