@@ -9,6 +9,7 @@ const SYMPTOMS = [
   {id:'suor_noturno', label:'Sudorese noturna', group: 'Geral'},
   {id:'adenomegalia', label:'Aumento de gânglios', group: 'Geral'},
   {id:'edema', label:'Inchaço (edema)', group: 'Geral'},
+  {id:'rigidez_matinal', label:'Rigidez Articular (pela manhã)', group: 'Geral'},
 
   // Grupo: Respiratório / ORL (Otorrino)
   {id:'tosse', label:'Tosse', group: 'Respiratório / ORL'},
@@ -56,6 +57,7 @@ const SYMPTOMS = [
   {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urinário / Metabólico'},
   {id:'hematuria', label:'Sangue na Urina', group: 'Urinário / Metabólico'},
   {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urinário / Metabólico'},
+  {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Urinário / Metabólico'},
 
   // Grupo: Cardiovascular
   {id:'palpitacao', label:'Palpitações', group: 'Cardiovascular'},
@@ -106,6 +108,9 @@ const DISEASES = [
   {id:'ansiedade', nome:'Ansiedade', sintomas:['palpitacao','insônia','tontura','sudorese'], painWeight:0.05, descricao:'Resposta exagerada de alerta.'},
   {id:'insônia', nome:'Insônia', sintomas:['insônia','astenia','irritabilidade'], painWeight:0.02, descricao:'Dificuldade de sono persistente.'},
   {id:'dpoc', nome:'DPOC', sintomas:['tosse','dispneia','palpitacao'], painWeight:0.3, descricao:'Doença pulmonar obstrutiva crônica.'},
+  {id:'artrite_reumatoide', nome:'Artrite Reumatoide', sintomas:['dor_articular', 'edema', 'rigidez_matinal', 'astenia', 'perda_peso'], painWeight: 0.7, genderPref: 'f', descricao:'Doença autoimune que causa inflamação crônica nas articulações (simétrica).'},
+  {id:'gota', nome:'Gota (Ácido Úrico)', sintomas:['dor_articular', 'edema', 'inic_local', 'calafrios', 'febre'], painWeight: 0.9, descricao:'Artrite inflamatória por excesso de ácido úrico, causando dor intensa (especialmente no dedão do pé).'},
+  {id:'prostatite', nome:'Prostatite', sintomas:['disuria', 'polaciuria', 'dor_perineal', 'febre', 'calafrios', 'dor_flanco'], painWeight: 0.8, genderPref: 'm', descricao:'Inflamação da próstata, comum em homens, causando dor pélvica e dificuldade urinária.'},
   {id:'tuberculose', nome:'Tuberculose', sintomas:['tosse','suor_noturno','perda_peso','febre'], painWeight:0.2, descricao:'Infecção bacteriana crônica dos pulmões.'},
   {id:'malaria', nome:'Malária', sintomas:['febre','calafrios','cefaleia','dor_corpo'], painWeight:0.3, descricao:'Infecção transmitida por mosquito com febre alta.'},
   {id:'chikungunya', nome:'Chikungunya', sintomas:['febre','dor_corpo','dor_articular','cefaleia'], painWeight:0.4, descricao:'Doença viral com artralgia intensa.'},
@@ -234,6 +239,21 @@ const RISK_WEIGHTS = {
     'm': { '0-18': -15, '19-23': -15, '24-28': -10, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'f': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -10, '34-38': -5, '39-43': 0, '44-48': 5, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': -15, '19-23': -15, '24-28': -13, '29-33': -8, '34-38': -3, '39-43': 3, '44-48': 8, '49-53': 13, '54-58': 15, '59+': 15 }
+  },
+  'artrite_reumatoide': {
+    'm': { '0-18': -10, '19-23': -5, '24-28': 0, '29-33': 5, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 5, '54-58': 5, '59+': 5 },
+    'f': { '0-18': -5, '19-23': 5, '24-28': 10, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 10, '54-58': 10, '59+': 5 },
+    'o': { '0-18': -8, '19-23': 0, '24-28': 5, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 8, '49-53': 8, '54-58': 8, '59+': 5 }
+  },
+  'gota': {
+    'm': { '0-18': -10, '19-23': -5, '24-28': 0, '29-33': 5, '34-38': 10, '39-43': 15, '44-48': 15, '49-53': 15, '54-58': 10, '59+': 10 },
+    'f': { '0-18': -15, '19-23': -10, '24-28': -5, '29-33': -5, '34-38': 0, '39-43': 0, '44-48': 5, '49-53': 5, '54-58': 10, '59+': 10 },
+    'o': { '0-18': -13, '19-23': -8, '24-28': -3, '29-33': 0, '34-38': 5, '39-43': 8, '44-48': 10, '49-53': 10, '54-58': 10, '59+': 10 }
+  },
+  'prostatite': {
+    'm': { '0-18': -10, '19-23': 5, '24-28': 10, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 5, '54-58': 0, '59+': -5 },
+    'f': { '0-18': -99, '19-23': -99, '24-28': -99, '29-33': -99, '34-38': -99, '39-43': -99, '44-48': -99, '49-53': -99, '54-58': -99, '59+': -99 },
+    'o': { '0-18': -10, '19-23': 3, '24-28': 5, '29-33': 8, '34-38': 8, '39-43': 8, '44-48': 5, '49-53': 3, '54-58': 0, '59+': -5 }
   },
   'angina': {
     'm': { '0-18': -15, '19-23': -15, '24-28': -10, '29-33': -5, '34-38': 0, '39-43': 5, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
@@ -386,9 +406,9 @@ const RISK_WEIGHTS = {
 };
 const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
-  'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20 },
+  'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20, 'gota': 5 },
   'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20 },
-  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5 },
+  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
@@ -397,6 +417,15 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'seca', label: 'Seca' },
     { id: 'catarro', label: 'Com Catarro (Amarelo/Verde)' },
     { id: 'sangue', label: 'Com Sangue' }
+  ],
+  'dor_articular': [
+    { id: 'dedao_pe', label: 'Inchaço/Dor no Dedão do Pé' },
+    { id: 'vermelhidao_calor', label: 'Vermelhidão e calor intenso no local' },
+    { id: 'simetrica_maos', label: 'Dor simétrica (mãos/pulsos)' }
+  ],
+  'disuria': [
+    { id: 'jato_fraco', label: 'Jato urinário fraco / interrompido' },
+    { id: 'ardencia', label: 'Ardência / Queimação ao urinar' }
   ],
   'dor_abdominal': [
     { id: 'epigastrica', label: 'Na "Boca do Estômago"' },
