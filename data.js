@@ -71,7 +71,12 @@ const SYMPTOMS = [
   {id:'ansiedade_sintoma', label:'Ansiedade (Sintoma)', group: 'Geral'}, // Renomeado de 'ansiedade', usado em Hipertireoidismo
   {id:'insônia_sintoma', label:'Insônia (Sintoma)', group: 'Geral'}, // Renomeado de 'insônia', usado em Depressão/Ansiedade
   {id:'tristeza', label:'Tristeza / Desânimo', group: 'Geral'}, // Adicionei, usado em Depressão
-  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'} // Adicionei, usado em Insônia
+  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'}, // Adicionei, usado em Insônia
+  
+  // NOVAS ADIÇÕES:
+  {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urinário / Metabólico'},
+  {id:'hematuria', label:'Sangue na Urina', group: 'Urinário / Metabólico'},
+  {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urinário / Metabólico'},
 ];
 const DISEASES = [
   {id:'covid19', nome:'COVID-19', sintomas:['febre','tosse','dispneia','dor_corpo','cefaleia','coriza'], painWeight:0.5, descricao:'Doença viral respiratória. Sintomas respiratórios, febre, fadiga.'},
@@ -122,6 +127,9 @@ const DISEASES = [
   {id:'epilepsia', nome:'Epilepsia', sintomas:['convulsao','perda_consciencia','confusao'], painWeight:0.2, descricao:'Transtorno neurológico com crises convulsivas.'},
   {id:'apendicite', nome:'Apendicite aguda', sintomas:['dor_abdominal','febre','vomito','inic_local'], painWeight:1.0, descricao:'Inflamação do apêndice com dor abdominal localizada intensa.'},
   {id:'cistite_cronica', nome:'Cistite / Cistite recorrente', sintomas:['disuria','poliuria','hemorragia','dor_abdominal'], painWeight:0.6, genderPref: 'f', descricao:'Inflamação da bexiga com dor miccional.'}
+  
+  // NOVA ADIÇÃO:
+  {id:'calculo_renal', nome:'Cálculo Renal (Pedra nos Rins)', sintomas:['dor_flanco', 'hematuria', 'disuria', 'nausea', 'vomito', 'calafrios', 'febre', 'polaciuria'], painWeight: 1.0, descricao:'Depósitos minerais nos rins causando dor em cólica intensa que pode irradiar.'}
 ];
 const RISK_WEIGHTS = {
   // Lote 1
@@ -368,13 +376,19 @@ const RISK_WEIGHTS = {
     'm': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -10, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 5 },
     'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -8, '19-23': -3, '24-28': 0, '29-33': 0, '34-38': 3, '39-43': 0, '44-48': 3, '49-53': 8, '54-58': 10, '59+': 10 }
-  }
+  },
+    // NOVA ADIÇÃO:
+  'calculo_renal': {
+    'm': { '0-18': 0, '19-23': 5, '24-28': 10, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 10, '54-58': 5, '59+': 5 },
+    'f': { '0-18': 0, '19-23': 0, '24-28': 5, '29-33': 10, '34-38': 10, '39-43': 10, '44-48': 5, '49-53': 5, '54-58': 0, '59+': 0 },
+    'o': { '0-18': 0, '19-23': 3, '24-28': 8, '29-33': 13, '34-38': 13, '39-43': 13, '44-48': 8, '49-53': 8, '54-58': 3, '59+': 3 }
+  },
 };
 const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
   'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5 },
   'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5 },
-  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5 },
+  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
@@ -419,5 +433,11 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'sangue_vom', label: 'Com Sangue' },
     { id: 'jato', label: 'Incontrolável / Jato' },
     { id: 'pos_comer', label: 'Após Comer' }
+  ],
+  'dor_flanco': [
+  { id: 'irradia_virilha', label: 'Irradia para virilha / genitais' },
+  { id: 'colica_intensa', label: 'Cólica intensa (intermitente)' }
   ]
+
+
 };
