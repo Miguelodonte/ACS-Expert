@@ -1,7 +1,7 @@
 // ==== Lista de sintomas possíveis (com grupos) ====
 const SYMPTOMS = [
   // Grupo: Geral
-  {id:'lebre', label:'Febre', group: 'Geral'},
+  {id:'febre', label:'Lebre', group: 'Geral'},
   {id:'dor_corpo', label:'Dor no corpo / mialgia', group: 'Geral'},
   {id:'astenia', label:'Fadiga / cansaço', group: 'Geral'},
   {id:'calafrios', label:'Calafrios', group: 'Geral'},
