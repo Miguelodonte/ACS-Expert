@@ -97,9 +97,18 @@ const SYMPTOMS = [
   {id:'tremor_repouso', label:'Tremor (em repouso)', group: 'Neurológico / Cabeça'},
   {id:'rigidez_muscular', label:'Rigidez Muscular (Geral)', group: 'Neurológico / Cabeça'},
   {id:'bradicinesia', label:'Lentidão de Movimentos', group: 'Neurológico / Cabeça'},
-  {id:'instabilidade_postural', label:'Instabilidade Postural / Quedas', group: 'Neurológico / Cabeça'}
+  {id:'instabilidade_postural', label:'Instabilidade Postural / Quedas', group: 'Neurológico / Cabeça'},
+  {id:'perda_memoria_recente', label:'Perda de Memória Recente', group: 'Neurológico / Cabeça'},
+  {id:'dificuldade_linguagem', label:'Dificuldade de Linguagem/Fala', group: 'Neurológico / Cabeça'},
+  {id:'desorientacao', label:'Desorientação (Tempo/Espaço)', group: 'Neurológico / Cabeça'},
+  {id:'vertigem_rotatoria', label:'Vertigem (Sensação de Girar)', group: 'Neurológico / Cabeça'},
+  {id:'zumbido', label:'Zumbido no Ouvido', group: 'Respiratório / ORL'},
+  {id:'placas_descamativas', label:'Placas de Pele Descamativas (Prateadas)', group: 'Pele / Mucosas'}
 ];
 const DISEASES = [
+  {id:'alzheimer', nome:'Doença de Alzheimer', sintomas:['perda_memoria_recente', 'desorientacao', 'dificuldade_linguagem', 'confusao', 'irritabilidade', 'ansiedade_sintoma'], painWeight: 0.1, descricao:'Doença neurodegenerativa progressiva que causa declínio da memória e da função cognitiva.'},
+  {id:'labirintite', nome:'Labirintite / VPPB (Vertigem)', sintomas:['tontura', 'vertigem_rotatoria', 'nausea', 'vomito', 'zumbido', 'suor_noturno'], painWeight: 0.4, descricao:'Distúrbio do ouvido interno que causa vertigem rotatória intensa, náusea e perda de equilíbrio.'},
+  {id:'psoriase', nome:'Psoríase', sintomas:['manchas_pele', 'placas_descamativas', 'prurido', 'dor_articular'], painWeight: 0.3, descricao:'Doença autoimune crônica da pele que causa placas vermelhas e descamativas (prateadas).'},
   {id:'mioma_uterino', nome:'Mioma Uterino', sintomas:['sangramento_uterino_anormal', 'colica_menstrual_intensa', 'dor_pelvica_cronica', 'aumento_volume_abdominal', 'polaciuria'], painWeight: 0.6, genderPref: 'f', descricao:'Tumor benigno no útero, causando sangramento intenso e dor pélvica.'},
   {id:'enxaqueca', nome:'Enxaqueca (Migrânea)', sintomas:['cefaleia', 'nausea', 'vomito', 'sensibilidade_luz', 'aura_visual'], painWeight: 0.8, genderPref: 'f', descricao:'Cefaleia crônica, pulsátil, frequentemente unilateral e incapacitante, com sensibilidade sensorial.'},
   {id:'parkinson', nome:'Doença de Parkinson', sintomas:['tremor_repouso', 'rigidez_muscular', 'bradicinesia', 'instabilidade_postural'], painWeight: 0.1, genderPref: 'm', descricao:'Doença neurológica degenerativa que afeta o movimento, causando tremor em repouso e lentidão.'},
@@ -166,6 +175,21 @@ const DISEASES = [
 ];
 const RISK_WEIGHTS = {
   // Lote 1
+  'alzheimer': {
+    'm': { '0-18':-30, '19-23':-30, '24-28':-30, '29-33':-25, '34-38':-20, '39-43':-15, '44-48':-10, '49-53':0, '54-58':10, '59+':25 },
+    'f': { '0-18':-30, '19-23':-30, '24-28':-30, '29-33':-25, '34-38':-20, '39-43':-15, '44-48':-10, '49-53':5, '54-58':15, '59+':30 },
+    'o': { '0-18':-30, '19-23':-30, '24-28':-30, '29-33':-25, '34-38':-20, '39-43':-15, '44-48':-10, '49-53':3, '54-58':13, '59+':28 }
+  },
+  'labirintite': {
+    'm': { '0-18':-10, '19-23':-5, '24-28':0, '29-33':0, '34-38':5, '39-43':10, '44-48':10, '49-53':15, '54-58':15, '59+':15 },
+    'f': { '0-18':-5, '19-23':0, '24-28':5, '29-33':5, '34-38':10, '39-43':15, '44-48':15, '49-53':15, '54-58':15, '59+':15 },
+    'o': { '0-18':-8, '19-23':-3, '24-28':3, '29-33':3, '34-38':8, '39-43':13, '44-48':13, '49-53':15, '54-58':15, '59+':15 }
+  },
+  'psoriase': {
+    'm': { '0-18':5, '19-23':10, '24-28':15, '29-33':15, '34-38':10, '39-43':5, '44-48':5, '49-53':10, '54-58':15, '59+':10 },
+    'f': { '0-18':5, '19-23':10, '24-28':15, '29-33':15, '34-38':10, '39-43':5, '44-48':5, '49-53':10, '54-58':15, '59+':10 },
+    'o': { '0-18':5, '19-23':10, '24-28':15, '29-33':15, '34-38':10, '39-43':5, '44-48':5, '49-53':10, '54-58':15, '59+':10 }
+  },
   'endometriose': {
     'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
     'f': { '0-18':0, '19-23':10, '24-28':15, '29-33':15, '34-38':15, '39-43':10, '44-48':5, '49-53':-5, '54-58':-10, '59+':-15 },
@@ -487,10 +511,10 @@ const RISK_WEIGHTS = {
   }
 };
 const RISK_FACTOR_BONUS = {
-  'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
+  'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5, 'artrite_reumatoide': 10, 'psoriase': 10 },
   'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20, 'gota': 5 },
   'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20, 'candidiase_vaginal': 15, 'balanite_candidiaca': 15 },
-  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15, 'sop': 15, 'mioma_uterino': 10 },
+  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15, 'sop': 15, 'mioma_uterino': 10, 'psoriase': 5 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
@@ -512,8 +536,18 @@ const SYMPTOM_QUALIFIERS = {
   'manchas_pele': [
     { id: 'coceira', label: 'Com Coceira Intensa' },
     { id: 'rash', label: 'Vermelhas / Elevadas (Rash)' },
-    { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'}
+    { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'},
+    { id: 'placas_prateadas', label: 'Placas secas, grossas, prateadas' }
     ],
+  'tontura': [
+    { id: 'rotatoria', label: 'Vertigem (sensação de girar)' },
+    { id: 'pre_desmaio', label: 'Sensação de pré-desmaio / fraqueza' },
+    { id: 'desequilibrio', label: 'Desequilíbrio / Instabilidade' }
+  ],
+  'prurido': [
+    { id: 'generalizado_renal', label: 'Generalizada (corpo todo), sem lesão' },
+    { id: 'localizado_placas', label: 'Localizada (sobre placas de pele)' }
+  ],
   'tosse': [
     { id: 'seca', label: 'Seca' },
     { id: 'catarro', label: 'Com Catarro (Amarelo/Verde)' },
