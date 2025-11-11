@@ -2,6 +2,7 @@
 const SYMPTOMS = [
   // Grupo: Geral
   {id:'febre', label:'Febre', group: 'Geral'},
+  {id:'queda_cabelo', label:'Queda de cabelo (Alopécia)', group: 'Geral'},
   {id:'dor_corpo', label:'Dor no corpo / mialgia', group: 'Geral'},
   {id:'astenia', label:'Fadiga / cansaço', group: 'Geral'},
   {id:'calafrios', label:'Calafrios', group: 'Geral'},
@@ -48,6 +49,7 @@ const SYMPTOMS = [
   {id:'palidez', label:'Palidez', group: 'Pele / Mucosas'}, // Adicionei, usado em Anemia
   {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Pele / Mucosas'}, // Adicionei, usado em Conjuntivite
   {id:'prurido', label:'Coceira generalizada (sem rash)', group: 'Pele / Mucosas'},
+  {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Pele / Mucosas'},
 
   // Grupo: Urinário / Metabólico
   {id:'disuria', label:'Dor ao urinar', group: 'Urinário / Metabólico'},
@@ -75,9 +77,13 @@ const SYMPTOMS = [
   {id:'ansiedade_sintoma', label:'Ansiedade (Sintoma)', group: 'Geral'}, // Renomeado de 'ansiedade', usado em Hipertireoidismo
   {id:'insônia_sintoma', label:'Insônia (Sintoma)', group: 'Geral'}, // Renomeado de 'insônia', usado em Depressão/Ansiedade
   {id:'tristeza', label:'Tristeza / Desânimo', group: 'Geral'}, // Adicionei, usado em Depressão
+  {id:'crepitacao_articular', label:'Crepitação/Estalos nas Articulações', group: 'Outros'},
   {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'} // Adicionei, usado em Insônia
 ];
 const DISEASES = [
+  {id:'artrose', nome:'Artrose (Osteoartrite)', sintomas:['dor_articular', 'edema', 'crepitacao_articular', 'rigidez_matinal'], painWeight: 0.6, descricao:'Doença degenerativa da cartilagem, dor piora com esforço e no fim do dia.'},
+  {id:'fibromialgia', nome:'Fibromialgia', sintomas:['dor_corpo', 'astenia', 'insônia_sintoma', 'confusao', 'cefaleia', 'ansiedade_sintoma'], painWeight: 0.8, genderPref: 'f', descricao:'Síndrome de dor crônica generalizada, associada a fadiga, sono não reparador e "névoa mental".'},
+  {id:'lupus', nome:'Lúpus (LES)', sintomas:['astenia', 'febre', 'dor_articular', 'manchas_pele', 'sensibilidade_luz', 'perda_peso', 'feridas_boca', 'queda_cabelo'], painWeight: 0.5, genderPref: 'f', descricao:'Doença autoimune sistêmica que afeta pele, articulações, rins e outros órgãos. Predominante em mulheres.'},
   {id:'covid19', nome:'COVID-19', sintomas:['febre','tosse','dispneia','dor_corpo','cefaleia','coriza'], painWeight:0.5, descricao:'Doença viral respiratória. Sintomas respiratórios, febre, fadiga.'},
   {id:'dengue', nome:'Dengue', sintomas:['febre','dor_corpo','cefaleia','manchas_pele','calafrios','sangramento_gengiva'], painWeight:0.3, descricao:'Infecção viral transmitida por Aedes, febre alta, mialgia e rash.'},
   {id:'gripe', nome:'Gripe (Influenza)', sintomas:['febre','tosse','dor_corpo','cefaleia','coriza'], painWeight:0.3, descricao:'Infecção respiratória sazonal.'},
@@ -402,17 +408,46 @@ const RISK_WEIGHTS = {
     'm': { '0-18': -15, '19-23': -15, '24-28': -15, '29-33': -15, '34-38': -10, '39-43': -10, '44-48': -5, '49-53': 0, '54-58': 5, '59+': 5 },
     'f': { '0-18': 0, '19-23': 10, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 15, '54-58': 15, '59+': 15 },
     'o': { '0-18': -8, '19-23': -3, '24-28': 0, '29-33': 0, '34-38': 3, '39-43': 0, '44-48': 3, '49-53': 8, '54-58': 10, '59+': 10 }
+  },
+  'artrose': {
+    'm': { '0-18':-15, '19-23':-10, '24-28':-5, '29-33':0, '34-38':0, '39-43':5, '44-48':10, '49-53':15, '54-58':15, '59+':20 },
+    'f': { '0-18':-15, '19-23':-10, '24-28':-5, '29-33':0, '34-38':5, '39-43':10, '44-48':15, '49-53':15, '54-58':20, '59+':20 },
+    'o': { '0-18':-15, '19-23':-10, '24-28':-5, '29-33':0, '34-38':3, '39-43':8, '44-48':13, '49-53':15, '54-58':18, '59+':20 }
+  },
+  'fibromialgia': {
+    'm': { '0-18':-10, '19-23':-5, '24-28':0, '29-33':5, '34-38':5, '39-43':5, '44-48':5, '49-53':5, '54-58':0, '59+':0 },
+    'f': { '0-18':0, '19-23':5, '24-28':10, '29-33':15, '34-38':15, '39-43':15, '44-48':15, '49-53':15, '54-58':10, '59+':5 },
+    'o': { '0-18':-5, '19-23':0, '24-28':5, '29-33':10, '34-38':10, '39-43':10, '44-48':10, '49-53':10, '54-58':5, '59+':3 }
+  },
+  'lupus': {
+    'm': { '0-18':-10, '19-23':0, '24-28':0, '29-33':0, '34-38':0, '39-43':-5, '44-48':-5, '49-53':-10, '54-58':-10, '59+':-15 },
+    'f': { '0-18':5, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
+    'o': { '0-18':-3, '19-23':8, '24-28':8, '29-33':8, '34-38':8, '39-43':5, '44-48':3, '49-53':-3, '54-58':-5, '59+':-8 }
   }
 };
 const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
   'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20, 'gota': 5 },
   'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20 },
-  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10 },
+  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
 const SYMPTOM_QUALIFIERS = {
+  'dor_corpo': [
+    { id: 'difusa_generalizada', label: 'Difusa / Generalizada (corpo todo)' },
+    { id: 'pontos_sensiveis', label: 'Em pontos sensíveis (ao toque)' },
+    { id: 'muscular_localizada', label: 'Muscular / Localizada (pós-esforço)' }
+  ],
+  'rigidez_matinal': [
+    { id: 'longa_duracao', label: 'Longa Duração (> 30 min)' },
+    { id: 'curta_duracao', label: 'Curta Duração (< 30 min) / Pós-repouso' }
+  ],
+  'manchas_pele': [
+    { id: 'coceira', label: 'Com Coceira Intensa' },
+    { id: 'rash', label: 'Vermelhas / Elevadas (Rash)' },
+    { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'
+  },
   'tosse': [
     { id: 'seca', label: 'Seca' },
     { id: 'catarro', label: 'Com Catarro (Amarelo/Verde)' },
