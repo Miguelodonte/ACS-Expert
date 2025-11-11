@@ -109,7 +109,10 @@ const SYMPTOMS = [
   {id:'lesoes_nodulares_pele', label:'Lesões Nodulares / Cistos (Pele)', group: 'Pele / Mucosas'},
   {id:'euforia_mania', label:'Euforia / Agitação (Mania)', group: 'Geral / Psiquiátrico'},
   {id:'fala_acelerada', label:'Fala Acelerada / Compulsiva', group: 'Geral / Psiquiátrico'},
-  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'}
+  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'},
+  {id:'tag', nome:'Ansiedade Generalizada (TAG)', sintomas:['preocupacao_excessiva', 'ansiedade_sintoma', 'irritabilidade', 'insônia_sintoma', 'astenia', 'dor_corpo'], painWeight: 0.1, genderPref: 'f', descricao:'Preocupação crônica, excessiva e difícil de controlar sobre diversos temas.'},
+  {id:'panico', nome:'Síndrome do Pânico', sintomas:['medo_intenso_subito', 'palpitacao', 'taquicardia', 'dispneia', 'tontura', 'sudorese', 'calafrios'], painWeight: 0.7, descricao:'Ataques súbitos de medo intenso e sintomas físicos avassaladores sem perigo real.'},
+  {id:'fobia_especifica', nome:'Fobia Específica', sintomas:['medo_especifico', 'ansiedade_sintoma', 'palpitacao', 'sudorese'], painWeight: 0.1, descricao:'Medo intenso e irracional de um objeto ou situação específica (ex: aranha, altura, avião).'}
 ];
 const DISEASES = [
   {id:'urticaria', nome:'Urticária Aguda', sintomas:['manchas_pele', 'prurido', 'vergoes_pele', 'angioedema'], painWeight: 0.3, descricao:'Reação alérgica da pele que causa vergões vermelhos e coceira intensa. Angioedema é sinal de gravidade.'},
@@ -152,7 +155,6 @@ const DISEASES = [
   {id:'hipotireoidismo', nome:'Hipotireoidismo', sintomas:['astenia','ganho_peso','constipacao','frio_intolerancia'], painWeight:0.1, genderPref: 'f', descricao:'Baixa atividade da tireoide.'},
   {id:'hipertireoidismo', nome:'Hipertireoidismo', sintomas:['palpitacao','perda_peso','sudorese','ansiedade'], painWeight:0.1, genderPref: 'f', descricao:'Alta atividade da tireoide.'},
   {id:'depressao', nome:'Depressão', sintomas:['astenia','perda_peso','insônia','tristeza'], painWeight:0.05, descricao:'Transtorno do humor com perda de interesse.'},
-  {id:'ansiedade', nome:'Ansiedade', sintomas:['palpitacao','insônia','tontura','sudorese'], painWeight:0.05, descricao:'Resposta exagerada de alerta.'},
   {id:'insônia', nome:'Insônia', sintomas:['insônia','astenia','irritabilidade'], painWeight:0.02, descricao:'Dificuldade de sono persistente.'},
   {id:'dpoc', nome:'DPOC', sintomas:['tosse','dispneia','palpitacao'], painWeight:0.3, descricao:'Doença pulmonar obstrutiva crônica.'},
   {id:'artrite_reumatoide', nome:'Artrite Reumatoide', sintomas:['dor_articular', 'edema', 'rigidez_matinal', 'astenia', 'perda_peso'], painWeight: 0.7, genderPref: 'f', descricao:'Doença autoimune que causa inflamação crônica nas articulações (simétrica).'},
@@ -406,10 +408,20 @@ const RISK_WEIGHTS = {
     'f': { '0-18': 10, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 10, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
     'o': { '0-18': 8, '19-23': 13, '24-28': 13, '29-33': 13, '34-38': 10, '39-43': 8, '44-48': 8, '49-53': 8, '54-58': 13, '59+': 13 }
   },
-  'ansiedade': {
-    'm': { '0-18': 10, '19-23': 10, '24-28': 10, '29-33': 10, '34-38': 10, '39-43': 5, '44-48': 5, '49-53': 0, '54-58': 0, '59+': 0 },
-    'f': { '0-18': 15, '19-23': 15, '24-28': 15, '29-33': 15, '34-38': 15, '39-43': 15, '44-48': 10, '49-53': 5, '54-58': 5, '59+': 5 },
-    'o': { '0-18': 13, '19-23': 13, '24-28': 13, '29-33': 13, '34-38': 13, '39-43': 10, '44-48': 8, '49-53': 3, '54-58': 3, '59+': 3 }
+  'fobia_especifica': {
+    'm': { '0-18':15, '19-23':15, '24-28':10, '29-33':10, '34-38':5, '39-43':5, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
+    'f': { '0-18':15, '19-23':15, '24-28':10, '29-33':10, '34-38':5, '39-43':5, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
+    'o': { '0-18':15, '19-23':15, '24-28':10, '29-33':10, '34-38':5, '39-43':5, '44-48':0, '49-53':0, '54-58':0, '59+':0 }
+  },
+  'panico': {
+    'm': { '0-18':5, '19-23':10, '24-28':15, '29-33':15, '34-38':10, '39-43':5, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
+    'f': { '0-18':10, '19-23':15, '24-28':20, '29-33':20, '34-38':15, '39-43':10, '44-48':5, '49-53':0, '54-58':0, '59+':0 },
+    'o': { '0-18':8, '19-23':13, '24-28':18, '29-33':18, '34-38':13, '39-43':8, '44-48':3, '49-53':0, '54-58':0, '59+':0 }
+  },
+  'tag': {
+    'm': { '0-18':5, '19-23':10, '24-28':10, '29-33':10, '34-38':10, '39-43':10, '44-48':10, '49-53':10, '54-58':10, '59+':10 },
+    'f': { '0-18':10, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':15, '49-53':15, '54-58':15, '59+':15 },
+    'o': { '0-18':8, '19-23':13, '24-28':13, '29-33':13, '34-38':13, '39-43':13, '44-48':13, '49-53':13, '54-58':13, '59+':13 }
   },
   'insônia': {
     'm': { '0-18': -5, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
@@ -552,6 +564,11 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'difusa_generalizada', label: 'Difusa / Generalizada (corpo todo)' },
     { id: 'pontos_sensiveis', label: 'Em pontos sensíveis (ao toque)' },
     { id: 'muscular_localizada', label: 'Muscular / Localizada (pós-esforço)' }
+  ],
+  'ansiedade_sintoma': [
+    { id: 'foco_especifico', label: 'Medo focado (ex: Aranha, Altura, Avião)' },
+    { id: 'ataques_subitos', label: 'Medo súbito, intenso, "sensação de morte"' },
+    { id: 'preocupacao_cronica', label: 'Preocupação crônica (sobre tudo, o dia todo)' }
   ],
   'rigidez_matinal': [
     { id: 'longa_duracao', label: 'Longa Duração (> 30 min)' },
