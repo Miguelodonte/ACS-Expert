@@ -87,9 +87,13 @@ const SYMPTOMS = [
   {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
   {id:'prurido_vaginal', label:'Coceira Vaginal / Vulvar', group: 'Ginecologia / Urinário'},
   {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário'},
-  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário'}
+  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário'},
+  {id:'prurido_peniano', label:'Coceira no Pênis / Glande', group: 'Ginecologia / Urinário'},
+  {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário'},
+  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário'}
 ];
 const DISEASES = [
+  {id:'balanite_candidiaca', nome:'Balanite Candidiásica (Homem)', sintomas:['prurido_peniano', 'vermelhidao_glande', 'placas_brancas_penis', 'disuria'], painWeight: 0.4, genderPref: 'm', descricao:'Infecção fúngica peniana (glande/prepúcio), causando coceira, vermelhidão e placas brancas.'},
   {id:'endometriose', nome:'Endometriose', sintomas:['dor_pelvica_cronica', 'colica_menstrual_intensa', 'dispareunia', 'dor_abdominal', 'constipacao', 'diarreia'], painWeight: 0.9, genderPref: 'f', descricao:'Crescimento do tecido endometrial fora do útero, causando dor pélvica crônica intensa.'},
   {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_vaginal', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
   {id:'sop', nome:'SOP (Síndrome do Ovário Policístico)', sintomas:['ciclo_irregular', 'hirsutismo', 'ganho_peso', 'perda_cabelo'], painWeight: 0.1, genderPref: 'f', descricao:'Distúrbio hormonal comum que causa ciclos irregulares e características androgênicas.'},
@@ -169,6 +173,11 @@ const RISK_WEIGHTS = {
     'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
     'f': { '0-18':10, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':10, '44-48':5, '49-53':0, '54-58':-5, '59+':-10 },
     'o': { '0-18':-50, '19-23':8, '24-28':8, '29-33':8, '34-38':8, '39-43':5, '44-48':3, '49-53':0, '54-58':-3, '59+':-5 }
+  },
+  'balanite_candidiaca': {
+    'm': { '0-18':5, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
+    'f': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
+    'o': { '0-18':-50, '19-23':8, '24-28':8, '29-33':8, '34-38':8, '39-43':8, '44-48':5, '49-53':3, '54-58':0, '59+':0 }
   },
   'covid19': {
     'm': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
@@ -458,7 +467,7 @@ const RISK_WEIGHTS = {
 const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
   'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20, 'gota': 5 },
-  'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20, 'candidiase': 15 },
+  'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20, 'candidiase_vaginal': 15, 'balanite_candidiaca': 15 },
   'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15, 'sop': 15 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
