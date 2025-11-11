@@ -90,9 +90,19 @@ const SYMPTOMS = [
   {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário'},
   {id:'prurido_peniano', label:'Coceira no Pênis / Glande', group: 'Ginecologia / Urinário'},
   {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário'},
-  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário'}
+  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário'},
+  {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Ginecologia / Urinário'},
+  {id:'aumento_volume_abdominal', label:'Aumento do Volume Abdominal', group: 'Digestivo'},
+  {id:'aura_visual', label:'Aura Visual (luzes, pontos cegos)', group: 'Neurológico / Cabeça'},
+  {id:'tremor_repouso', label:'Tremor (em repouso)', group: 'Neurológico / Cabeça'},
+  {id:'rigidez_muscular', label:'Rigidez Muscular (Geral)', group: 'Neurológico / Cabeça'},
+  {id:'bradicinesia', label:'Lentidão de Movimentos', group: 'Neurológico / Cabeça'},
+  {id:'instabilidade_postural', label:'Instabilidade Postural / Quedas', group: 'Neurológico / Cabeça'}
 ];
 const DISEASES = [
+  {id:'mioma_uterino', nome:'Mioma Uterino', sintomas:['sangramento_uterino_anormal', 'colica_menstrual_intensa', 'dor_pelvica_cronica', 'aumento_volume_abdominal', 'polaciuria'], painWeight: 0.6, genderPref: 'f', descricao:'Tumor benigno no útero, causando sangramento intenso e dor pélvica.'},
+  {id:'enxaqueca', nome:'Enxaqueca (Migrânea)', sintomas:['cefaleia', 'nausea', 'vomito', 'sensibilidade_luz', 'aura_visual'], painWeight: 0.8, genderPref: 'f', descricao:'Cefaleia crônica, pulsátil, frequentemente unilateral e incapacitante, com sensibilidade sensorial.'},
+  {id:'parkinson', nome:'Doença de Parkinson', sintomas:['tremor_repouso', 'rigidez_muscular', 'bradicinesia', 'instabilidade_postural'], painWeight: 0.1, genderPref: 'm', descricao:'Doença neurológica degenerativa que afeta o movimento, causando tremor em repouso e lentidão.'},
   {id:'balanite_candidiaca', nome:'Balanite Candidiásica (Homem)', sintomas:['prurido_peniano', 'vermelhidao_glande', 'placas_brancas_penis', 'disuria'], painWeight: 0.4, genderPref: 'm', descricao:'Infecção fúngica peniana (glande/prepúcio), causando coceira, vermelhidão e placas brancas.'},
   {id:'endometriose', nome:'Endometriose', sintomas:['dor_pelvica_cronica', 'colica_menstrual_intensa', 'dispareunia', 'dor_abdominal', 'constipacao', 'diarreia'], painWeight: 0.9, genderPref: 'f', descricao:'Crescimento do tecido endometrial fora do útero, causando dor pélvica crônica intensa.'},
   {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_vaginal', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
@@ -164,6 +174,11 @@ const RISK_WEIGHTS = {
     'f': { '0-18':0, '19-23':10, '24-28':15, '29-33':15, '34-38':15, '39-43':10, '44-48':5, '49-53':-5, '54-58':-10, '59+':-15 },
     'o': { '0-18':-50, '19-23':5, '24-28':8, '29-33':8, '34-38':8, '39-43':5, '44-48':3, '49-53':-3, '54-58':-5, '59+':-8 }
   },
+  'enxaqueca': {
+    'm': { '0-18':5, '19-23':10, '24-28':10, '29-33':10, '34-38':10, '39-43':5, '44-48':0, '49-53':0, '54-58':-5, '59+':-5 },
+    'f': { '0-18':10, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
+    'o': { '0-18':8, '19-23':13, '24-28':13, '29-33':13, '34-38':13, '39-43':10, '44-48':5, '49-53':3, '54-58':-3, '59+':-3 }
+  },
   'candidiase': {
     'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
     'f': { '0-18':5, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
@@ -173,6 +188,16 @@ const RISK_WEIGHTS = {
     'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
     'f': { '0-18':10, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':10, '44-48':5, '49-53':0, '54-58':-5, '59+':-10 },
     'o': { '0-18':-50, '19-23':8, '24-28':8, '29-33':8, '34-38':8, '39-43':5, '44-48':3, '49-53':0, '54-58':-3, '59+':-5 }
+  },
+  'mioma_uterino': {
+    'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
+    'f': { '0-18':-10, '19-23':0, '24-28':5, '29-33':10, '34-38':15, '39-43':15, '44-48':15, '49-53':10, '54-58':5, '59+':0 },
+    'o': { '0-18':-50, '19-23':0, '24-28':3, '29-33':5, '34-38':8, '39-43':8, '44-48':8, '49-53':5, '54-58':3, '59+':0 }
+  },
+  'parkinson': {
+    'm': { '0-18':-20, '19-23':-20, '24-28':-20, '29-33':-15, '34-38':-10, '39-43':-5, '44-48':0, '49-53':5, '54-58':15, '59+':20 },
+    'f': { '0-18':-20, '19-23':-20, '24-28':-20, '29-33':-15, '34-38':-10, '39-43':-5, '44-48':-5, '49-53':0, '54-58':10, '59+':15 },
+    'o': { '0-18':-20, '19-23':-20, '24-28':-20, '29-33':-15, '34-38':-10, '39-43':-5, '44-48':-3, '49-53':3, '54-58':13, '59+':18 }
   },
   'balanite_candidiaca': {
     'm': { '0-18':5, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
@@ -468,7 +493,7 @@ const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
   'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20, 'gota': 5 },
   'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20, 'candidiase_vaginal': 15, 'balanite_candidiaca': 15 },
-  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15, 'sop': 15 },
+  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15, 'sop': 15, 'mioma_uterino': 10 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
@@ -533,7 +558,17 @@ const SYMPTOM_QUALIFIERS = {
   'cefaleia': [
     { id: 'intensa_subita', label: 'Intensa / Súbita' },
     { id: 'pulsatil', label: 'Pulsátil / Latejante' },
-    { id: 'nausea_vomito', label: 'Com Náusea / Vômito' }
+    { id: 'nausea_vomito', label: 'Com Náusea / Vômito' },
+    { id: 'com_aura', label: 'Com Aura Visual (luzes/pontos)' }
+  ],
+  'tremor_repouso': [
+    { id: 'piora_repouso', label: 'Pior em repouso ("contar moedas")' },
+    { id: 'melhora_movimento', label: 'Melhora com movimento intencional' }
+  ],
+  'sangramento_uterino_anormal': [
+    { id: 'menstruacao_longa', label: 'Menstruação longa (> 7 dias)' },
+    { id: 'fluxo_intenso', label: 'Fluxo muito intenso (coágulos)' },
+    { id: 'fora_do_ciclo', label: 'Sangramento fora do ciclo' }
   ],
   'dispneia': [
     { id: 'repouso', label: 'Em Repouso' },
