@@ -103,9 +103,18 @@ const SYMPTOMS = [
   {id:'desorientacao', label:'Desorientação (Tempo/Espaço)', group: 'Neurológico / Cabeça'},
   {id:'vertigem_rotatoria', label:'Vertigem (Sensação de Girar)', group: 'Neurológico / Cabeça'},
   {id:'zumbido', label:'Zumbido no Ouvido', group: 'Respiratório / ORL'},
-  {id:'placas_descamativas', label:'Placas de Pele Descamativas (Prateadas)', group: 'Pele / Mucosas'}
+  {id:'placas_descamativas', label:'Placas de Pele Descamativas (Prateadas)', group: 'Pele / Mucosas'},
+  {id:'vergoes_pele', label:'Vergões / Urticas (Pele elevada)', group: 'Pele / Mucosas'},
+  {id:'angioedema', label:'Inchaço de Lábios / Olhos / Rosto', group: 'Pele / Mucosas'},
+  {id:'lesoes_nodulares_pele', label:'Lesões Nodulares / Cistos (Pele)', group: 'Pele / Mucosas'},
+  {id:'euforia_mania', label:'Euforia / Agitação (Mania)', group: 'Geral / Psiquiátrico'},
+  {id:'fala_acelerada', label:'Fala Acelerada / Compulsiva', group: 'Geral / Psiquiátrico'},
+  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'}
 ];
 const DISEASES = [
+  {id:'urticaria', nome:'Urticária Aguda', sintomas:['manchas_pele', 'prurido', 'vergoes_pele', 'angioedema'], painWeight: 0.3, descricao:'Reação alérgica da pele que causa vergões vermelhos e coceira intensa. Angioedema é sinal de gravidade.'},
+  {id:'acne_grave', nome:'Acne Cística / Grave', sintomas:['manchas_pele', 'lesoes_nodulares_pele', 'inic_local', 'dor_face'], painWeight: 0.5, descricao:'Forma grave de acne com nódulos e cistos dolorosos e inflamados, geralmente no rosto e costas.'},
+  {id:'transtorno_bipolar', nome:'Transtorno Bipolar', sintomas:['tristeza', 'euforia_mania', 'irritabilidade', 'fala_acelerada', 'reducao_sono', 'ansiedade_sintoma', 'insônia_sintoma'], painWeight: 0.1, descricao:'Transtorno de humor caracterizado por alternância entre episódios de depressão e mania/hipomania.'},
   {id:'alzheimer', nome:'Doença de Alzheimer', sintomas:['perda_memoria_recente', 'desorientacao', 'dificuldade_linguagem', 'confusao', 'irritabilidade', 'ansiedade_sintoma'], painWeight: 0.1, descricao:'Doença neurodegenerativa progressiva que causa declínio da memória e da função cognitiva.'},
   {id:'labirintite', nome:'Labirintite / VPPB (Vertigem)', sintomas:['tontura', 'vertigem_rotatoria', 'nausea', 'vomito', 'zumbido', 'suor_noturno'], painWeight: 0.4, descricao:'Distúrbio do ouvido interno que causa vertigem rotatória intensa, náusea e perda de equilíbrio.'},
   {id:'psoriase', nome:'Psoríase', sintomas:['manchas_pele', 'placas_descamativas', 'prurido', 'dor_articular'], painWeight: 0.3, descricao:'Doença autoimune crônica da pele que causa placas vermelhas e descamativas (prateadas).'},
@@ -175,6 +184,21 @@ const DISEASES = [
 ];
 const RISK_WEIGHTS = {
   // Lote 1
+  'acne_grave': {
+    'm': { '0-18':20, '19-23':15, '24-28':5, '29-33':0, '34-38':-5, '39-43':-10, '44-48':-10, '49-53':-10, '54-58':-10, '59+':-10 },
+    'f': { '0-18':15, '19-23':10, '24-28':5, '29-33':5, '34-38':0, '39-43':-5, '44-48':-5, '49-53':-5, '54-58':-5, '59+':-5 },
+    'o': { '0-18':18, '19-23':13, '24-28':5, '29-33':3, '34-38':-3, '39-43':-8, '44-48':-8, '49-53':-8, '54-58':-8, '59+':-8 }
+  },
+  'transtorno_bipolar': {
+    'm': { '0-18':5, '19-23':15, '24-28':15, '29-33':10, '34-38':5, '39-43':0, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
+    'f': { '0-18':5, '19-23':15, '24-28':15, '29-33':10, '34-38':5, '39-43':0, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
+    'o': { '0-18':5, '19-23':15, '24-28':15, '29-33':10, '34-38':5, '39-43':0, '44-48':0, '49-53':0, '54-58':0, '59+':0 }
+  },
+  'urticaria': {
+    'm': { '0-18':10, '19-23':10, '24-28':10, '29-33':10, '34-38':10, '39-43':10, '44-48':10, '49-53':10, '54-58':10, '59+':10 },
+    'f': { '0-18':10, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':15, '49-53':15, '54-58':15, '59+':15 },
+    'o': { '0-18':10, '19-23':13, '24-28':13, '29-33':13, '34-38':13, '39-43':13, '44-48':13, '49-53':13, '54-58':13, '59+':13 }
+  },
   'alzheimer': {
     'm': { '0-18':-30, '19-23':-30, '24-28':-30, '29-33':-25, '34-38':-20, '39-43':-15, '44-48':-10, '49-53':0, '54-58':10, '59+':25 },
     'f': { '0-18':-30, '19-23':-30, '24-28':-30, '29-33':-25, '34-38':-20, '39-43':-15, '44-48':-10, '49-53':5, '54-58':15, '59+':30 },
@@ -537,8 +561,14 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'coceira', label: 'Com Coceira Intensa' },
     { id: 'rash', label: 'Vermelhas / Elevadas (Rash)' },
     { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'},
-    { id: 'placas_prateadas', label: 'Placas secas, grossas, prateadas' }
+    { id: 'placas_prateadas', label: 'Placas secas, grossas, prateadas' },
+    { id: 'vergoes_elevados', label: 'Vergões elevados que coçam (Urticas)' },
+    { id: 'nodulos_dolorosos', label: 'Nódulos/Cistos dolorosos (sob a pele)' }
     ],
+  'insônia_sintoma': [
+    { id: 'dificuldade_dormir', label: 'Dificuldade em adormecer / manter o sono' },
+    { id: 'reducao_necessidade', label: 'Pouca necessidade de sono (ex: 3h/noite)' }
+  ],
   'tontura': [
     { id: 'rotatoria', label: 'Vertigem (sensação de girar)' },
     { id: 'pre_desmaio', label: 'Sensação de pré-desmaio / fraqueza' },
