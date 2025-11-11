@@ -446,8 +446,8 @@ const SYMPTOM_QUALIFIERS = {
   'manchas_pele': [
     { id: 'coceira', label: 'Com Coceira Intensa' },
     { id: 'rash', label: 'Vermelhas / Elevadas (Rash)' },
-    { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'
-  },
+    { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'}
+    ],
   'tosse': [
     { id: 'seca', label: 'Seca' },
     { id: 'catarro', label: 'Com Catarro (Amarelo/Verde)' },
