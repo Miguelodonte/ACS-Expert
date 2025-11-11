@@ -50,6 +50,7 @@ const SYMPTOMS = [
   {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Pele / Mucosas'}, // Adicionei, usado em Conjuntivite
   {id:'prurido', label:'Coceira generalizada (sem rash)', group: 'Pele / Mucosas'},
   {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Pele / Mucosas'},
+  {id:'hirsutismo', label:'Excesso de Pelos (Hirsutismo)', group: 'Pele / Mucosas'},
 
   // Grupo: Urinário / Metabólico
   {id:'disuria', label:'Dor ao urinar', group: 'Urinário / Metabólico'},
@@ -78,9 +79,20 @@ const SYMPTOMS = [
   {id:'insônia_sintoma', label:'Insônia (Sintoma)', group: 'Geral'}, // Renomeado de 'insônia', usado em Depressão/Ansiedade
   {id:'tristeza', label:'Tristeza / Desânimo', group: 'Geral'}, // Adicionei, usado em Depressão
   {id:'crepitacao_articular', label:'Crepitação/Estalos nas Articulações', group: 'Outros'},
-  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'} // Adicionei, usado em Insônia
+  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'}, // Adicionei, usado em Insônia
+
+  // Grupo: Ginecologia / Urinário
+  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Ginecologia / Urinário'},
+  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário'},
+  {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
+  {id:'prurido_vaginal', label:'Coceira Vaginal / Vulvar', group: 'Ginecologia / Urinário'},
+  {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário'},
+  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário'}
 ];
 const DISEASES = [
+  {id:'endometriose', nome:'Endometriose', sintomas:['dor_pelvica_cronica', 'colica_menstrual_intensa', 'dispareunia', 'dor_abdominal', 'constipacao', 'diarreia'], painWeight: 0.9, genderPref: 'f', descricao:'Crescimento do tecido endometrial fora do útero, causando dor pélvica crônica intensa.'},
+  {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_vaginal', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
+  {id:'sop', nome:'SOP (Síndrome do Ovário Policístico)', sintomas:['ciclo_irregular', 'hirsutismo', 'ganho_peso', 'perda_cabelo'], painWeight: 0.1, genderPref: 'f', descricao:'Distúrbio hormonal comum que causa ciclos irregulares e características androgênicas.'},
   {id:'artrose', nome:'Artrose (Osteoartrite)', sintomas:['dor_articular', 'edema', 'crepitacao_articular', 'rigidez_matinal'], painWeight: 0.6, descricao:'Doença degenerativa da cartilagem, dor piora com esforço e no fim do dia.'},
   {id:'fibromialgia', nome:'Fibromialgia', sintomas:['dor_corpo', 'astenia', 'insônia_sintoma', 'confusao', 'cefaleia', 'ansiedade_sintoma'], painWeight: 0.8, genderPref: 'f', descricao:'Síndrome de dor crônica generalizada, associada a fadiga, sono não reparador e "névoa mental".'},
   {id:'lupus', nome:'Lúpus (LES)', sintomas:['astenia', 'febre', 'dor_articular', 'manchas_pele', 'sensibilidade_luz', 'perda_peso', 'feridas_boca', 'queda_cabelo'], painWeight: 0.5, genderPref: 'f', descricao:'Doença autoimune sistêmica que afeta pele, articulações, rins e outros órgãos. Predominante em mulheres.'},
@@ -132,6 +144,9 @@ const DISEASES = [
   {id:'meningite', nome:'Meningite', sintomas:['cefaleia','sensibilidade_luz','febre','confusao'], painWeight:1.0, descricao:'Inflamação das meninges com cefaleia intensa.'},
   {id:'sepsis', nome:'Sepse', sintomas:['febre','confusao','hipotensao','taquicardia'], painWeight:0.9, descricao:'Resposta inflamatória sistêmica grave a infecção.'},
   {id:'anemia', nome:'Anemia', sintomas:['astenia','palidez','tontura','fraqueza'], painWeight:0.1, descricao:'Baixa hemoglobina causando fadiga.'},
+  {id:'endometriose', nome:'Endometriose', sintomas:['dor_pelvica_cronica', 'colica_menstrual_intensa', 'dispareunia', 'dor_abdominal', 'constipacao', 'diarreia'], painWeight: 0.9, genderPref: 'f', descricao:'Crescimento do tecido endometrial fora do útero, causando dor pélvica crônica intensa.'},
+  {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_vaginal', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
+  {id:'sop', nome:'SOP (Síndrome do Ovário Policístico)', sintomas:['ciclo_irregular', 'hirsutismo', 'ganho_peso', 'queda_cabelo'], painWeight: 0.1, genderPref: 'f', descricao:'Distúrbio hormonal comum que causa ciclos irregulares e características androgênicas.'},
   {id:'epilepsia', nome:'Epilepsia', sintomas:['convulsao','perda_consciencia','confusao'], painWeight:0.2, descricao:'Transtorno neurológico com crises convulsivas.'},
   {id:'apendicite', nome:'Apendicite aguda', sintomas:['dor_abdominal','febre','vomito','inic_local'], painWeight:1.0, descricao:'Inflamação do apêndice com dor abdominal localizada intensa.'},
   {id:'cistite_cronica', nome:'Cistite / Cistite recorrente', sintomas:['disuria','poliuria','hemorragia','dor_abdominal'], painWeight:0.6, genderPref: 'f', descricao:'Inflamação da bexiga com dor miccional.'},
@@ -140,6 +155,21 @@ const DISEASES = [
 ];
 const RISK_WEIGHTS = {
   // Lote 1
+  'endometriose': {
+    'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
+    'f': { '0-18':0, '19-23':10, '24-28':15, '29-33':15, '34-38':15, '39-43':10, '44-48':5, '49-53':-5, '54-58':-10, '59+':-15 },
+    'o': { '0-18':-50, '19-23':5, '24-28':8, '29-33':8, '34-38':8, '39-43':5, '44-48':3, '49-53':-3, '54-58':-5, '59+':-8 }
+  },
+  'candidiase': {
+    'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
+    'f': { '0-18':5, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
+    'o': { '0-18':-50, '19-23':8, '24-28':8, '29-33':8, '34-38':8, '39-43':8, '44-48':5, '49-53':3, '54-58':0, '59+':0 }
+  },
+  'sop': {
+    'm': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
+    'f': { '0-18':10, '19-23':15, '24-28':15, '29-33':15, '34-38':15, '39-43':10, '44-48':5, '49-53':0, '54-58':-5, '59+':-10 },
+    'o': { '0-18':-50, '19-23':8, '24-28':8, '29-33':8, '34-38':8, '39-43':5, '44-48':3, '49-53':0, '54-58':-3, '59+':-5 }
+  },
   'covid19': {
     'm': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 10, '49-53': 10, '54-58': 15, '59+': 15 },
     'f': { '0-18': 0, '19-23': 0, '24-28': 0, '29-33': 0, '34-38': 5, '39-43': 5, '44-48': 5, '49-53': 10, '54-58': 10, '59+': 15 },
@@ -428,12 +458,17 @@ const RISK_WEIGHTS = {
 const RISK_FACTOR_BONUS = {
   'fumante': { 'dpoc': 15, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'hipertensao': 5, 'pneumonia': 5, 'bronquite': 5, 'ulcera': 5 },
   'hipertenso': { 'hipertensao': 15, 'infarto': 15, 'acidente_vascular': 15, 'doenca_coronariana': 15, 'angina': 15, 'sepsis': 5, 'insuficiencia_renal': 20, 'gota': 5 },
-  'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20 },
-  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15 },
+  'diabetico': { 'diabetes2': 20, 'infarto': 10, 'acidente_vascular': 10, 'doenca_coronariana': 10, 'angina': 10, 'celulite': 10, 'sepsis': 5, 'pielonefrite': 5, 'insuficiencia_renal': 20, 'candidiase': 15 },
+  'obeso': { 'diabetes2': 10, 'hipertensao': 10, 'infarto': 5, 'acidente_vascular': 5, 'doenca_coronariana': 5, 'angina': 5, 'calculo_renal': 5, 'gota': 10, 'artrose': 15, 'sop': 15 },
   'asmatico': { 'asma': 20, 'covid19': 5, 'gripe': 5, 'pneumonia': 5, 'bronquite': 5 },
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
 const SYMPTOM_QUALIFIERS = {
+  'corrimento_vaginal': [
+    { id: 'branco_espesso', label: 'Branco, espesso (Nata/Queijo Cottage)' },
+    { id: 'amarelo_esverdeado', label: 'Amarelo-esverdeado (com odor)' },
+    { id: 'acinzentado_odor', label: 'Acinzentado (com odor de peixe)' }
+  ],
   'dor_corpo': [
     { id: 'difusa_generalizada', label: 'Difusa / Generalizada (corpo todo)' },
     { id: 'pontos_sensiveis', label: 'Em pontos sensíveis (ao toque)' },
