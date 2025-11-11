@@ -39,7 +39,7 @@ function renderSymptoms(){
     return acc;
   }, {});
   // 2. Renderizar Grupos e Sintomas
-  const groupOrder = ['Geral', 'Respiratório / ORL', 'Digestivo', 'Neurológico / Cabeça', 'Pele / Mucosas', 'Urinário / Metabólico', 'Cardiovascular', 'Outros'];
+  const groupOrder = ['Geral', 'Respiratório / ORL', 'Digestivo', 'Neurológico / Cabeça', 'Pele / Mucosas', 'Urinário / Metabólico', 'Cardiovascular', 'Outros', 'Ginecologia / Urinário'];
   groupOrder.forEach(groupName => {
     if (!groupedSymptoms[groupName]) return;
 
