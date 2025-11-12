@@ -653,11 +653,6 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'esforco', label: 'Ao Esforço' },
     { id: 'chiado', label: 'Com Chiado no Peito' }
   ],
-  'manchas_pele': [
-    { id: 'coceira', label: 'Com Coceira Intensa' },
-    { id: 'rash', label: 'Vermelhas / Elevadas (Rash)' },
-    { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)' }
-  ],
   'vomito': [
     { id: 'sangue_vom', label: 'Com Sangue' },
     { id: 'jato', label: 'Incontrolável / Jato' },
