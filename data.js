@@ -109,12 +109,12 @@ const SYMPTOMS = [
   {id:'lesoes_nodulares_pele', label:'Lesões Nodulares / Cistos (Pele)', group: 'Pele / Mucosas'},
   {id:'euforia_mania', label:'Euforia / Agitação (Mania)', group: 'Geral / Psiquiátrico'},
   {id:'fala_acelerada', label:'Fala Acelerada / Compulsiva', group: 'Geral / Psiquiátrico'},
-  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'},
+  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'}
+ ];
+const DISEASES = [
   {id:'tag', nome:'Ansiedade Generalizada (TAG)', sintomas:['preocupacao_excessiva', 'ansiedade_sintoma', 'irritabilidade', 'insônia_sintoma', 'astenia', 'dor_corpo'], painWeight: 0.1, genderPref: 'f', descricao:'Preocupação crônica, excessiva e difícil de controlar sobre diversos temas.'},
   {id:'panico', nome:'Síndrome do Pânico', sintomas:['medo_intenso_subito', 'palpitacao', 'taquicardia', 'dispneia', 'tontura', 'sudorese', 'calafrios'], painWeight: 0.7, descricao:'Ataques súbitos de medo intenso e sintomas físicos avassaladores sem perigo real.'},
-  {id:'fobia_especifica', nome:'Fobia Específica', sintomas:['medo_especifico', 'ansiedade_sintoma', 'palpitacao', 'sudorese'], painWeight: 0.1, descricao:'Medo intenso e irracional de um objeto ou situação específica (ex: aranha, altura, avião).'}
-];
-const DISEASES = [
+  {id:'fobia_especifica', nome:'Fobia Específica', sintomas:['medo_especifico', 'ansiedade_sintoma', 'palpitacao', 'sudorese'], painWeight: 0.1, descricao:'Medo intenso e irracional de um objeto ou situação específica (ex: aranha, altura, avião).'},
   {id:'urticaria', nome:'Urticária Aguda', sintomas:['manchas_pele', 'prurido', 'vergoes_pele', 'angioedema'], painWeight: 0.3, descricao:'Reação alérgica da pele que causa vergões vermelhos e coceira intensa. Angioedema é sinal de gravidade.'},
   {id:'acne_grave', nome:'Acne Cística / Grave', sintomas:['manchas_pele', 'lesoes_nodulares_pele', 'inic_local', 'dor_face'], painWeight: 0.5, descricao:'Forma grave de acne com nódulos e cistos dolorosos e inflamados, geralmente no rosto e costas.'},
   {id:'transtorno_bipolar', nome:'Transtorno Bipolar', sintomas:['tristeza', 'euforia_mania', 'irritabilidade', 'fala_acelerada', 'reducao_sono', 'ansiedade_sintoma', 'insônia_sintoma'], painWeight: 0.1, descricao:'Transtorno de humor caracterizado por alternância entre episódios de depressão e mania/hipomania.'},
