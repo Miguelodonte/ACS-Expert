@@ -105,7 +105,15 @@ function renderSymptoms(){
         popupEl.dataset.popupFor = s.id;
 
         // *** CORREÇÃO DO TEXTO ESTRANHO ***
+       const sexoAtual = document.getElementById('sexo').value; // Pega o sexo selecionado
+        
         qualifiers.forEach(q => {
+          // SE o qualificador tem uma flag 'sex' E ela é DIFERENTE do sexoAtual, PULE este qualificador.
+          if (q.sex && q.sex !== sexoAtual) {
+            return; 
+          }
+
+          // Se passou no filtro, renderiza o qualificador
           popupEl.innerHTML += `
             <label>
               <input type="checkbox" id="chk_${s.id}_${q.id}" data-qualifier-id="${q.id}" data-parent-symptom="${s.id}"> ${q.label}
@@ -710,8 +718,14 @@ document.querySelectorAll('.tab').forEach(t=>{
     document.getElementById(target).classList.add('active');
   });
 });
-// --- FIM CORREÇÃO ---
-
+// ==== NOVA ADIÇÃO (PASSO 2) ====
+// Força a re-renderização dos sintomas ao trocar o sexo,
+// para garantir que os qualificadores corretos apareçam.
+document.getElementById('sexo').addEventListener('change', () => {
+    selectedSymptoms = {}; // Limpa a seleção atual para evitar bugs
+    renderSymptoms();
+});
+// ==== FIM DA NOVA ADIÇÃO ====
 
 SYMPTOMS.sort((a, b) => a.label.localeCompare(b.label));
 
