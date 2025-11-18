@@ -57,7 +57,16 @@ function renderSymptoms(){
       panel.classList.toggle('collapsed');
     });
 
+    const currentSex = document.getElementById('sexo').value; 
+
     groupedSymptoms[groupName].forEach(s => {
+      // ==== NOVA LÓGICA DE FILTRO ====
+      // Se o sintoma tem um filtro de sexo E ele é diferente do sexo atual, pule este sintoma.
+      if (s.sexFilter && s.sexFilter !== currentSex) {
+        return; 
+      }
+      // ===============================
+
       const wrapper = document.createElement('div');
       wrapper.className = 'symptom-wrapper';
     
