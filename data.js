@@ -50,8 +50,8 @@ const SYMPTOMS = [
   {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Pele / Mucosas'}, // Adicionei, usado em Conjuntivite
   {id:'prurido', label:'Coceira generalizada (sem rash)', group: 'Pele / Mucosas'},
   {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Pele / Mucosas'},
-  {id:'hirsutismo', label:'Excesso de Pelos (Hirsutismo)', group: 'Pele / Mucosas'},
-
+  {id:'hirsutismo', label:'Excesso de Pelos (Mulher)', group: 'Pele / Mucosas', sexFilter: 'f'},
+  
   // Grupo: Urinário / Metabólico
   {id:'disuria', label:'Dor ao urinar', group: 'Urinário / Metabólico'},
   {id:'anuria', label:'Redução/ausência de urina', group: 'Urinário / Metabólico'},
@@ -60,7 +60,8 @@ const SYMPTOMS = [
   {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urinário / Metabólico'},
   {id:'hematuria', label:'Sangue na Urina', group: 'Urinário / Metabólico'},
   {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urinário / Metabólico'},
-  {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Urinário / Metabólico'},
+  {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Urinário / Metabólico', sexFilter: 'm'},
+  {id:'ejaculacao_dolorosa', label:'Ejaculação dolorosa', group: 'Urinário / Metabólico', sexFilter: 'm'},
 
   // Grupo: Cardiovascular
   {id:'palpitacao', label:'Palpitações', group: 'Cardiovascular'},
@@ -82,15 +83,15 @@ const SYMPTOMS = [
   {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'}, // Adicionei, usado em Insônia
 
   // Grupo: Ginecologia / Urinário
-  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Ginecologia / Urinário'},
-  {id:'prurido_genital', label:'Coceira Genital', group: 'Ginecologia / Urinário'},
+  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica (Mulher)', group: 'Ginecologia / Urinário', sexFilter: 'f'}, 
+  {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Ginecologia / Urinário'},
   {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
-  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário'},
-  {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário'},
-  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário'},
-  {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário'},
-  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário'},
-  {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Ginecologia / Urinário'},
+  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário', sexFilter: 'f'},
+  {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário', sexFilter: 'f'},
+  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário', sexFilter: 'f'},
+  {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário', sexFilter: 'm'},
+  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário', sexFilter: 'm'},
+  {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Ginecologia / Urinário', sexFilter: 'f'},
   {id:'aumento_volume_abdominal', label:'Aumento do Volume Abdominal', group: 'Digestivo'},
   {id:'aura_visual', label:'Aura Visual (luzes, pontos cegos)', group: 'Neurológico / Cabeça'},
   {id:'tremor_repouso', label:'Tremor (em repouso)', group: 'Neurológico / Cabeça'},
