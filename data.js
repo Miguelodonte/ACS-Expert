@@ -83,12 +83,11 @@ const SYMPTOMS = [
 
   // Grupo: Ginecologia / Urinário
   {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Ginecologia / Urinário'},
-  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário'},
+  {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Ginecologia / Urinário'},
   {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
-  {id:'prurido_vaginal', label:'Coceira Vaginal / Vulvar', group: 'Ginecologia / Urinário'},
+  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário'},
   {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário'},
   {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário'},
-  {id:'prurido_peniano', label:'Coceira no Pênis / Glande', group: 'Ginecologia / Urinário'},
   {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário'},
   {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário'},
   {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Ginecologia / Urinário'},
@@ -124,7 +123,7 @@ const DISEASES = [
   {id:'mioma_uterino', nome:'Mioma Uterino', sintomas:['sangramento_uterino_anormal', 'colica_menstrual_intensa', 'dor_pelvica_cronica', 'aumento_volume_abdominal', 'polaciuria'], painWeight: 0.6, genderPref: 'f', descricao:'Tumor benigno no útero, causando sangramento intenso e dor pélvica.'},
   {id:'enxaqueca', nome:'Enxaqueca (Migrânea)', sintomas:['cefaleia', 'nausea', 'vomito', 'sensibilidade_luz', 'aura_visual'], painWeight: 0.8, genderPref: 'f', descricao:'Cefaleia crônica, pulsátil, frequentemente unilateral e incapacitante, com sensibilidade sensorial.'},
   {id:'parkinson', nome:'Doença de Parkinson', sintomas:['tremor_repouso', 'rigidez_muscular', 'bradicinesia', 'instabilidade_postural'], painWeight: 0.1, genderPref: 'm', descricao:'Doença neurológica degenerativa que afeta o movimento, causando tremor em repouso e lentidão.'},
-  {id:'balanite_candidiaca', nome:'Balanite Candidiásica (Homem)', sintomas:['prurido_peniano', 'vermelhidao_glande', 'placas_brancas_penis', 'disuria'], painWeight: 0.4, genderPref: 'm', descricao:'Infecção fúngica peniana (glande/prepúcio), causando coceira, vermelhidão e placas brancas.'},
+  {id:'balanite_candidiaca', nome:'Balanite Candidiásica (Homem)', sintomas:['prurido_genital', 'vermelhidao_glande', 'placas_brancas_penis', 'disuria'], painWeight: 0.4, genderPref: 'm', descricao:'Infecção fúngica peniana (glande/prepúcio), causando coceira, vermelhidão e placas brancas.'},
   {id:'artrose', nome:'Artrose (Osteoartrite)', sintomas:['dor_articular', 'edema', 'crepitacao_articular', 'rigidez_matinal'], painWeight: 0.6, descricao:'Doença degenerativa da cartilagem, dor piora com esforço e no fim do dia.'},
   {id:'fibromialgia', nome:'Fibromialgia', sintomas:['dor_corpo', 'astenia', 'insônia_sintoma', 'confusao', 'cefaleia', 'ansiedade_sintoma'], painWeight: 0.8, genderPref: 'f', descricao:'Síndrome de dor crônica generalizada, associada a fadiga, sono não reparador e "névoa mental".'},
   {id:'lupus', nome:'Lúpus (LES)', sintomas:['astenia', 'febre', 'dor_articular', 'manchas_pele', 'sensibilidade_luz', 'perda_peso', 'feridas_boca', 'queda_cabelo'], painWeight: 0.5, genderPref: 'f', descricao:'Doença autoimune sistêmica que afeta pele, articulações, rins e outros órgãos. Predominante em mulheres.'},
@@ -159,7 +158,7 @@ const DISEASES = [
   {id:'dpoc', nome:'DPOC', sintomas:['tosse','dispneia','palpitacao'], painWeight:0.3, descricao:'Doença pulmonar obstrutiva crônica.'},
   {id:'artrite_reumatoide', nome:'Artrite Reumatoide', sintomas:['dor_articular', 'edema', 'rigidez_matinal', 'astenia', 'perda_peso'], painWeight: 0.7, genderPref: 'f', descricao:'Doença autoimune que causa inflamação crônica nas articulações (simétrica).'},
   {id:'gota', nome:'Gota (Ácido Úrico)', sintomas:['dor_articular', 'edema', 'inic_local', 'calafrios', 'febre'], painWeight: 0.9, descricao:'Artrite inflamatória por excesso de ácido úrico, causando dor intensa (especialmente no dedão do pé).'},
-  {id:'prostatite', nome:'Prostatite', sintomas:['disuria', 'polaciuria', 'dor_perineal', 'febre', 'calafrios', 'dor_flanco'], painWeight: 0.8, genderPref: 'm', descricao:'Inflamação da próstata, comum em homens, causando dor pélvica e dificuldade urinária.'},
+  {id:'prostatite', nome:'Prostatite', sintomas:['dor_perineal', 'disuria', 'polaciuria', 'febre', 'calafrios', 'ejaculacao_dolorosa', 'dispareunia'], painWeight: 0.8, genderPref: 'm', descricao:'Inflamação da próstata, comum em homens, causando dor pélvica e dificuldade urinária.'},
   {id:'tuberculose', nome:'Tuberculose', sintomas:['tosse','suor_noturno','perda_peso','febre'], painWeight:0.2, descricao:'Infecção bacteriana crônica dos pulmões.'},
   {id:'malaria', nome:'Malária', sintomas:['febre','calafrios','cefaleia','dor_corpo'], painWeight:0.3, descricao:'Infecção transmitida por mosquito com febre alta.'},
   {id:'chikungunya', nome:'Chikungunya', sintomas:['febre','dor_corpo','dor_articular','cefaleia'], painWeight:0.4, descricao:'Doença viral com artralgia intensa.'},
@@ -176,7 +175,7 @@ const DISEASES = [
   {id:'sepsis', nome:'Sepse', sintomas:['febre','confusao','hipotensao','taquicardia'], painWeight:0.9, descricao:'Resposta inflamatória sistêmica grave a infecção.'},
   {id:'anemia', nome:'Anemia', sintomas:['astenia','palidez','tontura','fraqueza'], painWeight:0.1, descricao:'Baixa hemoglobina causando fadiga.'},
   {id:'endometriose', nome:'Endometriose', sintomas:['dor_pelvica_cronica', 'colica_menstrual_intensa', 'dispareunia', 'dor_abdominal', 'constipacao', 'diarreia'], painWeight: 0.9, genderPref: 'f', descricao:'Crescimento do tecido endometrial fora do útero, causando dor pélvica crônica intensa.'},
-  {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_vaginal', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
+  {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_genital', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
   {id:'sop', nome:'SOP (Síndrome do Ovário Policístico)', sintomas:['ciclo_irregular', 'hirsutismo', 'ganho_peso', 'queda_cabelo'], painWeight: 0.1, genderPref: 'f', descricao:'Distúrbio hormonal comum que causa ciclos irregulares e características androgênicas.'},
   {id:'epilepsia', nome:'Epilepsia', sintomas:['convulsao','perda_consciencia','confusao'], painWeight:0.2, descricao:'Transtorno neurológico com crises convulsivas.'},
   {id:'apendicite', nome:'Apendicite aguda', sintomas:['dor_abdominal','febre','vomito','inic_local'], painWeight:1.0, descricao:'Inflamação do apêndice com dor abdominal localizada intensa.'},
@@ -586,6 +585,11 @@ const SYMPTOM_QUALIFIERS = {
     { id: 'dificuldade_dormir', label: 'Dificuldade em adormecer / manter o sono' },
     { id: 'reducao_necessidade', label: 'Pouca necessidade de sono (ex: 3h/noite)' }
   ],
+  'dispareunia': [
+      { id: 'dor_profunda', label: 'Dor profunda (pélvica)', sex: 'f' },
+      { id: 'dor_entrada', label: 'Dor na entrada (vaginal)', sex: 'f' },
+      { id: 'dor_ejaculacao', label: 'Dor durante/após ejaculação', sex: 'm' }
+  ],
   'tontura': [
     { id: 'rotatoria', label: 'Vertigem (sensação de girar)' },
     { id: 'pre_desmaio', label: 'Sensação de pré-desmaio / fraqueza' },
@@ -594,6 +598,12 @@ const SYMPTOM_QUALIFIERS = {
   'prurido': [
     { id: 'generalizado_renal', label: 'Generalizada (corpo todo), sem lesão' },
     { id: 'localizado_placas', label: 'Localizada (sobre placas de pele)' }
+  ],
+  'prurido_genital': [
+    { id: 'corrimento_espesso', label: 'Com corrimento branco/espesso (Nata)', sex: 'f' },
+    { id: 'vermelhidao_vulvar', label: 'Com vermelhidão/inchaço (Vulva)', sex: 'f' },
+    { id: 'placas_glande', label: 'Com placas brancas (Glande)', sex: 'm' },
+    { id: 'vermelhidao_peniana', label: 'Com vermelhidão/inchaço (Pênis)', sex: 'm' }
   ],
   'tosse': [
     { id: 'seca', label: 'Seca' },
