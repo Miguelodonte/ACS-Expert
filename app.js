@@ -269,8 +269,7 @@ function evaluateDiseases(data){
     let demographicWeight = 0;
     const diseaseWeights = RISK_WEIGHTS[d.id];
     if (diseaseWeights) {
-      let genderKey = data.genero;
-      if (!diseaseWeights[genderKey]) { genderKey = 'o'; }
+      let genderKey = data.sexo;
       const ageWeights = diseaseWeights[genderKey];
       if (ageWeights && ageWeights[data.faixa_etaria] !== undefined) {
         demographicWeight = ageWeights[data.faixa_etaria];
@@ -514,7 +513,7 @@ function btnNextClickHandler() {
   const faixaEtariaStr = faixaEtariaEl.value; // ex: "29-33"
   const faixaEtariaLabel = faixaEtariaEl.options[faixaEtariaEl.selectedIndex].text;
   // ex: "29 a 33 anos"
-  const genero = document.getElementById('genero').value;
+  const sexo = document.getElementById('sexo').value;
   // Coleta sintomas principais e suas intensidades
   const sintomas = selectedSymptoms;
   // Coleta fatores de risco
@@ -540,7 +539,7 @@ function btnNextClickHandler() {
   });
   const data = {
     faixa_etaria: faixaEtariaStr,
-    genero: genero,
+    sexo: sexo,
     sintomas: sintomas, // Objeto { symptomId: { intensity: X } }
     riskFactors: riskFactors,
     qualifiers: qualifiers // Novo objeto { symptomId: { qualifierId: true/false } }
@@ -549,8 +548,7 @@ function btnNextClickHandler() {
     ?
     Object.keys(sintomas).map(k => `${SYMPTOMS.find(s=>s.id===k).label} (int: ${sintomas[k].intensity})`).join(', ')
     : 'nenhum';
-  setConversationUser(`Faixa: ${faixaEtariaLabel} — Riscos: ${riskFactors.join(', ') || 'nenhum'} — Sintomas: ${sintomasTxt}`);
-
+  setConversationUser(`Sexo: ${sexo === 'f' ? 'Feminino' : 'Masculino'} — Faixa: ${faixaEtariaLabel} — Riscos: ${riskFactors.join(', ') || 'nenhum'} — Sintomas: ${sintomasTxt}`);
   const {logs, computed} = evaluateDiseases(data);
   // update engine tab
   rawDataEl.textContent = JSON.stringify(data, null, 2);
@@ -667,7 +665,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 function btnResetClickHandler() {
   // Reseta demografia
   document.getElementById('faixa_etaria').value = '29-33';
-  document.getElementById('genero').value = 'f';
+  document.getElementById('sexo').value = 'f';
   // Limpa objeto de sintomas selecionados
   selectedSymptoms = {};
   // Limpa os fatores de risco
