@@ -667,7 +667,7 @@ document.getElementById('exportBtn').addEventListener('click', ()=>{
 function btnResetClickHandler() {
   // Reseta demografia
   document.getElementById('faixa_etaria').value = '29-33';
-  document.getElementById('genero').value = 'o';
+  document.getElementById('genero').value = 'f';
   // Limpa objeto de sintomas selecionados
   selectedSymptoms = {};
   // Limpa os fatores de risco
