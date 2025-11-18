@@ -83,14 +83,13 @@ const SYMPTOMS = [
   {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'}, // Adicionei, usado em Insônia
 
   // Grupo: Ginecologia / Urinário
-  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica (Mulher)', group: 'Ginecologia / Urinário', sexFilter: 'f'}, 
+  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Ginecologia / Urinário'}, 
   {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Ginecologia / Urinário'},
   {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
   {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário', sexFilter: 'f'},
-  {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário', sexFilter: 'f'},
   {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário', sexFilter: 'f'},
   {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário', sexFilter: 'm'},
-  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Ginecologia / Urinário', sexFilter: 'm'},
+  {id:'corrimento_genital', label:'Corrimento ou Placas Brancas (Genital)', group: 'Ginecologia / Urinário'},
   {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Ginecologia / Urinário', sexFilter: 'f'},
   {id:'aumento_volume_abdominal', label:'Aumento do Volume Abdominal', group: 'Digestivo'},
   {id:'aura_visual', label:'Aura Visual (luzes, pontos cegos)', group: 'Neurológico / Cabeça'},
@@ -112,6 +111,7 @@ const SYMPTOMS = [
   {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'}
  ];
 const DISEASES = [
+  {id:'sdpc', nome:'Síndrome da Dor Pélvica Crônica (Homem)', sintomas:['dor_pelvica_cronica', 'dor_perineal', 'disuria', 'polaciuria', 'dispareunia'], painWeight: 0.7, genderPref: 'm', descricao:'Dor crônica na região pélvica/perineal, geralmente sem causa infecciosa detectável.'},
   {id:'tag', nome:'Ansiedade Generalizada (TAG)', sintomas:['preocupacao_excessiva', 'ansiedade_sintoma', 'irritabilidade', 'insônia_sintoma', 'astenia', 'dor_corpo'], painWeight: 0.1, genderPref: 'f', descricao:'Preocupação crônica, excessiva e difícil de controlar sobre diversos temas.'},
   {id:'panico', nome:'Síndrome do Pânico', sintomas:['medo_intenso_subito', 'palpitacao', 'taquicardia', 'dispneia', 'tontura', 'sudorese', 'calafrios'], painWeight: 0.7, descricao:'Ataques súbitos de medo intenso e sintomas físicos avassaladores sem perigo real.'},
   {id:'fobia_especifica', nome:'Fobia Específica', sintomas:['medo_especifico', 'ansiedade_sintoma', 'palpitacao', 'sudorese'], painWeight: 0.1, descricao:'Medo intenso e irracional de um objeto ou situação específica (ex: aranha, altura, avião).'},
@@ -124,7 +124,7 @@ const DISEASES = [
   {id:'mioma_uterino', nome:'Mioma Uterino', sintomas:['sangramento_uterino_anormal', 'colica_menstrual_intensa', 'dor_pelvica_cronica', 'aumento_volume_abdominal', 'polaciuria'], painWeight: 0.6, genderPref: 'f', descricao:'Tumor benigno no útero, causando sangramento intenso e dor pélvica.'},
   {id:'enxaqueca', nome:'Enxaqueca (Migrânea)', sintomas:['cefaleia', 'nausea', 'vomito', 'sensibilidade_luz', 'aura_visual'], painWeight: 0.8, genderPref: 'f', descricao:'Cefaleia crônica, pulsátil, frequentemente unilateral e incapacitante, com sensibilidade sensorial.'},
   {id:'parkinson', nome:'Doença de Parkinson', sintomas:['tremor_repouso', 'rigidez_muscular', 'bradicinesia', 'instabilidade_postural'], painWeight: 0.1, genderPref: 'm', descricao:'Doença neurológica degenerativa que afeta o movimento, causando tremor em repouso e lentidão.'},
-  {id:'balanite_candidiaca', nome:'Balanite Candidiásica (Homem)', sintomas:['prurido_genital', 'vermelhidao_glande', 'placas_brancas_penis', 'disuria'], painWeight: 0.4, genderPref: 'm', descricao:'Infecção fúngica peniana (glande/prepúcio), causando coceira, vermelhidão e placas brancas.'},
+  {id:'balanite_candidiaca', nome:'Balanite Candidiásica', sintomas:['prurido_genital', 'vermelhidao_glande', 'corrimento_genital', 'disuria'], painWeight: 0.4, genderPref: 'm', descricao:'Infecção fúngica peniana (glande/prepúcio), causando coceira, vermelhidão e placas brancas.'},
   {id:'artrose', nome:'Artrose (Osteoartrite)', sintomas:['dor_articular', 'edema', 'crepitacao_articular', 'rigidez_matinal'], painWeight: 0.6, descricao:'Doença degenerativa da cartilagem, dor piora com esforço e no fim do dia.'},
   {id:'fibromialgia', nome:'Fibromialgia', sintomas:['dor_corpo', 'astenia', 'insônia_sintoma', 'confusao', 'cefaleia', 'ansiedade_sintoma'], painWeight: 0.8, genderPref: 'f', descricao:'Síndrome de dor crônica generalizada, associada a fadiga, sono não reparador e "névoa mental".'},
   {id:'lupus', nome:'Lúpus (LES)', sintomas:['astenia', 'febre', 'dor_articular', 'manchas_pele', 'sensibilidade_luz', 'perda_peso', 'feridas_boca', 'queda_cabelo'], painWeight: 0.5, genderPref: 'f', descricao:'Doença autoimune sistêmica que afeta pele, articulações, rins e outros órgãos. Predominante em mulheres.'},
@@ -176,7 +176,7 @@ const DISEASES = [
   {id:'sepsis', nome:'Sepse', sintomas:['febre','confusao','hipotensao','taquicardia'], painWeight:0.9, descricao:'Resposta inflamatória sistêmica grave a infecção.'},
   {id:'anemia', nome:'Anemia', sintomas:['astenia','palidez','tontura','fraqueza'], painWeight:0.1, descricao:'Baixa hemoglobina causando fadiga.'},
   {id:'endometriose', nome:'Endometriose', sintomas:['dor_pelvica_cronica', 'colica_menstrual_intensa', 'dispareunia', 'dor_abdominal', 'constipacao', 'diarreia'], painWeight: 0.9, genderPref: 'f', descricao:'Crescimento do tecido endometrial fora do útero, causando dor pélvica crônica intensa.'},
-  {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_genital', 'corrimento_vaginal', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
+  {id:'candidiase', nome:'Candidíase Vaginal', sintomas:['prurido_genital', 'corrimento_genital', 'disuria', 'dispareunia'], painWeight: 0.4, genderPref: 'f', descricao:'Infecção fúngica vaginal comum, causando coceira intensa e corrimento espesso.'},
   {id:'sop', nome:'SOP (Síndrome do Ovário Policístico)', sintomas:['ciclo_irregular', 'hirsutismo', 'ganho_peso', 'queda_cabelo'], painWeight: 0.1, genderPref: 'f', descricao:'Distúrbio hormonal comum que causa ciclos irregulares e características androgênicas.'},
   {id:'epilepsia', nome:'Epilepsia', sintomas:['convulsao','perda_consciencia','confusao'], painWeight:0.2, descricao:'Transtorno neurológico com crises convulsivas.'},
   {id:'apendicite', nome:'Apendicite aguda', sintomas:['dor_abdominal','febre','vomito','inic_local'], painWeight:1.0, descricao:'Inflamação do apêndice com dor abdominal localizada intensa.'},
@@ -190,6 +190,11 @@ const RISK_WEIGHTS = {
     'm': { '0-18':20, '19-23':15, '24-28':5, '29-33':0, '34-38':-5, '39-43':-10, '44-48':-10, '49-53':-10, '54-58':-10, '59+':-10 },
     'f': { '0-18':15, '19-23':10, '24-28':5, '29-33':5, '34-38':0, '39-43':-5, '44-48':-5, '49-53':-5, '54-58':-5, '59+':-5 },
     'o': { '0-18':18, '19-23':13, '24-28':5, '29-33':3, '34-38':-3, '39-43':-8, '44-48':-8, '49-53':-8, '54-58':-8, '59+':-8 }
+  },
+  'sdpc': {
+    'm': { '0-18':-10, '19-23':0, '24-28':5, '29-33':10, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
+    'f': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
+    'o': { '0-18':-50, '19-23':0, '24-28':3, '29-33':5, '34-38':8, '39-43':8, '44-48':5, '49-53':3, '54-58':0, '59+':0 }
   },
   'transtorno_bipolar': {
     'm': { '0-18':5, '19-23':15, '24-28':15, '29-33':10, '34-38':5, '39-43':0, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
@@ -555,10 +560,15 @@ const RISK_FACTOR_BONUS = {
   'gestante': { 'anemia': 10, 'infeccao_urinaria': 10, 'pielonefrite': 10, 'hipertensao': 5 }
 };
 const SYMPTOM_QUALIFIERS = {
-  'corrimento_vaginal': [
-    { id: 'branco_espesso', label: 'Branco, espesso (Nata/Queijo Cottage)' },
-    { id: 'amarelo_esverdeado', label: 'Amarelo-esverdeado (com odor)' },
-    { id: 'acinzentado_odor', label: 'Acinzentado (com odor de peixe)' }
+  'corrimento_genital': [
+    // Opções Femininas (Candidiase, Vaginose bacteriana)
+    { id: 'branco_espesso', label: 'Branco, espesso (Nata/Queijo Cottage)', sex: 'f' },
+    { id: 'amarelo_esverdeado', label: 'Amarelo-esverdeado (com odor)', sex: 'f' },
+    { id: 'acinzentado_odor', label: 'Acinzentado (com odor de peixe)', sex: 'f' },
+    
+    // Opções Masculinas (Balanite, DST)
+    { id: 'placas_brancas_glande', label: 'Placas/Crostas brancas na Glande', sex: 'm' },
+    { id: 'secrecao_uretral', label: 'Secreção na uretra (espessa/amarela)', sex: 'm' }
   ],
   'dor_corpo': [
     { id: 'difusa_generalizada', label: 'Difusa / Generalizada (corpo todo)' },
