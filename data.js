@@ -83,7 +83,7 @@ const SYMPTOMS = [
 
   // Grupo: Ginecologia / Urinário
   {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Ginecologia / Urinário'},
-  {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Ginecologia / Urinário'},
+  {id:'prurido_genital', label:'Coceira Genital', group: 'Ginecologia / Urinário'},
   {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
   {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário'},
   {id:'corrimento_vaginal', label:'Corrimento Vaginal', group: 'Ginecologia / Urinário'},
