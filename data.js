@@ -111,7 +111,7 @@ const SYMPTOMS = [
   {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'}
  ];
 const DISEASES = [
-  {id:'sdpc', nome:'Síndrome da Dor Pélvica Crônica (Homem)', sintomas:['dor_pelvica_cronica', 'dor_perineal', 'disuria', 'polaciuria', 'dispareunia'], painWeight: 0.7, genderPref: 'm', descricao:'Dor crônica na região pélvica/perineal, geralmente sem causa infecciosa detectável.'},
+  {id:'sdpc', nome:'Síndrome da Dor Pélvica Crônica', sintomas:['dor_pelvica_cronica', 'dor_perineal', 'disuria', 'polaciuria', 'dispareunia', 'ansiedade_sintoma'], painWeight: 0.7, genderPref: 'f', descricao:'Dor persistente na região pélvica sem infecção ativa comprovada (ex: prostatite crônica ou dor pélvica inespecífica).'},
   {id:'tag', nome:'Ansiedade Generalizada (TAG)', sintomas:['preocupacao_excessiva', 'ansiedade_sintoma', 'irritabilidade', 'insônia_sintoma', 'astenia', 'dor_corpo'], painWeight: 0.1, genderPref: 'f', descricao:'Preocupação crônica, excessiva e difícil de controlar sobre diversos temas.'},
   {id:'panico', nome:'Síndrome do Pânico', sintomas:['medo_intenso_subito', 'palpitacao', 'taquicardia', 'dispneia', 'tontura', 'sudorese', 'calafrios'], painWeight: 0.7, descricao:'Ataques súbitos de medo intenso e sintomas físicos avassaladores sem perigo real.'},
   {id:'fobia_especifica', nome:'Fobia Específica', sintomas:['medo_especifico', 'ansiedade_sintoma', 'palpitacao', 'sudorese'], painWeight: 0.1, descricao:'Medo intenso e irracional de um objeto ou situação específica (ex: aranha, altura, avião).'},
@@ -192,9 +192,9 @@ const RISK_WEIGHTS = {
     'o': { '0-18':18, '19-23':13, '24-28':5, '29-33':3, '34-38':-3, '39-43':-8, '44-48':-8, '49-53':-8, '54-58':-8, '59+':-8 }
   },
   'sdpc': {
-    'm': { '0-18':-10, '19-23':0, '24-28':5, '29-33':10, '34-38':15, '39-43':15, '44-48':10, '49-53':5, '54-58':0, '59+':0 },
-    'f': { '0-18':-99, '19-23':-99, '24-28':-99, '29-33':-99, '34-38':-99, '39-43':-99, '44-48':-99, '49-53':-99, '54-58':-99, '59+':-99 },
-    'o': { '0-18':-50, '19-23':0, '24-28':3, '29-33':5, '34-38':8, '39-43':8, '44-48':5, '49-53':3, '54-58':0, '59+':0 }
+    'm': { '0-18':-10, '19-23':0, '24-28':5, '29-33':10, '34-38':15, '39-43':15, '44-48':15, '49-53':10, '54-58':5, '59+':5 },
+    'f': { '0-18':-5, '19-23':10, '24-28':15, '29-33':20, '34-38':20, '39-43':20, '44-48':15, '49-53':5, '54-58':0, '59+':0 },
+    'o': { '0-18':-8, '19-23':5, '24-28':10, '29-33':15, '34-38':18, '39-43':18, '44-48':13, '49-53':8, '54-58':3, '59+':3 }
   },
   'transtorno_bipolar': {
     'm': { '0-18':5, '19-23':15, '24-28':15, '29-33':10, '34-38':5, '39-43':0, '44-48':0, '49-53':0, '54-58':0, '59+':0 },
