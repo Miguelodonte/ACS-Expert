@@ -38,8 +38,7 @@ function renderSymptoms(){
     acc[group].push(symptom);
     return acc;
   }, {});
-  // 2. Renderizar Grupos e Sintomas
-  const groupOrder = [
+const groupOrder = [
     'Sintomas Gerais',
     'Pele e Locomotor',
     'Respiratório e Otorrino',
