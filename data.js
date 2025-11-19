@@ -1,115 +1,140 @@
 // ==== Lista de sintomas possíveis (com grupos) ====
 const SYMPTOMS = [
-  // Grupo: Geral
-  {id:'febre', label:'Febre', group: 'Geral'},
-  {id:'queda_cabelo', label:'Queda de cabelo (Alopécia)', group: 'Geral'},
-  {id:'dor_corpo', label:'Dor no corpo / mialgia', group: 'Geral'},
-  {id:'astenia', label:'Fadiga / cansaço', group: 'Geral'},
-  {id:'calafrios', label:'Calafrios', group: 'Geral'},
-  {id:'perda_peso', label:'Perda de peso inexplicada', group: 'Geral'},
-  {id:'suor_noturno', label:'Sudorese noturna', group: 'Geral'},
-  {id:'adenomegalia', label:'Aumento de gânglios', group: 'Geral'},
-  {id:'edema', label:'Inchaço (edema)', group: 'Geral'},
-  {id:'rigidez_matinal', label:'Rigidez Articular (pela manhã)', group: 'Geral'},
-
-  // Grupo: Respiratório / ORL (Otorrino)
-  {id:'tosse', label:'Tosse', group: 'Respiratório / ORL'},
-  {id:'dispneia', label:'Dificuldade para respirar', group: 'Respiratório / ORL'},
-  {id:'dor_peito', label:'Dor no peito', group: 'Respiratório / ORL'}, // Pode ser cardíaco, mas deixamos aqui por ora
-  {id:'coriza', label:'Coriza / nariz entupido', group: 'Respiratório / ORL'},
-  {id:'odinofagia', label:'Dor ao engolir', group: 'Respiratório / ORL'},
-  {id:'rouquidão', label:'Rouquidão', group: 'Respiratório / ORL'},
-  {id:'rinorreia', label:'Secreção nasal', group: 'Respiratório / ORL'},
-  {id:'dor_ouvido', label:'Dor no ouvido', group: 'Respiratório / ORL'},
-  {id:'sangue_no_sarro', label:'Sangue na expectoração', group: 'Respiratório / ORL'},
-
-  // Grupo: Digestivo
-  {id:'dor_abdominal', label:'Dor abdominal', group: 'Digestivo'},
-  {id:'vomito', label:'Vômito', group: 'Digestivo'},
-  {id:'diarreia', label:'Diarreia', group: 'Digestivo'},
-  {id:'ictericia', label:'Icterícia (amarelamento)', group: 'Digestivo'},
-  {id:'sangue_no_sangue', label:'Sangue nas fezes', group: 'Digestivo'},
-  {id:'nausea', label:'Náusea', group: 'Digestivo'}, // Adicionei Náusea que estava implícita em Gastrite/Úlcera
-  {id:'perda_apetite', label:'Perda de Apetite', group: 'Digestivo'}, // Adicionei, usado em Gastrite
-
-  // Grupo: Neurológico / Cabeça
-  {id:'cefaleia', label:'Dor de cabeça', group: 'Neurológico / Cabeça'},
-  {id:'tontura', label:'Tontura / desmaio', group: 'Neurológico / Cabeça'},
-  {id:'confusao', label:'Confusão mental', group: 'Neurológico / Cabeça'},
-  {id:'perda_consciencia', label:'Perda de consciência', group: 'Neurológico / Cabeça'},
-  {id:'convulsao', label:'Convulsões', group: 'Neurológico / Cabeça'},
-  {id:'sensibilidade_luz', label:'Sensibilidade à luz', group: 'Neurológico / Cabeça'},
-  {id:'dor_face', label:'Dor na Face', group: 'Neurológico / Cabeça'}, // Adicionei, usado em Sinusite
-  {id:'fraqueza_unilateral', label: 'Fraqueza Unilateral', group: 'Neurológico / Cabeça'}, // Adicionei, usado em AVC
-
-  // Grupo: Pele / Mucosas
-  {id:'manchas_pele', label:'Manchas/erupção na pele', group: 'Pele / Mucosas'},
-  {id:'conjuntivite', label:'Olhos vermelhos / conjuntivite', group: 'Pele / Mucosas'},
-  {id:'sangramento_gengiva', label:'Sangramento nas gengivas', group: 'Pele / Mucosas'},
-  {id:'palidez', label:'Palidez', group: 'Pele / Mucosas'}, // Adicionei, usado em Anemia
-  {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Pele / Mucosas'}, // Adicionei, usado em Conjuntivite
-  {id:'prurido', label:'Coceira generalizada (sem rash)', group: 'Pele / Mucosas'},
-  {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Pele / Mucosas'},
-  {id:'hirsutismo', label:'Excesso de Pelos (Mulher)', group: 'Pele / Mucosas', sexFilter: 'f'},
+  // ===================================
+  // NOVO GRUPO: 1. Sintomas Gerais (Constitucionais)
+  // ===================================
+  {id:'febre', label:'Febre', group: 'Sintomas Gerais'},
+  {id:'astenia', label:'Fadiga / cansaço', group: 'Sintomas Gerais'},
+  {id:'calafrios', label:'Calafrios', group: 'Sintomas Gerais'},
+  {id:'adenomegalia', label:'Aumento de gânglios', group: 'Sintomas Gerais'},
+  {id:'suor_noturno', label:'Sudorese noturna', group: 'Sintomas Gerais'},
+  {id:'perda_peso', label:'Perda de peso inexplicada', group: 'Sintomas Gerais'},
+  {id:'ganho_peso', label:'Ganho de Peso', group: 'Sintomas Gerais'},
+  {id:'frio_intolerancia', label:'Intolerância ao Frio', group: 'Sintomas Gerais'},
+  {id:'edema', label:'Inchaço (edema)', group: 'Sintomas Gerais'},
+  {id:'palidez', label:'Palidez', group: 'Sintomas Gerais'}, // Originalmente em Pele/Mucosas
   
-  // Grupo: Urinário / Metabólico
-  {id:'disuria', label:'Dor ao urinar', group: 'Urinário / Metabólico'},
-  {id:'anuria', label:'Redução/ausência de urina', group: 'Urinário / Metabólico'},
-  {id:'poliuria', label:'Urina em excesso', group: 'Urinário / Metabólico'},
-  {id:'polidipsia', label:'Sede excessiva', group: 'Urinário / Metabólico'},
-  {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urinário / Metabólico'},
-  {id:'hematuria', label:'Sangue na Urina', group: 'Urinário / Metabólico'},
-  {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urinário / Metabólico'},
-  {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Urinário / Metabólico', sexFilter: 'm'},
-  {id:'ejaculacao_dolorosa', label:'Ejaculação dolorosa', group: 'Urinário / Metabólico', sexFilter: 'm'},
+  // ===================================
+  // NOVO GRUPO: 2. Pele e Locomotor
+  // ===================================
+  {id:'dor_corpo', label:'Dor no corpo / mialgia', group: 'Pele e Locomotor'},
+  {id:'dor_articular', label:'Dor Articular', group: 'Pele e Locomotor'},
+  {id:'rigidez_matinal', label:'Rigidez Articular (pela manhã)', group: 'Pele e Locomotor'},
+  {id:'crepitacao_articular', label:'Crepitação/Estalos nas Articulações', group: 'Pele e Locomotor'},
+  {id:'inic_local', label:'Dor localizada intensa', group: 'Pele e Locomotor'}, // Ex: Apendicite, LER
+  
+  {id:'manchas_pele', label:'Manchas/erupção na pele', group: 'Pele e Locomotor'},
+  {id:'placas_descamativas', label:'Placas de Pele Descamativas (Prateadas)', group: 'Pele e Locomotor'},
+  {id:'vergoes_pele', label:'Vergões / Urticas (Pele elevada)', group: 'Pele e Locomotor'},
+  {id:'angioedema', label:'Inchaço de Lábios / Olhos / Rosto', group: 'Pele e Locomotor'},
+  {id:'lesoes_nodulares_pele', label:'Lesões Nodulares / Cistos (Pele)', group: 'Pele e Locomotor'},
+  {id:'prurido', label:'Coceira generalizada (sem rash)', group: 'Pele e Locomotor'},
+  {id:'queda_cabelo', label:'Queda de cabelo (Alopécia)', group: 'Pele e Locomotor'},
+  {id:'hirsutismo', label:'Excesso de Pelos (Mulher)', group: 'Pele e Locomotor', sexFilter: 'f'},
 
-  // Grupo: Cardiovascular
+  // ===================================
+  // NOVO GRUPO: 3. Respiratório e Otorrino
+  // ===================================
+  {id:'tosse', label:'Tosse', group: 'Respiratório e Otorrino'},
+  {id:'dispneia', label:'Dificuldade para respirar', group: 'Respiratório e Otorrino'},
+  {id:'dor_peito', label:'Dor no peito', group: 'Respiratório e Otorrino'}, // Cardiovascular / Respiratório
+  {id:'chiado', label:'Chiado no Peito', group: 'Respiratório e Otorrino'}, 
+  {id:'sangue_no_sarro', label:'Sangue na expectoração', group: 'Respiratório e Otorrino'}, 
+
+  {id:'coriza', label:'Coriza / nariz entupido', group: 'Respiratório e Otorrino'},
+  {id:'rinorreia', label:'Secreção nasal', group: 'Respiratório e Otorrino'},
+  {id:'dor_face', label:'Dor na Face', group: 'Respiratório e Otorrino'},
+  {id:'odinofagia', label:'Dor ao engolir', group: 'Respiratório e Otorrino'},
+  {id:'rouquidão', label:'Rouquidão', group: 'Respiratório e Otorrino'},
+  {id:'dor_ouvido', label:'Dor no ouvido', group: 'Respiratório e Otorrino'},
+  {id:'zumbido', label:'Zumbido no Ouvido', group: 'Respiratório e Otorrino'},
+
+  // ===================================
+  // NOVO GRUPO: 4. Gastrointestinal
+  // ===================================
+  {id:'dor_abdominal', label:'Dor abdominal', group: 'Gastrointestinal'},
+  {id:'aumento_volume_abdominal', label:'Aumento do Volume Abdominal', group: 'Gastrointestinal'},
+  {id:'vomito', label:'Vômito', group: 'Gastrointestinal'},
+  {id:'nausea', label:'Náusea', group: 'Gastrointestinal'},
+  {id:'diarreia', label:'Diarreia', group: 'Gastrointestinal'},
+  {id:'constipacao', label:'Constipação', group: 'Gastrointestinal'},
+  {id:'sangue_no_sangue', label:'Sangue nas fezes', group: 'Gastrointestinal'},
+  {id:'perda_apetite', label:'Perda de Apetite', group: 'Gastrointestinal'},
+  {id:'ictericia', label:'Icterícia (amarelamento)', group: 'Gastrointestinal'},
+
+  // ===================================
+  // NOVO GRUPO: 5. Urogenital
+  // ===================================
+  {id:'disuria', label:'Dor ao urinar', group: 'Urogenital'},
+  {id:'polaciuria', label:'Vontade frequente de urinar', group: 'Urogenital'},
+  {id:'poliuria', label:'Urina em excesso', group: 'Urogenital'},
+  {id:'anuria', label:'Redução/ausência de urina', group: 'Urogenital'},
+  {id:'hematuria', label:'Sangue na Urina', group: 'Urogenital'},
+  {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urogenital'}, 
+  
+  {id:'polidipsia', label:'Sede excessiva', group: 'Urogenital'}, // Associado a Poliuria/Diabetes
+  
+  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Urogenital'}, 
+  {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Urogenital', sexFilter: 'm'},
+  {id:'ejaculacao_dolorosa', label:'Ejaculação dolorosa', group: 'Urogenital', sexFilter: 'm'},
+  {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Urogenital'},
+  {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Urogenital'},
+  {id:'corrimento_genital', label:'Corrimento ou Placas Brancas (Genital)', group: 'Urogenital'},
+  
+  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Urogenital', sexFilter: 'f'},
+  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Urogenital', sexFilter: 'f'},
+  {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Urogenital', sexFilter: 'f'},
+  {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Urogenital', sexFilter: 'm'},
+
+  // ===================================
+  // NOVO GRUPO: 6. Cardiovascular
+  // ===================================
   {id:'palpitacao', label:'Palpitações', group: 'Cardiovascular'},
+  {id:'taquicardia', label:'Taquicardia', group: 'Cardiovascular'},
   {id:'hipertensao_crise', label:'Pressão arterial muito alta', group: 'Cardiovascular'},
-  {id:'hipotensao', label:'Pressão Baixa / Choque', group: 'Cardiovascular'}, // Adicionei, usado em Sepse
-  {id:'taquicardia', label:'Taquicardia', group: 'Cardiovascular'}, // Adicionei, usado em Sepse
+  {id:'hipotensao', label:'Pressão Baixa / Choque', group: 'Cardiovascular'},
 
-  // Grupo: Outros (ajustar conforme necessidade)
-  {id:'inic_local', label:'Dor localizada intensa', group: 'Outros'}, // Ex: Apendicite, LER, Celulite
-  {id:'dor_articular', label:'Dor Articular', group: 'Outros'}, // Adicionei, usado em Chikungunya
-  {id:'chiado', label:'Chiado no Peito', group: 'Respiratório / ORL'}, // Movido para Respiratório
-  {id:'ganho_peso', label:'Ganho de Peso', group: 'Geral'}, // Adicionei, usado em Hipotireoidismo
-  {id:'constipacao', label:'Constipação', group: 'Digestivo'}, // Adicionei, usado em Hipotireoidismo
-  {id:'frio_intolerancia', label:'Intolerância ao Frio', group: 'Geral'}, // Adicionei, usado em Hipotireoidismo
-  {id:'ansiedade_sintoma', label:'Ansiedade (Sintoma)', group: 'Geral'}, // Renomeado de 'ansiedade', usado em Hipertireoidismo
-  {id:'insônia_sintoma', label:'Insônia (Sintoma)', group: 'Geral'}, // Renomeado de 'insônia', usado em Depressão/Ansiedade
-  {id:'tristeza', label:'Tristeza / Desânimo', group: 'Geral'}, // Adicionei, usado em Depressão
-  {id:'crepitacao_articular', label:'Crepitação/Estalos nas Articulações', group: 'Outros'},
-  {id:'irritabilidade', label:'Irritabilidade', group: 'Geral'}, // Adicionei, usado em Insônia
-
-  // Grupo: Ginecologia / Urinário
-  {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Ginecologia / Urinário'}, 
-  {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Ginecologia / Urinário'},
-  {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Ginecologia / Urinário'},
-  {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Ginecologia / Urinário', sexFilter: 'f'},
-  {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Ginecologia / Urinário', sexFilter: 'f'},
-  {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Ginecologia / Urinário', sexFilter: 'm'},
-  {id:'corrimento_genital', label:'Corrimento ou Placas Brancas (Genital)', group: 'Ginecologia / Urinário'},
-  {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Ginecologia / Urinário', sexFilter: 'f'},
-  {id:'aumento_volume_abdominal', label:'Aumento do Volume Abdominal', group: 'Digestivo'},
-  {id:'aura_visual', label:'Aura Visual (luzes, pontos cegos)', group: 'Neurológico / Cabeça'},
-  {id:'tremor_repouso', label:'Tremor (em repouso)', group: 'Neurológico / Cabeça'},
-  {id:'rigidez_muscular', label:'Rigidez Muscular (Geral)', group: 'Neurológico / Cabeça'},
-  {id:'bradicinesia', label:'Lentidão de Movimentos', group: 'Neurológico / Cabeça'},
-  {id:'instabilidade_postural', label:'Instabilidade Postural / Quedas', group: 'Neurológico / Cabeça'},
-  {id:'perda_memoria_recente', label:'Perda de Memória Recente', group: 'Neurológico / Cabeça'},
-  {id:'dificuldade_linguagem', label:'Dificuldade de Linguagem/Fala', group: 'Neurológico / Cabeça'},
-  {id:'desorientacao', label:'Desorientação (Tempo/Espaço)', group: 'Neurológico / Cabeça'},
-  {id:'vertigem_rotatoria', label:'Vertigem (Sensação de Girar)', group: 'Neurológico / Cabeça'},
-  {id:'zumbido', label:'Zumbido no Ouvido', group: 'Respiratório / ORL'},
-  {id:'placas_descamativas', label:'Placas de Pele Descamativas (Prateadas)', group: 'Pele / Mucosas'},
-  {id:'vergoes_pele', label:'Vergões / Urticas (Pele elevada)', group: 'Pele / Mucosas'},
-  {id:'angioedema', label:'Inchaço de Lábios / Olhos / Rosto', group: 'Pele / Mucosas'},
-  {id:'lesoes_nodulares_pele', label:'Lesões Nodulares / Cistos (Pele)', group: 'Pele / Mucosas'},
-  {id:'euforia_mania', label:'Euforia / Agitação (Mania)', group: 'Geral / Psiquiátrico'},
-  {id:'fala_acelerada', label:'Fala Acelerada / Compulsiva', group: 'Geral / Psiquiátrico'},
-  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Geral / Psiquiátrico'}
- ];
+  // ===================================
+  // NOVO GRUPO: 7. Neurológico e Mental
+  // ===================================
+  {id:'cefaleia', label:'Dor de cabeça', group: 'Neurológico e Mental'},
+  {id:'aura_visual', label:'Aura Visual (luzes, pontos cegos)', group: 'Neurológico e Mental'},
+  {id:'sensibilidade_luz', label:'Sensibilidade à luz', group: 'Neurológico e Mental'},
+  {id:'dor_face', label:'Dor na Face', group: 'Neurológico e Mental'}, 
+  
+  {id:'tontura', label:'Tontura / desmaio', group: 'Neurológico e Mental'},
+  {id:'vertigem_rotatoria', label:'Vertigem (Sensação de Girar)', group: 'Neurológico e Mental'},
+  {id:'perda_consciencia', label:'Perda de consciência', group: 'Neurológico e Mental'},
+  {id:'convulsao', label:'Convulsões', group: 'Neurológico e Mental'},
+  {id:'confusao', label:'Confusão mental', group: 'Neurológico e Mental'},
+  
+  {id:'fraqueza_unilateral', label: 'Fraqueza Unilateral', group: 'Neurológico e Mental'},
+  {id:'tremor_repouso', label:'Tremor (em repouso)', group: 'Neurológico e Mental'},
+  {id:'rigidez_muscular', label:'Rigidez Muscular (Geral)', group: 'Neurológico e Mental'},
+  {id:'bradicinesia', label:'Lentidão de Movimentos', group: 'Neurológico e Mental'},
+  {id:'instabilidade_postural', label:'Instabilidade Postural / Quedas', group: 'Neurológico e Mental'},
+  
+  {id:'perda_memoria_recente', label:'Perda de Memória Recente', group: 'Neurológico e Mental'},
+  {id:'dificuldade_linguagem', label:'Dificuldade de Linguagem/Fala', group: 'Neurológico e Mental'},
+  {id:'desorientacao', label:'Desorientação (Tempo/Espaço)', group: 'Neurológico e Mental'},
+  
+  {id:'ansiedade_sintoma', label:'Ansiedade / Nervosismo', group: 'Neurológico e Mental'},
+  {id:'tristeza', label:'Tristeza / Desânimo', group: 'Neurológico e Mental'},
+  {id:'insônia_sintoma', label:'Insônia / Dificuldade de dormir', group: 'Neurológico e Mental'},
+  {id:'irritabilidade', label:'Irritabilidade', group: 'Neurológico e Mental'},
+  {id:'euforia_mania', label:'Euforia / Agitação (Mania)', group: 'Neurológico e Mental'},
+  {id:'fala_acelerada', label:'Fala Acelerada / Compulsiva', group: 'Neurológico e Mental'},
+  {id:'reducao_sono', label:'Redução da Necessidade de Sono', group: 'Neurológico e Mental'},
+  
+  // ===================================
+  // NOVO GRUPO: 8. Outros (Residual)
+  // ===================================
+  {id:'sangramento_gengiva', label:'Sangramento nas gengivas', group: 'Outros'},
+  {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Outros'},
+  {id:'conjuntivite', label:'Olhos vermelhos / conjuntivite', group: 'Outros'},
+  {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Outros'}, 
+  {id:'inic_local', label:'Dor localizada intensa', group: 'Outros'} // Mantido aqui para casos não-articulares/cutâneos
+];
 const DISEASES = [
   {id:'sdpc', nome:'Síndrome da Dor Pélvica Crônica', sintomas:['dor_pelvica_cronica', 'dor_perineal', 'disuria', 'polaciuria', 'dispareunia', 'ansiedade_sintoma'], painWeight: 0.7, genderPref: 'f', descricao:'Dor persistente na região pélvica sem infecção ativa comprovada (ex: prostatite crônica ou dor pélvica inespecífica).'},
   {id:'tag', nome:'Ansiedade Generalizada (TAG)', sintomas:['preocupacao_excessiva', 'ansiedade_sintoma', 'irritabilidade', 'insônia_sintoma', 'astenia', 'dor_corpo'], painWeight: 0.1, genderPref: 'f', descricao:'Preocupação crônica, excessiva e difícil de controlar sobre diversos temas.'},
