@@ -1,4 +1,3 @@
-// ==== Lista de sintomas possíveis (Reorganizada: 12 Grupos) ====
 const SYMPTOMS = [
   // 1. Sintomas Gerais
   {id:'astenia', label:'Fadiga / cansaço', group: 'Sintomas Gerais'},
@@ -50,7 +49,7 @@ const SYMPTOMS = [
   {id:'dor_ouvido', label:'Dor no ouvido', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
   {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
   {id:'odinofagia', label:'Dor ao engolir', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
-  {id:'rinorreia', label:'Secreção nasal', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
+  // REMOVIDO: rinorreia (duplicata de coriza/não usado)
   {id:'rouquidão', label:'Rouquidão', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
   {id:'sangramento_gengiva', label:'Sangramento nas gengivas', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
   {id:'zumbido', label:'Zumbido no Ouvido', group: 'Ouvido, Nariz e Garganta (Otorrino)'},
@@ -76,7 +75,7 @@ const SYMPTOMS = [
   {id:'ictericia', label:'Icterícia (amarelamento)', group: 'Digestivo e Abdominal'},
   {id:'nausea', label:'Náusea', group: 'Digestivo e Abdominal'},
   {id:'perda_apetite', label:'Perda de Apetite', group: 'Digestivo e Abdominal'},
-  {id:'sangue_no_sangue', label:'Sangue nas fezes', group: 'Digestivo e Abdominal'},
+  {id:'sangue_nas_fezes', label:'Sangue nas fezes', group: 'Digestivo e Abdominal'}, // RENOMEADO
   {id:'vomito', label:'Vômito', group: 'Digestivo e Abdominal'},
 
   // 9. Urinário e Renal
@@ -156,11 +155,11 @@ const DISEASES = [
   {id:'gastrite', nome:'Gastrite', sintomas:['dor_abdominal','nausea','vomito','perda_apetite'], painWeight:0.8, descricao:'Inflamação do estômago com dor epigástrica.'},
   {id:'colecistite', nome:'Colecistite', sintomas:['dor_abdominal','febre','vomito','ictericia'], painWeight:0.9, descricao:'Inflamação da vesícula biliar com dor intensa no quadrante superior direito.'},
   {id:'pancreatite', nome:'Pancreatite', sintomas:['dor_abdominal','vomito','suor_noturno','ictericia'], painWeight:1.0, descricao:'Inflamação do pâncreas com dor abdominal intensa.'},
-  {id:'ulcera', nome:'Úlcera péptica', sintomas:['dor_abdominal','perda_peso','nausea','vomito'], painWeight:0.7, descricao:'Lesão na mucosa gástrica causando dor epigástrica.'},
+  {id:'ulcera', nome:'Úlcera péptica', sintomas:['dor_abdominal','perda_peso','nausea','vomito','sangue_nas_fezes'], painWeight:0.7, descricao:'Lesão na mucosa gástrica causando dor epigástrica e possível sangramento.'},
   {id:'doenca_coronariana', nome:'Doença arterial coronariana', sintomas:['dor_peito','palpitacao','dispneia','sudorese'], painWeight:0.9, descricao:'Problemas das artérias coronárias podendo causar dor torácica.'},
   {id:'infarto', nome:'Infarto agudo do miocárdio', sintomas:['dor_peito','sudorese','tontura','desmaio'], painWeight:1.0, descricao:'Isquemia coronária grave com dor torácica intensa.'},
   {id:'angina', nome:'Angina', sintomas:['dor_peito','dispneia','palpitacao'], painWeight:0.8, descricao:'Dor torácica por isquemia transitória.'},
-  {id:'hipertensao', nome:'Hipertensão arterial', sintomas:['cefaleia','tontura','palpitacao'], painWeight:0.2, descricao:'Pressão arterial alta, muitas vezes assintomática.'},
+  {id:'hipertensao', nome:'Hipertensão arterial', sintomas:['cefaleia','tontura','palpitacao','hipertensao_crise'], painWeight:0.2, descricao:'Pressão arterial alta, muitas vezes assintomática ou com picos hipertensivos.'},
   {id:'acidente_vascular', nome:'AVC (Acidente Vascular Cerebral)', sintomas:['confusao','perda_consciencia','tontura','fraqueza_unilateral'], painWeight:0.1, descricao:'Comprometimento neurológico agudo.'},
   {id:'diabetes2', nome:'Diabetes tipo 2', sintomas:['poliuria','polidipsia','perda_peso','astenia'], painWeight:0.1, descricao:'Doença metabólica com sede e micção aumentadas.'},
   {id:'hipotireoidismo', nome:'Hipotireoidismo', sintomas:['astenia','ganho_peso','constipacao','frio_intolerancia'], painWeight:0.1, genderPref: 'f', descricao:'Baixa atividade da tireoide.'},
@@ -169,7 +168,7 @@ const DISEASES = [
   {id:'insônia', nome:'Insônia', sintomas:['insônia','astenia','irritabilidade'], painWeight:0.02, descricao:'Dificuldade de sono persistente.'},
   {id:'dpoc', nome:'DPOC', sintomas:['tosse','dispneia','palpitacao'], painWeight:0.3, descricao:'Doença pulmonar obstrutiva crônica.'},
   {id:'artrite_reumatoide', nome:'Artrite Reumatoide', sintomas:['dor_articular', 'edema', 'rigidez_matinal', 'astenia', 'perda_peso'], painWeight: 0.7, genderPref: 'f', descricao:'Doença autoimune que causa inflamação crônica nas articulações (simétrica).'},
-  {id:'gota', nome:'Gota (Ácido Úrico)', sintomas:['dor_articular', 'edema', 'inic_local', 'calafrios', 'febre'], painWeight: 0.9, descricao:'Artrite inflamatória por excesso de ácido úrico, causando dor intensa (especialmente no dedão do pé).'},
+  {id:'gota', nome:'Gota (Ácido Úrico)', sintomas:['dor_articular', 'edema', 'inic_local', 'calafrios', 'febre', 'artrite_dedao_pe'], painWeight: 0.9, descricao:'Artrite inflamatória por excesso de ácido úrico, causando dor intensa (especialmente no dedão do pé).'},
   {id:'prostatite', nome:'Prostatite', sintomas:['dor_perineal', 'disuria', 'polaciuria', 'febre', 'calafrios', 'ejaculacao_dolorosa', 'dispareunia'], painWeight: 0.8, genderPref: 'm', descricao:'Inflamação da próstata, comum em homens, causando dor pélvica e dificuldade urinária.'},
   {id:'tuberculose', nome:'Tuberculose', sintomas:['tosse','suor_noturno','perda_peso','febre'], painWeight:0.2, descricao:'Infecção bacteriana crônica dos pulmões.'},
   {id:'malaria', nome:'Malária', sintomas:['febre','calafrios','cefaleia','dor_corpo'], painWeight:0.3, descricao:'Infecção transmitida por mosquito com febre alta.'},
