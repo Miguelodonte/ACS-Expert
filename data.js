@@ -41,7 +41,7 @@ const SYMPTOMS = [
   // 4. Visão e Olhos
   {id:'aura_visual', label:'Aura Visual (luzes, pontos cegos)', group: 'Visão e Olhos'},
   {id:'conjuntivite', label:'Olhos vermelhos / conjuntivite', group: 'Visão e Olhos'},
-  {id:'secrecao', label:'Secreção Ocular', group: 'Visão e Olhos'}, // ALTERADO: Agora específico para olhos
+  {id:'secrecao', label:'Secreção Ocular', group: 'Visão e Olhos'},
   {id:'sensibilidade_luz', label:'Sensibilidade à luz', group: 'Visão e Olhos'},
 
   // 5. Ouvido, Nariz e Garganta (Otorrino)
@@ -103,7 +103,7 @@ const SYMPTOMS = [
   {id:'bradicinesia', label:'Lentidão de Movimentos', group: 'Músculos e Articulações'},
   {id:'crepitacao_articular', label:'Crepitação/Estalos nas Articulações', group: 'Músculos e Articulações'},
   {id:'dor_articular', label:'Dor Articular', group: 'Músculos e Articulações'},
-  {id:'artrite_dedao_pe', label:'Dor/Inchaço no Dedão do Pé', group: 'Músculos e Articulações'}, // Mantido do código anterior
+  {id:'artrite_dedao_pe', label:'Dor/Inchaço no Dedão do Pé', group: 'Músculos e Articulações'}, 
   {id:'dor_corpo', label:'Dor no corpo / mialgia', group: 'Músculos e Articulações'},
   {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Músculos e Articulações'},
   {id:'rigidez_matinal', label:'Rigidez Articular (pela manhã)', group: 'Músculos e Articulações'},
@@ -112,7 +112,7 @@ const SYMPTOMS = [
 
   // 12. Pele e Cabelos
   {id:'angioedema', label:'Inchaço de Lábios / Olhos / Rosto', group: 'Pele e Cabelos'},
-  {id:'edema', label:'Inchaço (edema)', group: 'Pele e Cabelos'}, // Edema geral repetido ou movido para cá? Usei este grupo conforme seu pedido.
+  {id:'edema', label:'Inchaço (edema)', group: 'Pele e Cabelos'}, 
   {id:'hirsutismo', label:'Excesso de Pelos (Mulher)', group: 'Pele e Cabelos', sexFilter: 'f'},
   {id:'lesoes_nodulares_pele', label:'Lesões Nodulares / Cistos (Pele)', group: 'Pele e Cabelos'},
   {id:'manchas_pele', label:'Manchas/erupção na pele', group: 'Pele e Cabelos'},
