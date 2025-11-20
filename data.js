@@ -1,4 +1,4 @@
-// ==== Lista de sintomas possíveis (com grupos) ====
+// ==== Lista de sintomas possíveis (com grupos reorganizados) ====
 const SYMPTOMS = [
   // ===================================
   // NOVO GRUPO: 1. Sintomas Gerais (Constitucionais)
@@ -12,8 +12,8 @@ const SYMPTOMS = [
   {id:'ganho_peso', label:'Ganho de Peso', group: 'Sintomas Gerais'},
   {id:'frio_intolerancia', label:'Intolerância ao Frio', group: 'Sintomas Gerais'},
   {id:'edema', label:'Inchaço (edema)', group: 'Sintomas Gerais'},
-  {id:'palidez', label:'Palidez', group: 'Sintomas Gerais'}, // Originalmente em Pele/Mucosas
-  
+  {id:'palidez', label:'Palidez', group: 'Sintomas Gerais'},
+
   // ===================================
   // NOVO GRUPO: 2. Pele e Locomotor
   // ===================================
@@ -21,7 +21,7 @@ const SYMPTOMS = [
   {id:'dor_articular', label:'Dor Articular', group: 'Pele e Locomotor'},
   {id:'rigidez_matinal', label:'Rigidez Articular (pela manhã)', group: 'Pele e Locomotor'},
   {id:'crepitacao_articular', label:'Crepitação/Estalos nas Articulações', group: 'Pele e Locomotor'},
-  {id:'inic_local', label:'Dor localizada intensa', group: 'Pele e Locomotor'}, // Ex: Apendicite, LER
+  {id:'inic_local', label:'Dor localizada intensa', group: 'Pele e Locomotor'},
   
   {id:'manchas_pele', label:'Manchas/erupção na pele', group: 'Pele e Locomotor'},
   {id:'placas_descamativas', label:'Placas de Pele Descamativas (Prateadas)', group: 'Pele e Locomotor'},
@@ -37,7 +37,7 @@ const SYMPTOMS = [
   // ===================================
   {id:'tosse', label:'Tosse', group: 'Respiratório e Otorrino'},
   {id:'dispneia', label:'Dificuldade para respirar', group: 'Respiratório e Otorrino'},
-  {id:'dor_peito', label:'Dor no peito', group: 'Respiratório e Otorrino'}, // Cardiovascular / Respiratório
+  {id:'dor_peito', label:'Dor no peito', group: 'Respiratório e Otorrino'}, 
   {id:'chiado', label:'Chiado no Peito', group: 'Respiratório e Otorrino'}, 
   {id:'sangue_no_sarro', label:'Sangue na expectoração', group: 'Respiratório e Otorrino'}, 
 
@@ -72,7 +72,7 @@ const SYMPTOMS = [
   {id:'hematuria', label:'Sangue na Urina', group: 'Urogenital'},
   {id:'dor_flanco', label:'Dor no Flanco / Lombar (Costas)', group: 'Urogenital'}, 
   
-  {id:'polidipsia', label:'Sede excessiva', group: 'Urogenital'}, // Associado a Poliuria/Diabetes
+  {id:'polidipsia', label:'Sede excessiva', group: 'Urogenital'}, 
   
   {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Urogenital'}, 
   {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Urogenital', sexFilter: 'm'},
@@ -133,7 +133,7 @@ const SYMPTOMS = [
   {id:'feridas_boca', label:'Feridas na boca / nariz', group: 'Outros'},
   {id:'conjuntivite', label:'Olhos vermelhos / conjuntivite', group: 'Outros'},
   {id:'secrecao', label:'Secreção Ocular/Nasal', group: 'Outros'}, 
-  {id:'inic_local', label:'Dor localizada intensa', group: 'Outros'} // Mantido aqui para casos não-articulares/cutâneos
+  {id:'inic_local', label:'Dor localizada intensa', group: 'Outros'} 
 ];
 const DISEASES = [
   {id:'sdpc', nome:'Síndrome da Dor Pélvica Crônica', sintomas:['dor_pelvica_cronica', 'dor_perineal', 'disuria', 'polaciuria', 'dispareunia', 'ansiedade_sintoma'], painWeight: 0.7, genderPref: 'f', descricao:'Dor persistente na região pélvica sem infecção ativa comprovada (ex: prostatite crônica ou dor pélvica inespecífica).'},
