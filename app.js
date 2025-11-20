@@ -40,13 +40,17 @@ function renderSymptoms(){
   }, {});
 const groupOrder = [
     'Sintomas Gerais',
-    'Pele e Locomotor',
-    'Respiratório e Otorrino',
-    'Gastrointestinal',
-    'Urogenital',
+    'Saúde Mental',
+    'Neurológico e Cabeça',
+    'Visão e Olhos',
+    'Ouvido, Nariz e Garganta (Otorrino)',
     'Cardiovascular',
-    'Neurológico e Mental',
-    'Outros'
+    'Respiratório',
+    'Digestivo e Abdominal',
+    'Urinário e Renal',
+    'Genital e Reprodutivo',
+    'Músculos e Articulações',
+    'Pele e Cabelos'
   ];
   groupOrder.forEach(groupName => {
     if (!groupedSymptoms[groupName]) return;
