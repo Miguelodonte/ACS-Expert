@@ -601,6 +601,7 @@ const SYMPTOM_QUALIFIERS = {
   'manchas_pele': [
     { id: 'coceira', label: 'Com Coceira Intensa' },
     { id: 'rash', label: 'Vermelhas / Elevadas (Rash)' },
+    { id: 'rash_malar', label: 'Em "asa de borboleta" no rosto (Rash Malar)' },
     { id: 'petequias', label: 'Pontos Vermelhos/Roxos (Petéquias)'},
     { id: 'placas_prateadas', label: 'Placas secas, grossas, prateadas' },
     { id: 'vergoes_elevados', label: 'Vergões elevados que coçam (Urticas)' },

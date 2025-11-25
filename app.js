@@ -471,10 +471,11 @@ function evaluateDiseases(data){
             if (qualifiersData['preocupacao_cronica'] === true && d.id === 'tag') qualifierScore += 15;
         }
         
-        // Dor Articular
+        // Dor Articular (CORRIGIDO)
         else if (symptomId === 'dor_articular') {
-            if (qualifiersData['monoarticular_dedao'] === true && d.id === 'gota') qualifierScore += 15;
-            if (qualifiersData['simetrica_pequenas_art'] === true && d.id === 'artrite_reumatoide') qualifierScore += 15;
+            if (qualifiersData['dedao_pe'] === true && d.id === 'gota') qualifierScore += 15;
+            if (qualifiersData['simetrica_maos'] === true && d.id === 'artrite_reumatoide') qualifierScore += 15;
+            if (qualifiersData['vermelhidao_calor'] === true && (['gota', 'artrite_reumatoide'].includes(d.id))) qualifierScore += 5;
         }
         
         // Dor Flanco
@@ -499,6 +500,71 @@ function evaluateDiseases(data){
             if (qualifiersData['rotatoria'] === true && d.id === 'labirintite') qualifierScore += 15;
             if (qualifiersData['pre_desmaio'] === true && (['anemia', 'hipotensao', 'panico'].includes(d.id))) qualifierScore += 5;
             if (qualifiersData['desequilibrio'] === true && (['labirintite', 'parkinson', 'acidente_vascular'].includes(d.id))) qualifierScore += 5;
+        }
+
+        // Sudorese
+        else if (symptomId === 'sudorese') {
+            if (qualifiersData['noturno'] === true) {
+                if (['tuberculose', 'linfoma', 'hiv', 'menopausa'].includes(d.id)) qualifierScore += 10;
+                if (d.id === 'ansiedade') qualifierScore -= 5;
+            }
+            if (qualifiersData['frio'] === true) {
+                if (['infarto', 'hipotensao', 'panico'].includes(d.id)) qualifierScore += 10;
+            }
+        }
+
+        // Corrimento Genital
+        else if (symptomId === 'corrimento_genital') {
+            if (qualifiersData['branco_espesso'] === true && ['candidiase', 'balanite_candidiaca'].includes(d.id)) qualifierScore += 15;
+            if (qualifiersData['amarelo_esverdeado'] === true && ['dst', 'infeccao_urinaria'].includes(d.id)) qualifierScore += 10;
+            if (qualifiersData['placas_brancas_glande'] === true && d.id === 'balanite_candidiaca') qualifierScore += 15;
+        }
+
+        // Dor no Corpo
+        else if (symptomId === 'dor_corpo') {
+            if (qualifiersData['difusa_generalizada'] === true && ['fibromialgia', 'dengue', 'gripe'].includes(d.id)) qualifierScore += 10;
+            if (qualifiersData['pontos_sensiveis'] === true && d.id === 'fibromialgia') qualifierScore += 15;
+            if (qualifiersData['muscular_localizada'] === true && ['ler'].includes(d.id)) qualifierScore += 10;
+        }
+
+        // Insônia
+        else if (symptomId === 'insônia_sintoma') {
+            if (qualifiersData['dificuldade_dormir'] === true && ['insônia', 'tag'].includes(d.id)) qualifierScore += 10;
+            if (qualifiersData['reducao_necessidade'] === true && d.id === 'transtorno_bipolar') qualifierScore += 15;
+        }
+
+        // Dispareunia
+        else if (symptomId === 'dispareunia') {
+            if (qualifiersData['dor_profunda'] === true && ['endometriose', 'mioma_uterino', 'sdpc'].includes(d.id)) qualifierScore += 10;
+            if (qualifiersData['dor_entrada'] === true && ['candidiase', 'atrofia_vaginal'].includes(d.id)) qualifierScore += 10;
+            if (qualifiersData['dor_ejaculacao'] === true && d.id === 'prostatite') qualifierScore += 15;
+        }
+
+        // Prurido e Prurido Genital
+        else if (symptomId === 'prurido') {
+            if (qualifiersData['generalizado_renal'] === true && d.id === 'insuficiencia_renal') qualifierScore += 10;
+            if (qualifiersData['localizado_placas'] === true && ['psoriase', 'dermatite', 'urticaria'].includes(d.id)) qualifierScore += 10;
+        }
+        else if (symptomId === 'prurido_genital') {
+             if (qualifiersData['corrimento_espesso'] === true && d.id === 'candidiase') qualifierScore += 10;
+             if (qualifiersData['placas_glande'] === true && d.id === 'balanite_candidiaca') qualifierScore += 10;
+        }
+
+        // Disuria
+        else if (symptomId === 'disuria') {
+            if (qualifiersData['jato_fraco'] === true && ['prostatite', 'hiperplasia_prostatica'].includes(d.id)) qualifierScore += 10;
+            if (qualifiersData['ardencia'] === true && ['infeccao_urinaria', 'cistite_cronica', 'dst'].includes(d.id)) qualifierScore += 5;
+        }
+
+        // Tremor
+        else if (symptomId === 'tremor_repouso') {
+            if (qualifiersData['piora_repouso'] === true && d.id === 'parkinson') qualifierScore += 15;
+            if (qualifiersData['melhora_movimento'] === true && d.id !== 'parkinson') qualifierScore += 5;
+        }
+
+        // Sangramento Uterino
+        else if (symptomId === 'sangramento_uterino_anormal') {
+             if ((qualifiersData['menstruacao_longa'] === true || qualifiersData['fluxo_intenso'] === true) && ['mioma_uterino', 'sop', 'endometriose'].includes(d.id)) qualifierScore += 8;
         }
 
       } // Fim if(qualifiersData)
