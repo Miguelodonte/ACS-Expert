@@ -631,10 +631,10 @@ function btnNextClickHandler() {
     lastSummaryEl.textContent = 'Sem encaminhamentos';
     setPriorityCard([], data);
     lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
-    return;
+    return; 
   }
 
-  // SE TIVER RESULTADOS, CONTINUA
+  // SE TIVER RESULTADOS
   const topDisease = toShow[0];
   setConversationBot(`A doença mais provável é <strong>${topDisease.nome}</strong> com <strong>${topDisease.score}%</strong>. Veja a lista abaixo.`);
   
@@ -661,25 +661,26 @@ function btnNextClickHandler() {
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
 
-  // === TÉCNICA DE FOCO (OBRIGA O NAVEGADOR A DESCER) ===
+  // === SCROLL MATEMÁTICO (Funciona em qualquer layout) ===
   setTimeout(() => {
-    // Seleciona a coluna da direita inteira
-    const target = document.querySelector('.right-col');
+    // 1. Encontra a coluna da direita (Resultados)
+    const resultsColumn = document.querySelector('.right-col');
     
-    if (target) {
-        // 1. Torna a div focável via script (normalmente divs não recebem foco)
-        target.setAttribute('tabindex', '-1');
+    if (resultsColumn) {
+        // 2. Calcula a posição exata do elemento em relação ao topo do documento
+        // (A posição do elemento na janela + quanto a janela já rolou)
+        const elementPosition = resultsColumn.getBoundingClientRect().top + window.scrollY;
         
-        // 2. Força o foco nela. O celular VAI pular para lá.
-        target.focus();
-        
-        // 3. Remove a linha azul de foco (estética)
-        target.style.outline = 'none';
-        
-        // 4. Garante o scroll suave também, caso o foco não seja suficiente em algum browser
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 3. Desconta um espaço para o cabeçalho (60px) para não ficar colado
+        const offsetPosition = elementPosition - 20; 
+
+        // 4. Manda a janela ir para essa coordenada exata
+        window.scrollTo({
+             top: offsetPosition,
+             behavior: "smooth"
+        });
     }
-  }, 250); // Pequeno delay para garantir renderização
+  }, 300); // Tempo para o layout 'esticar' no mobile
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
