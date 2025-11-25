@@ -87,13 +87,12 @@ const SYMPTOMS = [
   // 10. Genital e Reprodutivo
   {id:'ciclo_irregular', label:'Ciclo Menstrual Irregular', group: 'Genital e Reprodutivo', sexFilter: 'f'},
   {id:'colica_menstrual_intensa', label:'Cólica Menstrual Intensa', group: 'Genital e Reprodutivo', sexFilter: 'f'},
-  {id:'corrimento_genital', label:'Corrimento ou Placas Brancas (Genital)', group: 'Genital e Reprodutivo'},
+  {id:'corrimento_genital', label:'Corrimento ou Placas Brancas', group: 'Genital e Reprodutivo'},
   {id:'dispareunia', label:'Dor na Relação Sexual', group: 'Genital e Reprodutivo'},
   {id:'dor_pelvica_cronica', label:'Dor Pélvica Crônica', group: 'Genital e Reprodutivo'},
-  {id:'dor_perineal', label:'Dor Perineal / Pélvica (Homens)', group: 'Genital e Reprodutivo', sexFilter: 'm'},
+  {id:'dor_perineal', label:'Dor Perineal / Pélvica', group: 'Genital e Reprodutivo', sexFilter: 'm'},
   {id:'ejaculacao_dolorosa', label:'Ejaculação dolorosa', group: 'Genital e Reprodutivo', sexFilter: 'm'},
-  {id:'placas_brancas_penis', label:'Placas Brancas / Corrimento (Pênis)', group: 'Genital e Reprodutivo', sexFilter: 'm'},
-  {id:'prurido_genital', label:'Coceira Genital (Vagina/Pênis)', group: 'Genital e Reprodutivo'},
+  {id:'prurido_genital', label:'Coceira Genital', group: 'Genital e Reprodutivo'},
   {id:'sangramento_uterino_anormal', label:'Sangramento Menstrual Intenso/Irregular', group: 'Genital e Reprodutivo', sexFilter: 'f'},
   {id:'vermelhidao_glande', label:'Vermelhidão / Inchaço na Glande', group: 'Genital e Reprodutivo', sexFilter: 'm'},
 
