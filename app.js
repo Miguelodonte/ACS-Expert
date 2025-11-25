@@ -560,7 +560,7 @@ function btnNextClickHandler() {
   
   const sexo = document.getElementById('sexo').value; 
   
-  // Coleta sintomas principais e suas intensidades
+  // Coleta sintomas
   const sintomas = selectedSymptoms;
   
   // Coleta fatores de risco
@@ -569,7 +569,7 @@ function btnNextClickHandler() {
       riskFactors.push(chk.id.replace('chk_', ''));
   });
   
-  // Coleta o estado dos Qualificadores
+  // Coleta qualificadores
   const qualifiers = {};
   Object.keys(selectedSymptoms).forEach(symptomId => { 
     const symptomQualifiers = SYMPTOM_QUALIFIERS[symptomId];
@@ -601,7 +601,7 @@ function btnNextClickHandler() {
 
   const {logs, computed} = evaluateDiseases(data);
 
-  // update engine tab
+  // update logs
   rawDataEl.textContent = JSON.stringify(data, null, 2);
   engineLogEl.innerHTML = '';
   
@@ -619,22 +619,22 @@ function btnNextClickHandler() {
     engineLogEl.appendChild(div);
   });
 
-  // results UI
+  // Renderiza Resultados
   resultsEl.innerHTML = '';
   const threshold = 0;
   const toShow = computed.filter((c,i)=> (c.score > threshold) || i<5 ).slice(0,20);
 
-  // === SE NÃO TIVER RESULTADOS, PARA AQUI ===
+  // SE NÃO TIVER RESULTADOS
   if(toShow.length===0 || toShow[0].score <= threshold){
     setConversationBot('Nenhuma doença atingiu probabilidade significativa com os dados fornecidos.');
     resultsEl.innerHTML = `<div class="muted">Nenhuma correspondência forte.</div>`;
     lastSummaryEl.textContent = 'Sem encaminhamentos';
     setPriorityCard([], data);
     lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
-    return;
+    return; // Não faz scroll se não tiver doença
   }
 
-  // === SE TIVER RESULTADOS, CONTINUA ===
+  // SE TIVER RESULTADOS
   const topDisease = toShow[0];
   setConversationBot(`A doença mais provável é <strong>${topDisease.nome}</strong> com <strong>${topDisease.score}%</strong>. Veja a lista abaixo.`);
   
@@ -661,15 +661,21 @@ function btnNextClickHandler() {
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
 
-  // === SCROLL AUTOMÁTICO COM ATRASO (CORRIGIDO) ===
+  // === SCROLL DIRETO PARA O PRIMEIRO CARTÃO (CORREÇÃO) ===
   setTimeout(() => {
-    // Procura o título "Resultados" (h3 dentro do painel da direita)
-    // O seletor procura o painel que contém o resultsEl
-    const resultsPanel = resultsEl.closest('.panel');
-    if (resultsPanel) {
-        resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Tenta pegar o primeiro cartão de resultado gerado
+    const firstCard = resultsEl.querySelector('.dcard');
+    
+    if (firstCard) {
+        // Rola até o cartão ficar no CENTRO da tela (block: 'center')
+        // Isso força a tela a descer, independente de onde estava
+        firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        // Fallback: se não achar cartão, rola para o título de resultados
+        const resultsHeader = document.querySelector('.right-col h3');
+        if(resultsHeader) resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, 100); // Atraso de 100ms para garantir que o DOM atualizou
+  }, 150);
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
