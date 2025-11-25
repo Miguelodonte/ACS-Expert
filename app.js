@@ -631,7 +631,7 @@ function btnNextClickHandler() {
     lastSummaryEl.textContent = 'Sem encaminhamentos';
     setPriorityCard([], data);
     lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
-    return; 
+    return;
   }
 
   // SE TIVER RESULTADOS
@@ -661,26 +661,25 @@ function btnNextClickHandler() {
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
 
-  // === SCROLL MATEMÁTICO (Funciona em qualquer layout) ===
+  // === SCROLL UNIVERSAL (Tenta rolar TUDO para baixo) ===
   setTimeout(() => {
-    // 1. Encontra a coluna da direita (Resultados)
-    const resultsColumn = document.querySelector('.right-col');
-    
-    if (resultsColumn) {
-        // 2. Calcula a posição exata do elemento em relação ao topo do documento
-        // (A posição do elemento na janela + quanto a janela já rolou)
-        const elementPosition = resultsColumn.getBoundingClientRect().top + window.scrollY;
-        
-        // 3. Desconta um espaço para o cabeçalho (60px) para não ficar colado
-        const offsetPosition = elementPosition - 20; 
+     // 1. Pega a altura total da página
+     const totalHeight = document.body.scrollHeight;
+     
+     // 2. Tenta rolar a Janela
+     window.scrollTo({ top: totalHeight, behavior: 'smooth' });
+     
+     // 3. Tenta rolar o HTML (Firefox/IE às vezes usa isso)
+     document.documentElement.scrollTop = totalHeight;
+     
+     // 4. Tenta rolar o Body (Safari antigo/Chrome às vezes usa isso)
+     document.body.scrollTop = totalHeight;
+     
+     // 5. Garante com scrollIntoView no último elemento
+     const lastCard = resultsEl.lastElementChild;
+     if (lastCard) lastCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
-        // 4. Manda a janela ir para essa coordenada exata
-        window.scrollTo({
-             top: offsetPosition,
-             behavior: "smooth"
-        });
-    }
-  }, 300); // Tempo para o layout 'esticar' no mobile
+  }, 300);
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
