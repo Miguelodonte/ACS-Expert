@@ -234,3 +234,90 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   /* Mudar de grid para block */
   /* Remover grid-template-columns e gap */
 }
+/* =========================================
+   ESTILOS MOBILE (Responsividade)
+   ========================================= */
+@media (max-width: 768px) {
+  
+  /* 1. Layout Principal: Empilhar colunas */
+  .main {
+    grid-template-columns: 1fr; /* Muda de 2 colunas para 1 coluna */
+    gap: 10px;
+  }
+
+  /* 2. Cabeçalho Compacto */
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  header .small {
+    display: none; /* Oculta a descrição longa no mobile para economizar espaço */
+  }
+
+  /* 3. Área de Chat e Controles */
+  .conversation {
+    height: 200px; /* Reduz altura do chat para caber na tela */
+    font-size: 14px;
+  }
+  
+  /* Painel de Controles (Idade/Gênero/Botões) */
+  #triage .tab-content > div > div[style*="display:flex"] {
+    flex-wrap: wrap; /* Permite que os controles caiam para a linha de baixo */
+  }
+  
+  /* Botões Grandes (Fáceis de Tocar) */
+  .btn-primary, .btn-ghost {
+    width: 100%; /* Botões ocupam a largura total */
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 8px;
+  }
+
+  /* 4. Lista de Sintomas (Toque Otimizado) */
+  .symptom-group-header {
+    padding: 14px; /* Área de toque maior */
+    font-size: 15px;
+  }
+  
+  .symptom {
+    padding: 14px 10px; /* Facilita clicar com o dedo */
+    font-size: 15px;
+  }
+
+  /* Checkboxes maiores */
+  input[type="checkbox"] {
+    transform: scale(1.3); /* Aumenta 30% o tamanho */
+    margin-right: 8px;
+  }
+
+  /* 5. Popups de Qualificadores */
+  .qualifier-popup {
+    position: relative; /* No mobile, o popup empurra o conteúdo em vez de flutuar */
+    top: 0;
+    width: 100%;
+    min-width: unset;
+    box-shadow: none;
+    border: 1px solid #eee;
+    margin-top: 5px;
+    z-index: 10;
+  }
+  
+  /* 6. Abas de Navegação */
+  .tabs {
+    overflow-x: auto; /* Permite rolar as abas lateralmente se não couberem */
+    white-space: nowrap;
+    padding-bottom: 5px;
+  }
+  
+  .tab {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  /* 7. Resultados */
+  .right-col {
+    margin-top: 20px; /* Espaço extra antes dos resultados */
+  }
+}
