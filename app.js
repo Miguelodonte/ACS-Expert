@@ -624,7 +624,7 @@ function btnNextClickHandler() {
   const threshold = 0;
   const toShow = computed.filter((c,i)=> (c.score > threshold) || i<5 ).slice(0,20);
 
-  // SE NÃO TIVER RESULTADOS, PARA.
+  // SE NÃO TIVER RESULTADOS
   if(toShow.length===0 || toShow[0].score <= threshold){
     setConversationBot('Nenhuma doença atingiu probabilidade significativa com os dados fornecidos.');
     resultsEl.innerHTML = `<div class="muted">Nenhuma correspondência forte.</div>`;
@@ -661,20 +661,25 @@ function btnNextClickHandler() {
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
 
-  // === SCROLL AGRESSIVO / INSTANTÂNEO ===
+  // === TÉCNICA DE FOCO (OBRIGA O NAVEGADOR A DESCER) ===
   setTimeout(() => {
-    // Alvo: A coluna inteira de resultados (container)
+    // Seleciona a coluna da direita inteira
     const target = document.querySelector('.right-col');
     
     if (target) {
-        // 1. Tenta rolar o elemento para o topo da visão instantaneamente
-        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        // 1. Torna a div focável via script (normalmente divs não recebem foco)
+        target.setAttribute('tabindex', '-1');
         
-        // 2. Força extra: Tenta mover a janela manualmente para a posição Y do elemento
-        const y = target.getBoundingClientRect().top + window.pageYOffset - 10;
-        window.scrollTo(0, y);
+        // 2. Força o foco nela. O celular VAI pular para lá.
+        target.focus();
+        
+        // 3. Remove a linha azul de foco (estética)
+        target.style.outline = 'none';
+        
+        // 4. Garante o scroll suave também, caso o foco não seja suficiente em algum browser
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, 300);
+  }, 250); // Pequeno delay para garantir renderização
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
