@@ -278,14 +278,22 @@ function setConversationUser(text){
 setConversationBot('Olá! Preencha a demografia, fatores de risco, sintomas (+detalhes) e ajuste a intensidade. Clique em "Avaliar triagem".');
 // ==== Motor de inferência ====
 // --- ATUALIZADO COM LÓGICA DE QUALIFICADORES REFINADA ---
+// ==== Motor de inferência ====
+// --- ATUALIZADO (Completo e Sincronizado com data.js) ---
 function evaluateDiseases(data){
   const logs = [];
   const computed = [];
 
   DISEASES.forEach(d => {
     const required = d.sintomas;
+    // Filtra quais sintomas da doença o paciente marcou
     const matchedSymptoms = required.filter(s => data.sintomas[s] !== undefined);
     const matched = matchedSymptoms.length;
+
+    // === TRAVA DE SEGURANÇA ===
+    // Se não marcou nenhum sintoma da doença, ignora.
+    if (matched === 0) return; 
+
     const total = Math.max(required.length,1);
 
     const symptomScore = (matched / total) * 60;
@@ -298,10 +306,13 @@ function evaluateDiseases(data){
     let demographicWeight = 0;
     const diseaseWeights = RISK_WEIGHTS[d.id];
     if (diseaseWeights) {
-      let genderKey = data.sexo;
-      const ageWeights = diseaseWeights[genderKey];
-      if (ageWeights && ageWeights[data.faixa_etaria] !== undefined) {
-        demographicWeight = ageWeights[data.faixa_etaria];
+      let genderKey = data.sexo; // Usa o novo campo 'sexo'
+      if (genderKey && diseaseWeights[genderKey]) {
+         // Se existir regra para o sexo, usa. Se não, fallback para 'o' (segurança)
+         const ageWeights = diseaseWeights[genderKey];
+         if (ageWeights && ageWeights[data.faixa_etaria] !== undefined) {
+            demographicWeight = ageWeights[data.faixa_etaria];
+         }
       }
     }
 
@@ -317,11 +328,11 @@ function evaluateDiseases(data){
     if (riskFactorBonus > 20) { riskFactorBonus = 20;
     }
 
-    // --- LÓGICA DOS QUALIFICADORES (EXPANDIDA) ---
+    // --- LÓGICA DOS QUALIFICADORES ---
     let qualifierScore = 0;
     matchedSymptoms.forEach(symptomId => {
       const qualifiersData = data.qualifiers ? data.qualifiers[symptomId] : null;
-      if (qualifiersData) { // Se este sintoma teve qualificadores coletados
+      if (qualifiersData) { 
 
         // Tosse
         if (symptomId === 'tosse') {
@@ -334,7 +345,6 @@ function evaluateDiseases(data){
              if (['asma', 'resfriado'].includes(d.id)) qualifierScore -= 3;
           }
           if (qualifiersData['sangue'] === true) {
-       
              if (['tuberculose', 'pneumonia'].includes(d.id)) qualifierScore += 10;
              if (['resfriado', 'gripe', 'asma', 'faringite'].includes(d.id)) qualifierScore -= 10;
           }
@@ -348,7 +358,6 @@ function evaluateDiseases(data){
           }
           if (qualifiersData['qid'] === true) {
             if (d.id === 'apendicite') qualifierScore += 15;
-            // Muito específico
             if (['gastrite', 'ulcera', 'pancreatite'].includes(d.id)) qualifierScore -= 8;
           }
            if (qualifiersData['colica'] === true) {
@@ -357,7 +366,7 @@ function evaluateDiseases(data){
           }
           if (qualifiersData['difusa'] === true) {
              if (['gastroenterite'].includes(d.id)) qualifierScore += 3;
-             if (['apendicite', 'colecistite', 'gastrite'].includes(d.id)) qualifierScore -= 3; // Menos provável se difusa
+             if (['apendicite', 'colecistite', 'gastrite'].includes(d.id)) qualifierScore -= 3; 
           }
         }
 
@@ -373,7 +382,7 @@ function evaluateDiseases(data){
           }
           if (qualifiersData['piora_resp'] === true) {
             if (['pneumonia'].includes(d.id)) qualifierScore += 8;
-            if (['infarto', 'angina'].includes(d.id)) qualifierScore -= 15; // Forte contra-indicador
+            if (['infarto', 'angina'].includes(d.id)) qualifierScore -= 15; 
           }
         }
 
@@ -384,7 +393,6 @@ function evaluateDiseases(data){
             if (['resfriado', 'gastrite', 'ansiedade'].includes(d.id)) qualifierScore -= 5;
            } else if (qualifiersData['baixa'] === true) {
               if (['dengue', 'pneumonia', 'pielonefrite', 'meningite', 'sepsis'].includes(d.id)) qualifierScore -= 5;
-              // Menos provável se febre baixa
            }
         }
 
@@ -395,24 +403,22 @@ function evaluateDiseases(data){
              if (['resfriado', 'sinusite'].includes(d.id)) qualifierScore -= 5;
           }
           if (qualifiersData['pulsatil'] === true) {
-             if (['hipertensao', 'enxaqueca'].includes(d.id)) qualifierScore += 3; // Adicionado enxaqueca
+             if (['hipertensao', 'enxaqueca'].includes(d.id)) qualifierScore += 3;
           }
           if (qualifiersData['nausea_vomito'] === true) {
-             if (['meningite', 'acidente_vascular', 'hipertensao_crise', 'enxaqueca'].includes(d.id)) qualifierScore += 5; // Adicionado enxaqueca
+             if (['meningite', 'acidente_vascular', 'hipertensao_crise', 'enxaqueca'].includes(d.id)) qualifierScore += 5;
              if (['resfriado', 'sinusite'].includes(d.id)) qualifierScore -= 3;
           }
-          if (qualifiersData['com_aura'] === true) {
-             if (d.id === 'enxaqueca') qualifierScore += 15;
-          }
+          if (qualifiersData['com_aura'] === true && d.id === 'enxaqueca') qualifierScore += 15;
         }
 
         // Dispneia
         else if (symptomId === 'dispneia') {
            if (qualifiersData['repouso'] === true) {
-             if (['pneumonia', 'covid19', 'dpoc', 'asma', 'sepsis', 'infarto', 'angina', 'panico'].includes(d.id)) qualifierScore += 10; // Adicionado panico
+             if (['pneumonia', 'covid19', 'dpoc', 'asma', 'sepsis', 'infarto', 'angina', 'panico'].includes(d.id)) qualifierScore += 10;
            }
            if (qualifiersData['esforco'] === true) {
-              if (['anemia', 'dpoc', 'asma', 'doenca_coronariana'].includes(d.id)) qualifierScore += 5;
+               if (['anemia', 'dpoc', 'asma', 'doenca_coronariana'].includes(d.id)) qualifierScore += 5;
            }
            if (qualifiersData['chiado'] === true) {
               if (['asma', 'bronquite', 'dpoc'].includes(d.id)) qualifierScore += 10;
@@ -423,7 +429,7 @@ function evaluateDiseases(data){
         // Manchas na Pele
         else if (symptomId === 'manchas_pele') {
           if (qualifiersData['coceira'] === true) {
-             if (['dermatite', 'varicela', 'urticaria'].includes(d.id)) qualifierScore += 8; // Adicionado urticaria
+             if (['dermatite', 'varicela', 'urticaria'].includes(d.id)) qualifierScore += 8; 
              if (['dengue', 'sarampo', 'rubéola'].includes(d.id)) qualifierScore -= 3; 
           }
           if (qualifiersData['rash'] === true) {
@@ -434,18 +440,11 @@ function evaluateDiseases(data){
              if (['dengue', 'meningite', 'sepsis'].includes(d.id)) qualifierScore += 15;
              if (['zika', 'rubéola', 'varicela', 'dermatite'].includes(d.id)) qualifierScore -= 10;
           }
-          if (qualifiersData['rash_malar'] === true) {
-             if (d.id === 'lupus') qualifierScore += 15;
-          }
-          if (qualifiersData['placas_prateadas'] === true) {
-             if (d.id === 'psoriase') qualifierScore += 15;
-          }
-          if (qualifiersData['vergoes_elevados'] === true) {
-             if (d.id === 'urticaria') qualifierScore += 15;
-          }
-          if (qualifiersData['nodulos_dolorosos'] === true) {
-             if (d.id === 'acne_grave') qualifierScore += 15;
-          }
+           // Novos Qualificadores
+           if (qualifiersData['rash_malar'] === true && d.id === 'lupus') qualifierScore += 15;
+           if (qualifiersData['placas_prateadas'] === true && d.id === 'psoriase') qualifierScore += 15;
+           if (qualifiersData['vergoes_elevados'] === true && d.id === 'urticaria') qualifierScore += 15;
+           if (qualifiersData['nodulos_dolorosos'] === true && d.id === 'acne_grave') qualifierScore += 15;
         }
 
         // Vômito
@@ -461,9 +460,7 @@ function evaluateDiseases(data){
              if (['gastrite', 'ulcera', 'colecistite'].includes(d.id)) qualifierScore += 5;
            }
         }
-        
-        // --- NOVAS REGRAS DE QUALIFICADOR ---
-        
+
         // Ansiedade Sintoma
         else if (symptomId === 'ansiedade_sintoma') {
             if (qualifiersData['foco_especifico'] === true && d.id === 'fobia_especifica') qualifierScore += 15;
@@ -479,13 +476,13 @@ function evaluateDiseases(data){
         
         // Dor Flanco
         else if (symptomId === 'dor_flanco') {
-            if ((qualifiersData['irradia_virilha'] === true || qualifiersData['colica_intensa'] === true) && d.id === 'calculo_renal') qualifierScore += 15;
+           if ((qualifiersData['irradia_virilha'] === true || qualifiersData['colica_intensa'] === true) && d.id === 'calculo_renal') qualifierScore += 15;
         }
 
         // Edema (Inchaço)
         else if (symptomId === 'edema') {
-            if (qualifiersData['pernas_rosto'] === true && (['insuficiencia_renal', 'lupus'].includes(d.id))) qualifierScore += 10;
-            if (qualifiersData['localizado_trauma'] === true && (['insuficiencia_renal', 'lupus'].includes(d.id))) qualifierScore -= 10;
+           if (qualifiersData['pernas_rosto'] === true && (['insuficiencia_renal', 'lupus'].includes(d.id))) qualifierScore += 10;
+           if (qualifiersData['localizado_trauma'] === true && (['insuficiencia_renal', 'lupus'].includes(d.id))) qualifierScore -= 10;
         }
 
         // Rigidez Matinal
@@ -500,18 +497,37 @@ function evaluateDiseases(data){
             if (qualifiersData['pre_desmaio'] === true && (['anemia', 'hipotensao', 'panico'].includes(d.id))) qualifierScore += 5;
             if (qualifiersData['desequilibrio'] === true && (['labirintite', 'parkinson', 'acidente_vascular'].includes(d.id))) qualifierScore += 5;
         }
+        
+        // Prurido
+        else if (symptomId === 'prurido') {
+             if (qualifiersData['generalizado_renal'] === true && d.id === 'insuficiencia_renal') qualifierScore += 15;
+             if (qualifiersData['localizado_placas'] === true && d.id === 'psoriase') qualifierScore += 10;
+        }
+        
+        // Tremor
+        else if (symptomId === 'tremor_repouso') {
+            if (qualifiersData['piora_repouso'] === true && d.id === 'parkinson') qualifierScore += 15;
+        }
+        
+        // Sangramento Uterino
+        else if (symptomId === 'sangramento_uterino_anormal') {
+             if ((qualifiersData['menstruacao_longa'] === true || qualifiersData['fluxo_intenso'] === true) && d.id === 'mioma_uterino') qualifierScore += 10;
+        }
+        
+        // Sudorese (Novo)
+        else if (symptomId === 'sudorese') {
+            if (qualifiersData['noturno'] === true && (['tuberculose', 'labirintite'].includes(d.id))) qualifierScore += 5;
+            if (qualifiersData['frio'] === true && (['infarto', 'panico', 'sepsis'].includes(d.id))) qualifierScore += 5;
+        }
 
       } // Fim if(qualifiersData)
     });
     // Fim forEach matchedSymptoms
 
-    // Limita o score dos qualificadores
     if (qualifierScore > 15) qualifierScore = 15;
     if (qualifierScore < -15) qualifierScore = -15;
-    // --- FIM LÓGICA QUALIFICADORES ---
 
-    const extra = (matched >= Math.ceil(total/2)) ?
-    2 : 0;
+    const extra = (matched >= Math.ceil(total/2)) ? 2 : 0;
 
     let finalScore = symptomScore + intensityBonus + demographicWeight + riskFactorBonus + qualifierScore + extra;
     if(finalScore > 100) finalScore = 100;
