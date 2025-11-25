@@ -624,17 +624,17 @@ function btnNextClickHandler() {
   const threshold = 0;
   const toShow = computed.filter((c,i)=> (c.score > threshold) || i<5 ).slice(0,20);
 
-  // SE NÃO TIVER RESULTADOS
+  // SE NÃO TIVER RESULTADOS, PARA.
   if(toShow.length===0 || toShow[0].score <= threshold){
     setConversationBot('Nenhuma doença atingiu probabilidade significativa com os dados fornecidos.');
     resultsEl.innerHTML = `<div class="muted">Nenhuma correspondência forte.</div>`;
     lastSummaryEl.textContent = 'Sem encaminhamentos';
     setPriorityCard([], data);
     lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
-    return; // Não faz scroll se não tiver doença
+    return;
   }
 
-  // SE TIVER RESULTADOS
+  // SE TIVER RESULTADOS, CONTINUA
   const topDisease = toShow[0];
   setConversationBot(`A doença mais provável é <strong>${topDisease.nome}</strong> com <strong>${topDisease.score}%</strong>. Veja a lista abaixo.`);
   
@@ -661,21 +661,20 @@ function btnNextClickHandler() {
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
 
-  // === SCROLL DIRETO PARA O PRIMEIRO CARTÃO (CORREÇÃO) ===
+  // === SCROLL AGRESSIVO / INSTANTÂNEO ===
   setTimeout(() => {
-    // Tenta pegar o primeiro cartão de resultado gerado
-    const firstCard = resultsEl.querySelector('.dcard');
+    // Alvo: A coluna inteira de resultados (container)
+    const target = document.querySelector('.right-col');
     
-    if (firstCard) {
-        // Rola até o cartão ficar no CENTRO da tela (block: 'center')
-        // Isso força a tela a descer, independente de onde estava
-        firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-        // Fallback: se não achar cartão, rola para o título de resultados
-        const resultsHeader = document.querySelector('.right-col h3');
-        if(resultsHeader) resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (target) {
+        // 1. Tenta rolar o elemento para o topo da visão instantaneamente
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        
+        // 2. Força extra: Tenta mover a janela manualmente para a posição Y do elemento
+        const y = target.getBoundingClientRect().top + window.pageYOffset - 10;
+        window.scrollTo(0, y);
     }
-  }, 150);
+  }, 300);
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
