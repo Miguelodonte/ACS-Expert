@@ -7,6 +7,13 @@
   --card:#ffffff;
   font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
+/* Adicione isso no TOPO do CSS para garantir o enquadramento */
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Corta qualquer coisa que tente sair da largura da tela */
+  position: relative;
+  touch-action: manipulation; /* Melhora a resposta do toque */
+}
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,var(--bg),#ffffff);color:#0b1220}
 .app{max-width:1200px;margin:20px auto;padding:20px}
