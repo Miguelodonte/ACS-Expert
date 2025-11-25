@@ -555,49 +555,56 @@ function round(n){ return Math.round((n + Number.EPSILON) * 10) / 10; }
 
 function btnNextClickHandler() {
   const faixaEtariaEl = document.getElementById('faixa_etaria');
-  const faixaEtariaStr = faixaEtariaEl.value; // ex: "29-33"
+  const faixaEtariaStr = faixaEtariaEl.value; 
   const faixaEtariaLabel = faixaEtariaEl.options[faixaEtariaEl.selectedIndex].text;
-  // ex: "29 a 33 anos"
-  const sexo = document.getElementById('sexo').value;
+  
+  const sexo = document.getElementById('sexo').value; // Alterado para 'sexo'
+  
   // Coleta sintomas principais e suas intensidades
   const sintomas = selectedSymptoms;
+  
   // Coleta fatores de risco
   const riskFactors = [];
   document.querySelectorAll('.risk-factor-item input:checked').forEach(chk => {
       riskFactors.push(chk.id.replace('chk_', ''));
   });
+  
   // Coleta o estado dos Qualificadores
   const qualifiers = {};
-  Object.keys(selectedSymptoms).forEach(symptomId => { // Para cada sintoma principal ATIVO
+  Object.keys(selectedSymptoms).forEach(symptomId => { 
     const symptomQualifiers = SYMPTOM_QUALIFIERS[symptomId];
-    if (symptomQualifiers) { // Se este sintoma tem qualificadores
-      qualifiers[symptomId] = {}; // Cria um objeto para ele
+    if (symptomQualifiers) { 
+      qualifiers[symptomId] = {}; 
       symptomQualifiers.forEach(q => {
         const chkId = `chk_${symptomId}_${q.id}`;
         const checkboxEl = document.getElementById(chkId);
-        if (checkboxEl) { // Verifica se o elemento existe
-           qualifiers[symptomId][q.id] = 
-           checkboxEl.checked; // Guarda true/false
+        if (checkboxEl) { 
+           qualifiers[symptomId][q.id] = checkboxEl.checked; 
         }
       });
     }
   });
+
   const data = {
     faixa_etaria: faixaEtariaStr,
-    sexo: sexo,
-    sintomas: sintomas, // Objeto { symptomId: { intensity: X } }
+    sexo: sexo, // Alterado para 'sexo'
+    sintomas: sintomas, 
     riskFactors: riskFactors,
-    qualifiers: qualifiers // Novo objeto { symptomId: { qualifierId: true/false } }
+    qualifiers: qualifiers 
   };
+
   const sintomasTxt = Object.keys(sintomas).length > 0
-    ?
-    Object.keys(sintomas).map(k => `${SYMPTOMS.find(s=>s.id===k).label} (int: ${sintomas[k].intensity})`).join(', ')
+    ? Object.keys(sintomas).map(k => `${SYMPTOMS.find(s=>s.id===k).label} (int: ${sintomas[k].intensity})`).join(', ')
     : 'nenhum';
+  
   setConversationUser(`Sexo: ${sexo === 'f' ? 'Feminino' : 'Masculino'} — Faixa: ${faixaEtariaLabel} — Riscos: ${riskFactors.join(', ') || 'nenhum'} — Sintomas: ${sintomasTxt}`);
+
   const {logs, computed} = evaluateDiseases(data);
+
   // update engine tab
   rawDataEl.textContent = JSON.stringify(data, null, 2);
   engineLogEl.innerHTML = '';
+  
   logs.forEach(l=>{
     const div = document.createElement('div');
     div.style.padding='8px';
@@ -611,21 +618,28 @@ function btnNextClickHandler() {
     `;
     engineLogEl.appendChild(div);
   });
+
   // results UI
   resultsEl.innerHTML = '';
   const threshold = 0;
   const toShow = computed.filter((c,i)=> (c.score > threshold) || i<5 ).slice(0,20);
+
+  // === SE NÃO TIVER RESULTADOS (OU NENHUM SINTOMA), PARA AQUI ===
   if(toShow.length===0 || toShow[0].score <= threshold){
     setConversationBot('Nenhuma doença atingiu probabilidade significativa com os dados fornecidos.');
     resultsEl.innerHTML = `<div class="muted">Nenhuma correspondência forte.</div>`;
     lastSummaryEl.textContent = 'Sem encaminhamentos';
     setPriorityCard([], data);
     lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
+    
+    // NÃO FAZ SCROLL AQUI (Pois não há resultado relevante)
     return;
   }
 
+  // === SE TIVER RESULTADOS, CONTINUA ===
   const topDisease = toShow[0];
   setConversationBot(`A doença mais provável é <strong>${topDisease.nome}</strong> com <strong>${topDisease.score}%</strong>. Veja a lista abaixo.`);
+  
   toShow.forEach(d=>{
     const cls = d.score >= 65 ? 'danger' : d.score >= 35 ? 'warning' : 'info';
     const card = document.createElement('div');
@@ -637,7 +651,6 @@ function btnNextClickHandler() {
       </div>
       <div style="width:160px;text-align:right">
         <div style="font-weight:800">${d.score}%</div>
-     
         <div class="small muted">${d.label}</div>
         <div style="height:8px"></div>
         <div class="percent-bar"><div class="percent-fill" style="width:${d.score}%;background:${progressColor(d.score)}"></div></div>
@@ -645,9 +658,15 @@ function btnNextClickHandler() {
     `;
     resultsEl.appendChild(card);
   });
+  
   lastSummaryEl.textContent = `${toShow.length} doenças listadas — maior: ${toShow[0].nome} (${toShow[0].score}%)`;
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
+
+  // === NOVO COMANDO: SCROLL AUTOMÁTICO ===
+  // Rola suavemente até o pai da lista de resultados (o painel "Resultados")
+  // Isso garante que o título "Resultados" fique visível
+  resultsEl.parentElement.scrollIntoView({ behavior: 'smooth' });
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
