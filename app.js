@@ -558,7 +558,7 @@ function btnNextClickHandler() {
   const faixaEtariaStr = faixaEtariaEl.value; 
   const faixaEtariaLabel = faixaEtariaEl.options[faixaEtariaEl.selectedIndex].text;
   
-  const sexo = document.getElementById('sexo').value; // Alterado para 'sexo'
+  const sexo = document.getElementById('sexo').value; 
   
   // Coleta sintomas principais e suas intensidades
   const sintomas = selectedSymptoms;
@@ -587,7 +587,7 @@ function btnNextClickHandler() {
 
   const data = {
     faixa_etaria: faixaEtariaStr,
-    sexo: sexo, // Alterado para 'sexo'
+    sexo: sexo, 
     sintomas: sintomas, 
     riskFactors: riskFactors,
     qualifiers: qualifiers 
@@ -624,15 +624,13 @@ function btnNextClickHandler() {
   const threshold = 0;
   const toShow = computed.filter((c,i)=> (c.score > threshold) || i<5 ).slice(0,20);
 
-  // === SE NÃO TIVER RESULTADOS (OU NENHUM SINTOMA), PARA AQUI ===
+  // === SE NÃO TIVER RESULTADOS, PARA AQUI ===
   if(toShow.length===0 || toShow[0].score <= threshold){
     setConversationBot('Nenhuma doença atingiu probabilidade significativa com os dados fornecidos.');
     resultsEl.innerHTML = `<div class="muted">Nenhuma correspondência forte.</div>`;
     lastSummaryEl.textContent = 'Sem encaminhamentos';
     setPriorityCard([], data);
     lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
-    
-    // NÃO FAZ SCROLL AQUI (Pois não há resultado relevante)
     return;
   }
 
@@ -663,10 +661,15 @@ function btnNextClickHandler() {
   setPriorityCard(toShow, data);
   lastTriagem = {data, logs, computed, timestamp: new Date().toISOString()};
 
-  // === NOVO COMANDO: SCROLL AUTOMÁTICO ===
-  // Rola suavemente até o pai da lista de resultados (o painel "Resultados")
-  // Isso garante que o título "Resultados" fique visível
-  resultsEl.parentElement.scrollIntoView({ behavior: 'smooth' });
+  // === SCROLL AUTOMÁTICO COM ATRASO (CORRIGIDO) ===
+  setTimeout(() => {
+    // Procura o título "Resultados" (h3 dentro do painel da direita)
+    // O seletor procura o painel que contém o resultsEl
+    const resultsPanel = resultsEl.closest('.panel');
+    if (resultsPanel) {
+        resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 100); // Atraso de 100ms para garantir que o DOM atualizou
 }
 document.getElementById('btnNext').addEventListener('click', btnNextClickHandler);
 
