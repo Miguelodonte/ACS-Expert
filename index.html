@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7, user-scalable=0" />
-<title>Protótipo Triagem ACS — Qualificadores Refinados</title>
+<title>ACS-Expert — Protótipo de Triagem </title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,7 @@
   <header>
     <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#1992ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700">ACS</div>
     <div>
-      <h1>Assistente de Triagem — Protótipo</h1>
+      <h1>Assistente de Triagem</h1>
       <div class="small">Escolha demografia, fatores de risco, sintomas (+detalhes) e ajuste a intensidade.</div>
     </div>
   </header>
@@ -38,11 +38,10 @@
  min-width: 130px;">
                 <label class="small">Faixa Etária</label>
                 <select id="faixa_etaria">
-                  <option value="0-18">0 a 18 anos</option>
+                  <option value="0-18" selected>0 a 18 anos</option>
                   <option value="19-23">19 a 23 anos</option>
-                  <option 
- value="24-28">24 a 28 anos</option>
-                  <option value="29-33" selected>29 a 33 anos</option>
+                  <option value="24-28">24 a 28 anos</option>
+                  <option value="29-33">29 a 33 anos</option>
                   <option value="34-38">34 a 38 anos</option>
                   <option value="39-43">39 a 43 anos</option>
                   <option value="44-48">44 a 48 anos</option>
@@ -121,7 +120,7 @@
       <div id="rules" class="tab-content">
         <h3 style="margin-top:0">Doenças / Regras</h3>
        
-         <div class="muted small" style="margin-bottom:10px">Lista de doenças (48) com sintomas-chave.
+         <div class="muted small" style="margin-bottom:10px">Lista de doenças (88) com sintomas-chave.
          Clique para ver detalhes.</div>
         <div class="rules-list panel" id="rulesList"></div>
       </div>
